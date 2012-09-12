@@ -1,0 +1,13 @@
+icConnected
+icConnecting
+icDisconnected
+icDisconnecting
+icError
+icHostResolved
+icNone
+icReceivingResponse
+icRequesting
+icRequestSent
+icResolvingHost
+icResponseCompleted
+icResponseReceived
