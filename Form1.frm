@@ -256,12 +256,12 @@ Begin VB.Form frmMain
          MouseIcon       =   "Form1.frx":6094
       End
    End
-   Begin Project1.Tray Tray 
+   Begin AGYouTubeVideoGrabber.Tray Tray 
       Left            =   0
       Top             =   2520
-      _ExtentX        =   847
-      _ExtentY        =   847
-      PictureIcon     =   "Form1.frx":61F6
+      _extentx        =   847
+      _extenty        =   847
+      pictureicon     =   "Form1.frx":61F6
    End
    Begin VB.Timer trmGetClipData 
       Enabled         =   0   'False
@@ -957,7 +957,7 @@ End Sub
 Private Sub Form_Load()
     'cmbDownloadOption.AddItem "Please select..."
     If App.LogMode = 0 Then
-        MsgBox "Don't Run At IDE Please!", vbInformation
+        'MsgBox "Don't Run At IDE Please!", vbInformation
         RemoveMenu GetSystemMenu(hWnd, 0), SC_CLOSE, MF_REMOVE
         'End
     End If
@@ -1042,7 +1042,7 @@ Private Sub Form_Unload(Cancel As Integer)
     ' Unload frmSupportedFileType
     Unload frmUpdate
     Unload Me
-    Call TerminateProcess(GetCurrentProcess, ByVal 0&)
+    TerminateProcess GetCurrentProcess, ByVal 0&
     
 End Sub
 
@@ -1485,11 +1485,11 @@ End Sub
 Private Sub tvwQuality_NodeClick(ByVal Node As Node)
     If tvwQuality.SelectedItem = txtDownloadLink.Text Then Exit Sub
     Dim I As Long
-    If tvwQuality.SelectedItem.Children <> 0 Then Exit Sub
+    If tvwQuality.SelectedItem.children <> 0 Then Exit Sub
     'If tvwQuality.SelectedItem.Child.Selected = False Then Exit Sub
     'If tvwQuality.SelectedItem.Child.Parent.Selected Then Exit Sub
     
-    If tvwQuality.SelectedItem.Children = 0 Then
+    If tvwQuality.SelectedItem.children = 0 Then
         
         For I = 1 To tvwQuality.Nodes.Count
             If tvwQuality.Nodes(I).Selected Then
@@ -1584,7 +1584,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         tvwQuality.SetFocus
         Dim x As Integer
         CleanUp
-        If InStr(LCase(txtLink.Text), "youtube") = 0 Then lstAdd "Failed To Get Video Info.": txtLink.Text = "": txtLink.SetFocus: Exit Sub
+        If InStr(LCase(txtLink.Text), "www.youtube.com/watch?") = 0 Then lstAdd "Failed To Get Video Info.": txtLink.Text = "": txtLink.SetFocus: Exit Sub
         lstAdd "Getting Video's ID"
         
         Dim VideoId  As String
@@ -1600,6 +1600,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         lstAdd "Getting Web Source Code"
         
         If txtID.Text <> "" Then
+            
             Dim WebBin() As Byte
             Inet1.Cancel
             WebBin = Inet1.OpenURL("http://youtube.com/get_video_info?video_id=" & VideoId, icByteArray)
@@ -1938,8 +1939,6 @@ Private Function CheckUpdate() As Boolean
     iniF = InetUpdate.OpenURL("http://dl.dropbox.com/u/43619472/%E6%89%B9%E5%A4%84%E7%90%86/VB6/Youtube%20Downloader/Updates/Update.ini", icByteArray)
     If InetFail = True Then Exit Function
     SaveToFile Environ$("temp") & "\AGYTVGU.ini", iniF
-    
-    
     
     Dim x As Double
     Dim NewVer As String, tmpVer As String

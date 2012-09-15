@@ -159,7 +159,7 @@ Private Sub Form_Load()
     'MHeight = Me.Height
     'MWidth = Me.Width
     
-    
+    Attach Me.hWnd
     RoundRect Me.hDC, 0, 0, Me.Width / Screen.TwipsPerPixelX - 1, Me.Height / Screen.TwipsPerPixelY - 1, 20, 20
     
     Me.Caption = "About " & App.Title
@@ -188,6 +188,7 @@ Private Sub Form_Unload(Cancel As Integer)
     'SetWindowPos Me.hwnd, 0, (Screen.Width - Me.Width) / 2 / Screen.TwipsPerPixelX, (Screen.Height - Me.Height) / 2 / Screen.TwipsPerPixelY, Me.Width / Screen.TwipsPerPixelX, Me.Height / Screen.TwipsPerPixelY, 0
     'DoEvents
     'Loop
+    Detach Me.hWnd
 End Sub
 
 Private Sub lblDescription_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)

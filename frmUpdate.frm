@@ -23,7 +23,7 @@ Begin VB.Form frmUpdate
    ScaleWidth      =   6135
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin Project1.SFProgressBar myProgressBar1 
+   Begin AGYouTubeVideoGrabber.SFProgressBar myProgressBar1 
       Height          =   150
       Left            =   120
       Top             =   2400
@@ -147,7 +147,7 @@ Private Sub Form_Activate()
     
     'SaveToFileFrm Environ$("temp") & "\AGYTVGU.ini", iniF
     'Open Environ$("temp") & "\AGYTVGU.ini" For Binary As #1
-    Dim X As Double
+    Dim x As Double
     'For x = 0 To UBound(iniF)
     'Put #1, , iniF(x)
     'DoEvents
@@ -230,7 +230,7 @@ Private Sub Form_Activate()
                 Dim FileInd As Long
                 FileExDl = Split(GetIni("OtherFile", "FileDownloadLink", 0, Environ$("temp") & "\AGYTVGU.ini"), ",")
                 
-                For X = LBound(FileExDl) To UBound(FileExDl)
+                For x = LBound(FileExDl) To UBound(FileExDl)
                     'Dim ExUpdateF() As Byte
                     'InetUpdate.URL = FileExDl(FileInd)
                     'MsgBox InetUpdate.GetHeader
@@ -287,6 +287,7 @@ End Sub
 
 Private Sub Form_Load()
     Set wd = New WininetDown
+    Attach Me.hWnd
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -302,6 +303,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     RunNum = 0
+    Detach Me.hWnd
     Unload Me
 End Sub
 

@@ -6,12 +6,9 @@ Public Const FILE_ATTRIBUTE_DIRECTORY = &H10
 Public Declare Function OpenProcess Lib "kernel32" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, ByVal dwProcessId As Long) As Long
 Private Declare Function CloseHandle Lib "kernel32" (ByVal hObject As Long) As Long
 
-Private Declare Function MultiByteToWideChar Lib "kernel32" (ByVal CodePage As Long, ByVal dwFlags As Long, ByVal lpMultiByteStr As Long, ByVal cchMultiByte As Long, ByVal lpWideCharStr As Long, ByVal cchWideChar As Long) As Long
-Private Const CP_UTF8 = 65001
-
-Public Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
+Public Declare Sub SetWindowPos Lib "user32" (ByVal hWnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cX As Long, ByVal cY As Long, ByVal wFlags As Long)
 'remove menu
-Public Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
+Public Declare Function GetSystemMenu Lib "user32" (ByVal hWnd As Long, ByVal bRevert As Long) As Long
 Public Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
 Public Const MF_REMOVE = &H1000&
 Public Const SC_CLOSE = &HF060
@@ -147,12 +144,12 @@ Public Function CheckFolder(strPath) As Boolean
     fldr = ""
     If Dir(strDiver & "\" & cfolder, vbDirectory) = "" Then
         GetNewsFold = Split(cfolder, "\")
-        Dim i As Long
-        For i = 0 To UBound(GetNewsFold)
+        Dim I As Long
+        For I = 0 To UBound(GetNewsFold)
             If fldr = "" Then
-                fldr = GetNewsFold(i)
+                fldr = GetNewsFold(I)
             Else
-                fldr = fldr & "\" & GetNewsFold(i)
+                fldr = fldr & "\" & GetNewsFold(I)
             End If
             
             If Dir(strDiver & "\" & fldr, vbDirectory) = "" Then
@@ -165,27 +162,11 @@ Public Function CheckFolder(strPath) As Boolean
     End If
 End Function
 
-Public Function Utf8ToUnicode(ByRef Utf() As Byte) As String
-    Dim lRet As Long
-    Dim lLength As Long
-    Dim lBufferSize As Long
-    lLength = UBound(Utf) - LBound(Utf) + 1
-    If lLength <= 0 Then Exit Function
-    lBufferSize = lLength * 2
-    Utf8ToUnicode = String$(lBufferSize, Chr(0))
-    lRet = MultiByteToWideChar(CP_UTF8, 0, VarPtr(Utf(0)), lLength, StrPtr(Utf8ToUnicode), lBufferSize)
-    If lRet <> 0 Then
-        Utf8ToUnicode = Left(Utf8ToUnicode, lRet)
-    Else
-        Utf8ToUnicode = ""
-    End If
-End Function
-
 Public Sub SaveToFile(ByVal DirFilename As String, ByRef FileByte() As Byte)
     Open DirFilename For Binary As #3
-    Dim X As Double
-    For X = 0 To UBound(FileByte)
-        Put #3, , FileByte(X)
+    Dim x As Double
+    For x = 0 To UBound(FileByte)
+        Put #3, , FileByte(x)
         DoEvents
     Next
     Close #3
