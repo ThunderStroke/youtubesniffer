@@ -9,7 +9,7 @@ Begin VB.Form frmMain
    ClientHeight    =   7935
    ClientLeft      =   1680
    ClientTop       =   3495
-   ClientWidth     =   15915
+   ClientWidth     =   18825
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   9
@@ -24,8 +24,17 @@ Begin VB.Form frmMain
    MaxButton       =   0   'False
    ScaleHeight     =   529
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   1061
+   ScaleWidth      =   1255
    StartUpPosition =   2  'CenterScreen
+   Begin VB.TextBox Text1 
+      Height          =   6975
+      Left            =   15960
+      MultiLine       =   -1  'True
+      ScrollBars      =   2  'Vertical
+      TabIndex        =   42
+      Top             =   120
+      Width           =   2655
+   End
    Begin VB.ListBox lstState 
       BeginProperty Font 
          Name            =   "Segoe UI"
@@ -237,7 +246,6 @@ Begin VB.Form frmMain
       PictureIcon     =   "Form1.frx":61F6
    End
    Begin VB.Timer trmGetClipData 
-      Enabled         =   0   'False
       Interval        =   100
       Left            =   0
       Top             =   3000
@@ -283,18 +291,18 @@ Begin VB.Form frmMain
          Width           =   735
       End
       Begin VB.TextBox txtLength 
-         Enabled         =   0   'False
          Height          =   315
          Left            =   7200
+         Locked          =   -1  'True
          TabIndex        =   24
          ToolTipText     =   "Video's Duration"
          Top             =   600
          Width           =   1575
       End
       Begin VB.TextBox txtView 
-         Enabled         =   0   'False
          Height          =   315
          Left            =   4080
+         Locked          =   -1  'True
          TabIndex        =   15
          ToolTipText     =   "Video's Views"
          Top             =   600
@@ -309,7 +317,6 @@ Begin VB.Form frmMain
          Width           =   6135
       End
       Begin VB.TextBox txtID 
-         Enabled         =   0   'False
          Height          =   315
          Left            =   1440
          Locked          =   -1  'True
@@ -388,10 +395,10 @@ Begin VB.Form frmMain
       Begin VB.Label Label8 
          Caption         =   "Uploader's Channel:"
          Height          =   255
-         Left            =   3360
+         Left            =   3600
          TabIndex        =   10
          Top             =   1320
-         Width           =   2415
+         Width           =   1815
       End
       Begin VB.Label Label3 
          BackColor       =   &H8000000B&
@@ -692,7 +699,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Private Declare Sub InitCommonControls Lib "comctl32" ()
 Private Declare Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long '获取鼠标在屏幕上的坐标
 Private Declare Function ClientToScreen Lib "user32 " (ByVal hWnd As Long, lpPoint As POINTAPI) As Long '用户坐标转换为屏幕坐标
 Private Type POINTAPI
@@ -706,22 +712,15 @@ Private Type RECT
     Bottom   As Long
 End Type
 
-Dim Pm As POINTAPI                                                              'Mouse Cursor Coordinate
-Dim PRct As RECT
-Dim OldPicSize As POINTAPI                                                      'Old Picture2 Size
-Dim OldFrmSize As POINTAPI                                                      ' Old Form Size
-Dim YoutubeDLink As String, WebSwf As String, DecodeString As String, WebHtml As String
-Public DlFileEx As String
+'Dim Pm As POINTAPI                                                              'Mouse Cursor Coordinate
+'Dim PRct As RECT
+'Dim OldPicSize As POINTAPI                                                      'Old Picture2 Size
+'Dim OldFrmSize As POINTAPI                                                      ' Old Form Size
+'Dim YoutubeDLink As String, WebSwf As String
+Dim DecodeString As String, WebHtml As String
+'Public DlFileEx As String
 Dim URLFileSize As String                                                       'For Getting URL size True=Get
 'Dim URLCheckTmp As Boolean
-Private Type TGUID
-    Data1 As Long
-    Data2 As Integer
-    Data3 As Integer
-    Data4(0 To 7) As Byte
-End Type
-Private Declare Function OleLoadPicturePath Lib "oleaut32.dll" (ByVal szURLorPath As Long, ByVal punkCaller As Long, ByVal dwReserved As Long, ByVal clrReserved As OLE_COLOR, ByRef riid As TGUID, ByRef ppvRet As IPicture) As Long
-
 Dim InetFail As Boolean
 'Dim PrevWndProc_frmmain As Long
 Private Declare Function GetCurrentProcess Lib "kernel32" () As Long
@@ -770,10 +769,10 @@ End Sub
 
 Private Sub cmdDelete_Click()
     With lvwDownloadList
-        Dim i As Long
-        For i = .ListItems.Count To 1 Step -1
-            If .ListItems(i).Selected = True Then
-                .ListItems.Remove i
+        Dim I As Long
+        For I = .ListItems.Count To 1 Step -1
+            If .ListItems(I).Selected = True Then
+                .ListItems.Remove I
             End If
         Next
     End With
@@ -802,17 +801,17 @@ Private Sub cmdDown_Click()
 End Sub
 
 Private Sub cmdDownAll_Click()
-    Dim i As Long
+    Dim I As Long
     Load frmDownload
     Dim x As ListItem
-    For i = 1 To lvwDownloadList.ListItems.Count
+    For I = 1 To lvwDownloadList.ListItems.Count
         'Debug.Print lvwDownloadList.ListItems.Item(i)
         'Debug.Print lvwDownloadList.ListItems.Item(i).SubItems(1)
-        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(i))
-        x.SubItems(1) = lvwDownloadList.ListItems.Item(i).SubItems(1)
-        x.SubItems(2) = lvwDownloadList.ListItems.Item(i).SubItems(2)
-        x.SubItems(3) = lvwDownloadList.ListItems.Item(i).SubItems(3)
-        x.SubItems(4) = lvwDownloadList.ListItems.Item(i).SubItems(4)
+        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
+        x.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
+        x.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
+        x.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
+        x.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
     Next
     frmDownload.Show 1
 End Sub
@@ -845,22 +844,6 @@ Private Sub cmdVisit_Click()
     VisitURL (txtHome.Text)
 End Sub
 
-Function ExtractMatch(Text, Pattern)
-    Dim Regex As Object
-    Dim Matches
-    
-    Set Regex = New RegExp
-    Regex.Pattern = Pattern
-    
-    Set Matches = Regex.Execute(Text)
-    If Matches.Count = 0 Then
-        ExtractMatch = ""
-        Exit Function
-    End If
-    
-    ExtractMatch = Matches(0).SubMatches(0)
-End Function
-
 Private Sub Form_Activate()
     Static Rn As Integer
     If Rn = 0 Then
@@ -875,18 +858,14 @@ Private Sub Form_Activate()
     End If
 End Sub
 
-
-Private Sub form_Initialize()
-    'InitCommonControls
-    
-End Sub
-
 Private Sub Form_Load()
     'cmbDownloadOption.AddItem "Please select..."
     If App.LogMode = 0 Then
         'MsgBox "Don't Run At IDE Please!", vbInformation
         RemoveMenu GetSystemMenu(hWnd, 0), SC_CLOSE, MF_REMOVE
         'End
+    Else
+        Attach Me.hWnd
     End If
     'If Dir$(App.Path & "\ffmpeg.exe") = "" Then
     'MsgBox "ffmpeg.exe not found" & vbNewLine & "Please Redownload!", vbCritical, "Error!"
@@ -899,15 +878,14 @@ Private Sub Form_Load()
     'MsgBox "ffplay.exe not found" & vbNewLine & "Please Redownload!", vbCritical, "Error!"
     'End
     'End If
-    Attach Me.hWnd
-    With OldPicSize
-        .x = Picture2.Width
-        .y = Picture2.Height
-    End With
-    With OldFrmSize
-        .x = Me.Width
-        .y = Me.Height
-    End With
+    'With OldPicSize
+    '.x = Picture2.Width
+    '.y = Picture2.Height
+    'End With
+    'With OldFrmSize
+    '.x = Me.Width
+    '.y = Me.Height
+    'End With
     
     'cmbDownloadOption.ListIndex = 0
     
@@ -959,7 +937,7 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     'SetWindowLong Me.hwnd, GWL_WNDPROC, pWndProc
     Tray.Hide
-    Detach Me.hWnd
+    If App.LogMode > 0 Then Detach Me.hWnd
     'Unload Form2
     'Unload frmConvert
     Unload frmDownload
@@ -989,12 +967,11 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
         txtUploader.Text = ""
         txtHome.Text = ""
         Picture2.Picture = LoadPicture("")
-        Dim x As Integer
+        'Dim x As Integer
         'For x = 0 To 3
         'txtDownload(x).Text = ""
         'optDownload(x).Enabled = False
         'Next
-        
         Exit Sub
         'Case icResponseCompleted
         'Dim strData As String
@@ -1024,66 +1001,6 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
     End Select
     
 End Sub
-
-Public Function LoadPicture(ByVal strFileName As String) As Picture
-    
-    Dim IID  As TGUID
-    With IID
-        .Data1 = &H7BF80980
-        .Data2 = &HBF32
-        .Data3 = &H101A
-        .Data4(0) = &H8B
-        .Data4(1) = &HBB
-        .Data4(2) = &H0
-        .Data4(3) = &HAA
-        .Data4(4) = &H0
-        .Data4(5) = &H30
-        .Data4(6) = &HC
-        .Data4(7) = &HAB
-    End With
-    On Error GoTo ERR_LINE
-    OleLoadPicturePath StrPtr(strFileName), 0&, 0&, 0&, IID, LoadPicture
-    Exit Function
-ERR_LINE:
-    Set LoadPicture = VB.LoadPicture(strFileName)
-End Function
-
-
-' Copy the image from pic_src into pic_dst so
-' it fits and has the same aspect ratio as the
-' original picture.
-Public Sub FitPictureToBox(ByVal pic_src As PictureBox, pic_dst As PictureBox)
-    On Error Resume Next
-    Dim aspect_src As Single
-    Dim wid As Single
-    Dim hgt As Single
-    
-    ' get the original picture's aspect ratio.
-    aspect_src = pic_src.ScaleWidth / pic_src.ScaleHeight
-    
-    ' get the size available.
-    wid = pic_dst.ScaleWidth
-    hgt = pic_dst.ScaleHeight
-    
-    ' Adjust the wid/hgt ratio to match aspect_src.
-    If wid / hgt > aspect_src Then
-        ' The area is too short and wide.
-        ' Make it narrower.
-        wid = aspect_src * hgt
-    Else
-        ' The area is too tall and thin.
-        ' Make it shorter.
-        hgt = wid / aspect_src
-    End If
-    
-    ' Center the image at the correct size.
-    pic_dst.Cls
-    pic_dst.PaintPicture pic_src.Picture, _
-    (pic_dst.ScaleWidth - wid) / 2, _
-    (pic_dst.ScaleHeight - hgt) / 2, _
-    wid, hgt
-End Sub
-
 
 Private Sub InetFileSize_StateChanged(ByVal State As Integer)
     On Error Resume Next
@@ -1158,10 +1075,10 @@ Private Sub mnuClearAll_Click()
 End Sub
 
 Private Sub mnuCollapse_Click()
-    Dim i As Long
-    For i = 1 To tvwQuality.Nodes.Count
-        tvwQuality.Nodes(i).Expanded = False
-    Next i
+    Dim I As Long
+    For I = 1 To tvwQuality.Nodes.Count
+        tvwQuality.Nodes(I).Expanded = False
+    Next I
 End Sub
 
 Private Sub mnuConvert_Click()
@@ -1179,10 +1096,10 @@ End Sub
 
 Private Sub mnuDelSelected_Click()
     With lvwDownloadList
-        Dim i As Long
-        For i = .ListItems.Count To 1 Step -1
-            If .ListItems(i).Selected = True Then
-                .ListItems.Remove i
+        Dim I As Long
+        For I = .ListItems.Count To 1 Step -1
+            If .ListItems(I).Selected = True Then
+                .ListItems.Remove I
             End If
         Next
     End With
@@ -1192,17 +1109,17 @@ Private Sub mnuDelSelected_Click()
 End Sub
 
 Private Sub mnuDownloadAll_Click()
-    Dim i As Long
+    Dim I As Long
     Load frmDownload
     Dim x As ListItem
-    For i = 1 To lvwDownloadList.ListItems.Count
+    For I = 1 To lvwDownloadList.ListItems.Count
         'Debug.Print lvwDownloadList.ListItems.Item(i)
         'Debug.Print lvwDownloadList.ListItems.Item(i).SubItems(1)
-        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(i))
-        x.SubItems(1) = lvwDownloadList.ListItems.Item(i).SubItems(1)
-        x.SubItems(2) = lvwDownloadList.ListItems.Item(i).SubItems(2)
-        x.SubItems(3) = lvwDownloadList.ListItems.Item(i).SubItems(3)
-        x.SubItems(4) = lvwDownloadList.ListItems.Item(i).SubItems(4)
+        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
+        x.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
+        x.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
+        x.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
+        x.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
     Next
     frmDownload.Show 1
 End Sub
@@ -1222,10 +1139,10 @@ Private Sub mnuDownSelected_Click()
 End Sub
 
 Private Sub mnuExpand_Click()
-    Dim i As Long
-    For i = 1 To tvwQuality.Nodes.Count
-        tvwQuality.Nodes(i).Expanded = True
-    Next i
+    Dim I As Long
+    For I = 1 To tvwQuality.Nodes.Count
+        tvwQuality.Nodes(I).Expanded = True
+    Next I
 End Sub
 
 Private Sub mnuGetLinkClip_Click()
@@ -1278,6 +1195,7 @@ End Sub
 
 Private Sub mnuSubSavePicAs_Click()
     With cdSave
+        .DefaultExt = ".bmp"
         .Filter = "Bitmap File (*.BMP)|*.BMP"
         .ShowSave
         If Len(.FileName) = 0 Then
@@ -1377,31 +1295,22 @@ Private Sub Tray_Click()
     Tray.Hide
 End Sub
 
-
-
 Private Sub trmGetClipData_Timer()
     On Error Resume Next
     If mnuGetLinkClip.Checked = False Then Exit Sub
     If ExtractMatch(Clipboard.GetText, "v=([A-Za-z0-9-_]+)") = "" Then Exit Sub
-    If InStr(LCase$(Clipboard.GetText), "youtube") <> 0 And InStr(LCase$(Clipboard.GetText), "http://") And LCase$(txtLink.Text) <> LCase$(Clipboard.GetText) Then
+    If InStr(LCase$(Clipboard.GetText), "www.youtube.com") <> 0 And LCase$(txtLink.Text) <> LCase$(Clipboard.GetText) Then
         lstAdd "Found Link In Clipboard"
-    
-        
         txtLink.Text = Clipboard.GetText
         If mnuAppActivate.Checked = True Then
             AppActivate Me.Caption
         End If
-        
         txtLink_KeyDown 13, 0
-        
     End If
     Exit Sub
 ClipErr:
     lstAdd Err.Description & Err.Source
-
-    
 End Sub
-
 
 Private Sub tvwQuality_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If Button = 2 And tvwQuality.Nodes.Count > 0 Then
@@ -1411,18 +1320,18 @@ End Sub
 
 Private Sub tvwQuality_NodeClick(ByVal Node As Node)
     If tvwQuality.SelectedItem = txtDownloadLink.Text Then Exit Sub
-    Dim i As Long
+    Dim I As Long
     If tvwQuality.SelectedItem.children <> 0 Then Exit Sub
     'If tvwQuality.SelectedItem.Child.Selected = False Then Exit Sub
     'If tvwQuality.SelectedItem.Child.Parent.Selected Then Exit Sub
     
     If tvwQuality.SelectedItem.children = 0 Then
         
-        For i = 1 To tvwQuality.Nodes.Count
-            If tvwQuality.Nodes(i).Selected Then
+        For I = 1 To tvwQuality.Nodes.Count
+            If tvwQuality.Nodes(I).Selected Then
                 lstAdd "Quality Selected. Analyzing"
                 
-                txtDownloadLink.Text = tvwQuality.Nodes(i).Text
+                txtDownloadLink.Text = tvwQuality.Nodes(I).Text
                 'Dim h As Long
                 'For h = 0 To cmbDownloadOption.ListCount - 1
                 'If cmbDownloadOption.List(h) = tvwQuality.Nodes(i).Text Then
@@ -1432,7 +1341,7 @@ Private Sub tvwQuality_NodeClick(ByVal Node As Node)
                 '    Next
                 'cmbDownloadOption.List(cmbDownloadOption.ListIndex) = tvwQuality.Nodes(i).Text
             End If
-        Next i
+        Next I
     End If
 End Sub
 
@@ -1506,12 +1415,14 @@ End Sub
 Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
     
     On Error Resume Next
-    If txtLink.Text <> "" And KeyCode = 13 Then
+    
+    If KeyCode = 13 Then
+        If txtLink.Text = "" Then CleanUp: Exit Sub
         txtLink.Enabled = False
         tvwQuality.SetFocus
         Dim x As Integer
         CleanUp
-        If InStr(LCase(txtLink.Text), "www.youtube.com/watch?") = 0 Then lstAdd "Failed To Get Video Info.": txtLink.Text = "": txtLink.SetFocus: Exit Sub
+        If InStr(LCase(txtLink.Text), "www.youtube.com") = 0 Then lstAdd "Failed To Get Video Info.": txtLink.Text = "": txtLink.SetFocus: Exit Sub
         lstAdd "Getting Video's ID"
         
         Dim VideoId  As String
@@ -1525,7 +1436,15 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         
         
         lstAdd "Getting Web Source Code"
-        SeperateSWF txtLink.Text
+        If SeperateSWF(txtLink.Text) = "Hey! No data recieved! Check your network connection" Then
+            lstAdd "Hey! No data recieved! Check your network connection"
+            CleanUp
+            Exit Sub
+        End If
+        LoadVideoInfo txtLink.Text, txtID, txtTitle, txtView, txtLength, txtUploader, txtHome, Picture1, Picture2
+        Exit Sub
+        
+        
         If txtID.Text <> "" Then
             
             Dim WebBin() As Byte
@@ -1826,16 +1745,8 @@ goterr:
     txtLink.Enabled = True
 End Sub
 
-Function VisitURL(VisitUrlink As String)
-    On Error Resume Next
-    Shell "rundll32.exe url.dll,FileProtocolHandler " & Chr(34) & VisitUrlink & Chr(34), 1
-End Function
-
-
 Private Sub CleanUp()
     lstAdd "Reseting.."
-    
-    
     'cmbDownloadOption.Clear
     'cmbDownloadOption.AddItem "Please Select..."
     'cmbDownloadOption.ListIndex = 0
@@ -1844,7 +1755,7 @@ Private Sub CleanUp()
     'txtDislikes.Text = ""
     txtView.Text = ""
     tvwQuality.Nodes.Clear
-    
+    txtLink.Enabled = True
     txtTitle.Text = ""
     txtLength.Text = ""
     txtUploader.Text = ""
@@ -1881,4 +1792,3 @@ Private Sub lstAdd(ByVal InName As String)
     lstState.AddItem Date & "-" & Time & ": " & InName
     lstState.ListIndex = lstState.NewIndex
 End Sub
-

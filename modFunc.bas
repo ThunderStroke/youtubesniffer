@@ -17,6 +17,16 @@ Private Declare Function MultiByteToWideChar Lib "kernel32" (ByVal CodePage As L
 Private Const CP_UTF8 = 65001
 'Utf to Unicode End===
 
+'Load Picture
+Private Type TGUID
+    Data1 As Long
+    Data2 As Integer
+    Data3 As Integer
+    Data4(0 To 7) As Byte
+End Type
+Private Declare Function OleLoadPicturePath Lib "oleaut32.dll" (ByVal szURLorPath As Long, ByVal punkCaller As Long, ByVal dwReserved As Long, ByVal clrReserved As OLE_COLOR, ByRef riid As TGUID, ByRef ppvRet As IPicture) As Long
+'Load Picture End===
+
 Public Function URLDecode(ByVal URL As String, Optional ByVal PlusSpace As Boolean = True) As String
     Dim cchUnescaped As Long
     Dim HRESULT As Long
@@ -82,38 +92,120 @@ Public Function DownHTML(strURL As String, strCharset As String)
     End If
     Set Ado_Stream = Nothing
     Set Obj_XMLHTTP = Nothing
+    
 End Function
 
 Public Function UTF8_UrlDecode(ByVal URL As String)
     Dim B, ub
     Dim UtfB
     Dim UtfB1, UtfB2, UtfB3
-    Dim i, n, s
+    Dim I, n, s
     n = 0
     ub = 0
-    For i = 1 To Len(URL)
-        B = Mid(URL, i, 1)
+    For I = 1 To Len(URL)
+        DoEvents
+        B = Mid(URL, I, 1)
         Select Case B
         Case "+"
             s = s & " "
         Case "%"
-            ub = Mid(URL, i + 1, 2)
+            ub = Mid(URL, I + 1, 2)
             UtfB = Val("&H" & ub)
             If UtfB < 128 Then
-                i = i + 2
+                I = I + 2
                 s = s & ChrW(UtfB)
             Else
                 UtfB1 = (UtfB And &HF) * &H1000
-                UtfB2 = (CInt("&H" & Mid(URL, i + 4, 2)) And &H3F) * &H40
-                UtfB3 = CInt("&H" & Mid(URL, i + 7, 2)) And &H3F
+                UtfB2 = (CInt("&H" & Mid(URL, I + 4, 2)) And &H3F) * &H40
+                UtfB3 = CInt("&H" & Mid(URL, I + 7, 2)) And &H3F
                 s = s & ChrW(UtfB1 Or UtfB2 Or UtfB3)
-                i = i + 8
+                I = I + 8
             End If
         Case Else
             s = s & B
         End Select
     Next
     UTF8_UrlDecode = s
-    
 End Function
+
+Public Function VisitURL(VisitUrlink As String)
+    On Error Resume Next
+    Shell "rundll32.exe url.dll,FileProtocolHandler " & Chr(34) & VisitUrlink & Chr(34), 1
+End Function
+
+' Copy the image from pic_src into pic_dst so
+' it fits and has the same aspect ratio as the
+' original picture.
+Public Sub FitPictureToBox(ByVal pic_src As PictureBox, pic_dst As PictureBox)
+    On Error Resume Next
+    Dim aspect_src As Single
+    Dim wid As Single
+    Dim hgt As Single
+    
+    ' get the original picture's aspect ratio.
+    aspect_src = pic_src.ScaleWidth / pic_src.ScaleHeight
+    
+    ' get the size available.
+    wid = pic_dst.ScaleWidth
+    hgt = pic_dst.ScaleHeight
+    
+    ' Adjust the wid/hgt ratio to match aspect_src.
+    If wid / hgt > aspect_src Then
+        ' The area is too short and wide.
+        ' Make it narrower.
+        wid = aspect_src * hgt
+    Else
+        ' The area is too tall and thin.
+        ' Make it shorter.
+        hgt = wid / aspect_src
+    End If
+    
+    ' Center the image at the correct size.
+    pic_dst.Cls
+    pic_dst.PaintPicture pic_src.Picture, _
+    (pic_dst.ScaleWidth - wid) / 2, _
+    (pic_dst.ScaleHeight - hgt) / 2, _
+    wid, hgt
+End Sub
+
+Public Function LoadPicture(ByVal strFileName As String) As Picture
+    
+    Dim IID  As TGUID
+    With IID
+        .Data1 = &H7BF80980
+        .Data2 = &HBF32
+        .Data3 = &H101A
+        .Data4(0) = &H8B
+        .Data4(1) = &HBB
+        .Data4(2) = &H0
+        .Data4(3) = &HAA
+        .Data4(4) = &H0
+        .Data4(5) = &H30
+        .Data4(6) = &HC
+        .Data4(7) = &HAB
+    End With
+    On Error GoTo ERR_LINE
+    OleLoadPicturePath StrPtr(strFileName), 0&, 0&, 0&, IID, LoadPicture
+    Exit Function
+ERR_LINE:
+    Set LoadPicture = VB.LoadPicture(strFileName)
+End Function
+
+
+Public Function ExtractMatch(Text, Pattern)
+    Dim Regex As Object
+    Dim Matches
+    
+    Set Regex = New RegExp
+    Regex.Pattern = Pattern
+    
+    Set Matches = Regex.Execute(Text)
+    If Matches.Count = 0 Then
+        ExtractMatch = ""
+        Exit Function
+    End If
+    
+    ExtractMatch = Matches(0).SubMatches(0)
+End Function
+
 
