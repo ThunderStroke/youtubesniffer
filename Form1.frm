@@ -26,32 +26,6 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1255
    StartUpPosition =   2  'CenterScreen
-   Begin VB.TextBox Text1 
-      Height          =   6975
-      Left            =   15960
-      MultiLine       =   -1  'True
-      ScrollBars      =   2  'Vertical
-      TabIndex        =   42
-      Top             =   120
-      Width           =   2655
-   End
-   Begin VB.ListBox lstState 
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   1035
-      Left            =   120
-      TabIndex        =   33
-      ToolTipText     =   "Program Status"
-      Top             =   6720
-      Width           =   15615
-   End
    Begin VB.PictureBox Picture2 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
@@ -71,9 +45,35 @@ Begin VB.Form frmMain
       ScaleHeight     =   103
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   103
-      TabIndex        =   32
+      TabIndex        =   42
       Top             =   120
       Width           =   1575
+   End
+   Begin VB.TextBox Text1 
+      Height          =   6975
+      Left            =   15960
+      MultiLine       =   -1  'True
+      ScrollBars      =   2  'Vertical
+      TabIndex        =   41
+      Top             =   120
+      Width           =   2655
+   End
+   Begin VB.ListBox lstState 
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   1035
+      Left            =   120
+      TabIndex        =   32
+      ToolTipText     =   "Program Status"
+      Top             =   6720
+      Width           =   15615
    End
    Begin InetCtlsObjects.Inet InetUpdate 
       Left            =   0
@@ -103,7 +103,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   375
          Left            =   120
-         TabIndex        =   41
+         TabIndex        =   40
          ToolTipText     =   "Download Selected Video"
          Top             =   5520
          Width           =   2415
@@ -113,7 +113,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   375
          Left            =   2520
-         TabIndex        =   40
+         TabIndex        =   39
          ToolTipText     =   "Download All Video In The Download List"
          Top             =   5520
          Width           =   2175
@@ -123,7 +123,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   375
          Left            =   2520
-         TabIndex        =   39
+         TabIndex        =   38
          ToolTipText     =   "Delect Selected Video Entry"
          Top             =   5880
          Width           =   2175
@@ -132,7 +132,7 @@ Begin VB.Form frmMain
          Caption         =   "Clear All"
          Height          =   375
          Left            =   120
-         TabIndex        =   38
+         TabIndex        =   37
          ToolTipText     =   "Clear All Entries In The Download List"
          Top             =   5880
          Width           =   2415
@@ -285,7 +285,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   255
          Left            =   8160
-         TabIndex        =   37
+         TabIndex        =   36
          ToolTipText     =   "Visit YouTube Channel"
          Top             =   1320
          Width           =   735
@@ -451,7 +451,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   975
          Left            =   7320
-         TabIndex        =   36
+         TabIndex        =   35
          ToolTipText     =   "Add Selected Video To Download List "
          Top             =   3240
          Width           =   3135
@@ -461,7 +461,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Left            =   240
-         TabIndex        =   35
+         TabIndex        =   34
          ToolTipText     =   "Open The Video In Your Default Browser"
          Top             =   3720
          Width           =   7095
@@ -471,7 +471,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Left            =   240
-         TabIndex        =   34
+         TabIndex        =   33
          ToolTipText     =   "Download The Selected Video"
          Top             =   3240
          Width           =   7095
@@ -562,12 +562,6 @@ Begin VB.Form frmMain
          Top             =   2520
          Width           =   1575
       End
-   End
-   Begin VB.Timer Timer1 
-      Enabled         =   0   'False
-      Interval        =   100
-      Left            =   0
-      Top             =   1800
    End
    Begin VB.PictureBox Picture1 
       AutoRedraw      =   -1  'True
@@ -699,22 +693,9 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Private Declare Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long '获取鼠标在屏幕上的坐标
-Private Declare Function ClientToScreen Lib "user32 " (ByVal hWnd As Long, lpPoint As POINTAPI) As Long '用户坐标转换为屏幕坐标
-Private Type POINTAPI
-    x   As Long
-    y   As Long
-End Type
-Private Type RECT
-    Left   As Long
-    Top   As Long
-    Right   As Long
-    Bottom   As Long
-End Type
-
 'Dim Pm As POINTAPI                                                              'Mouse Cursor Coordinate
 'Dim PRct As RECT
-'Dim OldPicSize As POINTAPI                                                      'Old Picture2 Size
+
 'Dim OldFrmSize As POINTAPI                                                      ' Old Form Size
 'Dim YoutubeDLink As String, WebSwf As String
 Dim DecodeString As String, WebHtml As String
@@ -723,8 +704,6 @@ Dim URLFileSize As String                                                       
 'Dim URLCheckTmp As Boolean
 Dim InetFail As Boolean
 'Dim PrevWndProc_frmmain As Long
-Private Declare Function GetCurrentProcess Lib "kernel32" () As Long
-Private Declare Function TerminateProcess Lib "kernel32" (ByVal hProcess As Long, ByVal uExitCode As Long) As Long
 
 
 'Private Sub cmbDownloadOption_Click()
@@ -845,9 +824,9 @@ Private Sub cmdVisit_Click()
 End Sub
 
 Private Sub Form_Activate()
-    Static Rn As Integer
-    If Rn = 0 Then
-        Rn = 1
+    Static Opened As Integer
+    If Opened = 0 Then
+        Opened = 1
     Else
         Exit Sub
     End If
@@ -864,7 +843,7 @@ Private Sub Form_Load()
         'MsgBox "Don't Run At IDE Please!", vbInformation
         RemoveMenu GetSystemMenu(hWnd, 0), SC_CLOSE, MF_REMOVE
         'End
-    Else
+    ElseIf App.LogMode Then
         Attach Me.hWnd
     End If
     'If Dir$(App.Path & "\ffmpeg.exe") = "" Then
@@ -879,8 +858,8 @@ Private Sub Form_Load()
     'End
     'End If
     'With OldPicSize
-    '.x = Picture2.Width
-    '.y = Picture2.Height
+        '.x = Picture2.Width
+        '.y = Picture2.Height
     'End With
     'With OldFrmSize
     '.x = Me.Width
@@ -937,7 +916,10 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     'SetWindowLong Me.hwnd, GWL_WNDPROC, pWndProc
     Tray.Hide
-    If App.LogMode > 0 Then Detach Me.hWnd
+    
+    If App.LogMode Then
+        Detach Me.hWnd
+    End If
     'Unload Form2
     'Unload frmConvert
     Unload frmDownload
@@ -1273,8 +1255,6 @@ Private Sub Picture2_MouseDown(Button As Integer, Shift As Integer, x As Single,
         PopupMenu mnuSavePic
     End If
 End Sub
-
-
 
 'Public Sub LoadWebImage(ByVal PicSource As PictureBox, PicDestination As PictureBox)
 'On Error Resume Next

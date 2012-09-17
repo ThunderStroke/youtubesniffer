@@ -27,6 +27,12 @@ End Type
 Private Declare Function OleLoadPicturePath Lib "oleaut32.dll" (ByVal szURLorPath As Long, ByVal punkCaller As Long, ByVal dwReserved As Long, ByVal clrReserved As OLE_COLOR, ByRef riid As TGUID, ByRef ppvRet As IPicture) As Long
 'Load Picture End===
 
+'Terminate Process
+Public Declare Function GetCurrentProcess Lib "kernel32" () As Long
+Public Declare Function TerminateProcess Lib "kernel32" (ByVal hProcess As Long, ByVal uExitCode As Long) As Long
+'Terminate Process End===
+
+
 Public Function URLDecode(ByVal URL As String, Optional ByVal PlusSpace As Boolean = True) As String
     Dim cchUnescaped As Long
     Dim HRESULT As Long
@@ -190,7 +196,6 @@ Public Function LoadPicture(ByVal strFileName As String) As Picture
 ERR_LINE:
     Set LoadPicture = VB.LoadPicture(strFileName)
 End Function
-
 
 Public Function ExtractMatch(Text, Pattern)
     Dim Regex As Object

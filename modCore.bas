@@ -15,7 +15,7 @@ Public Function SeperateSWF(ByVal strVideoURL As String) As String
     strWebHTML = Replace(strWebHTML, vbLf, "")
     strWebHTML = Replace(strWebHTML, vbCr, "")
     If strWebHTML = "" Then
-        SeperateSWF = "Hey! No data recieved! Check your network connection": Exit Function
+        SeperateSWF = "Hey! No data recieved! Check your network connection! Or retry!": Exit Function
     End If
     strDecodedSWF = Mid(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), InStr(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), "url_encoded_fmt_stream_map"))
     
@@ -56,6 +56,8 @@ Private Sub LoadAuthorInfo(ByVal txtVideoUploader As TextBox, ByVal txtVideoChan
 End Sub
 
 Private Sub LoadPicScreenShot(ByVal picVideoScreenShot As PictureBox, ByVal picVideoScreenShotView As PictureBox)
-    Set picVideoScreenShot.Picture = LoadPicture(Mid$(strWebHTML, InStrRev(strWebHTML, "=", InStrRev(strWebHTML, ".jpg")) + Len("="), InStrRev(strWebHTML, ".jpg") - InStrRev(strWebHTML, "=", InStrRev(strWebHTML, ".jpg")) + Len(".jpg") - 1))
+    
+    Set picVideoScreenShot.Picture = LoadPicture(Mid(Mid(strWebHTML, InStr(strWebHTML, "<meta property=""og:image"" content=") + Len("<meta property=""og:image"" content=")), 2, InStr(Mid(strWebHTML, InStr(strWebHTML, "<meta property=""og:image"" content=") + Len("<meta property=""og:image"" content=")), """>") - 2))
     FitPictureToBox picVideoScreenShot, picVideoScreenShotView
+    'picVideoScreenShotView.Picture = picVideoScreenShot.Picture
 End Sub
