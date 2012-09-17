@@ -37,7 +37,7 @@ Begin VB.Form frmDownload
       ForeColor       =   &H00000000&
       Height          =   2415
       Left            =   120
-      TabIndex        =   10
+      TabIndex        =   4
       Top             =   120
       Width           =   7335
       Begin VB.TextBox DownTo 
@@ -52,7 +52,7 @@ Begin VB.Form frmDownload
          EndProperty
          Height          =   285
          Left            =   960
-         TabIndex        =   13
+         TabIndex        =   7
          Top             =   480
          Width           =   5655
       End
@@ -69,7 +69,7 @@ Begin VB.Form frmDownload
          EndProperty
          Height          =   255
          Left            =   6720
-         TabIndex        =   12
+         TabIndex        =   6
          Top             =   480
          Width           =   375
       End
@@ -102,7 +102,7 @@ Begin VB.Form frmDownload
          EndProperty
          Height          =   300
          Left            =   2040
-         TabIndex        =   11
+         TabIndex        =   5
          Top             =   960
          Width           =   7215
       End
@@ -121,7 +121,7 @@ Begin VB.Form frmDownload
          Height          =   300
          Index           =   2
          Left            =   240
-         TabIndex        =   23
+         TabIndex        =   17
          Top             =   960
          Width           =   2055
       End
@@ -140,7 +140,7 @@ Begin VB.Form frmDownload
          Height          =   300
          Index           =   1
          Left            =   240
-         TabIndex        =   22
+         TabIndex        =   16
          Top             =   540
          Width           =   975
       End
@@ -157,7 +157,7 @@ Begin VB.Form frmDownload
          EndProperty
          Height          =   300
          Left            =   1560
-         TabIndex        =   21
+         TabIndex        =   15
          Top             =   240
          Width           =   5655
       End
@@ -176,7 +176,7 @@ Begin VB.Form frmDownload
          Height          =   300
          Index           =   0
          Left            =   240
-         TabIndex        =   20
+         TabIndex        =   14
          Top             =   240
          Width           =   1575
       End
@@ -195,7 +195,7 @@ Begin VB.Form frmDownload
          Height          =   300
          Index           =   3
          Left            =   240
-         TabIndex        =   19
+         TabIndex        =   13
          Top             =   1200
          Width           =   1815
       End
@@ -213,7 +213,7 @@ Begin VB.Form frmDownload
          EndProperty
          Height          =   225
          Left            =   1800
-         TabIndex        =   18
+         TabIndex        =   12
          Top             =   1200
          Width           =   7215
       End
@@ -232,7 +232,7 @@ Begin VB.Form frmDownload
          Height          =   300
          Index           =   4
          Left            =   240
-         TabIndex        =   17
+         TabIndex        =   11
          Top             =   1440
          Width           =   1695
       End
@@ -249,7 +249,7 @@ Begin VB.Form frmDownload
          EndProperty
          Height          =   300
          Left            =   1680
-         TabIndex        =   16
+         TabIndex        =   10
          Top             =   1440
          Width           =   7215
       End
@@ -266,7 +266,7 @@ Begin VB.Form frmDownload
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   15
+         TabIndex        =   9
          Top             =   1920
          Width           =   1215
       End
@@ -282,7 +282,7 @@ Begin VB.Form frmDownload
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   14
+         TabIndex        =   8
          Top             =   1920
          Width           =   5055
       End
@@ -303,68 +303,49 @@ Begin VB.Form frmDownload
       TabIndex        =   2
       Top             =   3240
       Width           =   7335
-      Begin VB.PictureBox Picture1 
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   9
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   1575
+      Begin VB.CommandButton cmdStopAllDownload 
+         Caption         =   "Stop Download All"
+         Enabled         =   0   'False
+         Height          =   495
+         Left            =   3720
+         TabIndex        =   22
+         Top             =   3480
+         Width           =   3495
+      End
+      Begin VB.CommandButton cmdDownAll 
+         Caption         =   "Start Download All"
+         Enabled         =   0   'False
+         Height          =   495
          Left            =   120
-         ScaleHeight     =   1575
-         ScaleWidth      =   7095
-         TabIndex        =   4
+         TabIndex        =   21
+         Top             =   3480
+         Width           =   3615
+      End
+      Begin VB.CommandButton cmdDelete 
+         Caption         =   "Delete Selected"
+         Enabled         =   0   'False
+         Height          =   495
+         Left            =   3720
+         TabIndex        =   20
+         Top             =   3960
+         Width           =   3495
+      End
+      Begin VB.CommandButton cmdDownSelected 
+         Caption         =   "Download Selected"
+         Enabled         =   0   'False
+         Height          =   495
+         Left            =   120
+         TabIndex        =   19
          Top             =   3000
          Width           =   7095
-         Begin VB.CommandButton cmdClear 
-            Caption         =   "Clear All"
-            Height          =   495
-            Left            =   0
-            TabIndex        =   9
-            Top             =   960
-            Width           =   3615
-         End
-         Begin VB.CommandButton cmdDownSelected 
-            Caption         =   "Download Selected"
-            Enabled         =   0   'False
-            Height          =   495
-            Left            =   0
-            TabIndex        =   8
-            Top             =   0
-            Width           =   7095
-         End
-         Begin VB.CommandButton cmdDelete 
-            Caption         =   "Delete Selected"
-            Enabled         =   0   'False
-            Height          =   495
-            Left            =   3600
-            TabIndex        =   7
-            Top             =   960
-            Width           =   3495
-         End
-         Begin VB.CommandButton cmdDownAll 
-            Caption         =   "Start Download All"
-            Enabled         =   0   'False
-            Height          =   495
-            Left            =   0
-            TabIndex        =   6
-            Top             =   480
-            Width           =   3615
-         End
-         Begin VB.CommandButton cmdStopAllDownload 
-            Caption         =   "Stop Download All"
-            Enabled         =   0   'False
-            Height          =   495
-            Left            =   3600
-            TabIndex        =   5
-            Top             =   480
-            Width           =   3495
-         End
+      End
+      Begin VB.CommandButton cmdClear 
+         Caption         =   "Clear All"
+         Height          =   495
+         Left            =   120
+         TabIndex        =   18
+         Top             =   3960
+         Width           =   3615
       End
       Begin MSComctlLib.ListView lvwDownload 
          Height          =   2655

@@ -84,3 +84,36 @@ Public Function DownHTML(strURL As String, strCharset As String)
     Set Obj_XMLHTTP = Nothing
 End Function
 
+Public Function UTF8_UrlDecode(ByVal URL As String)
+    Dim B, ub
+    Dim UtfB
+    Dim UtfB1, UtfB2, UtfB3
+    Dim i, n, s
+    n = 0
+    ub = 0
+    For i = 1 To Len(URL)
+        B = Mid(URL, i, 1)
+        Select Case B
+        Case "+"
+            s = s & " "
+        Case "%"
+            ub = Mid(URL, i + 1, 2)
+            UtfB = Val("&H" & ub)
+            If UtfB < 128 Then
+                i = i + 2
+                s = s & ChrW(UtfB)
+            Else
+                UtfB1 = (UtfB And &HF) * &H1000
+                UtfB2 = (CInt("&H" & Mid(URL, i + 4, 2)) And &H3F) * &H40
+                UtfB3 = CInt("&H" & Mid(URL, i + 7, 2)) And &H3F
+                s = s & ChrW(UtfB1 Or UtfB2 Or UtfB3)
+                i = i + 8
+            End If
+        Case Else
+            s = s & B
+        End Select
+    Next
+    UTF8_UrlDecode = s
+    
+End Function
+

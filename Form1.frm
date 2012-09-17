@@ -26,14 +26,6 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1061
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CommandButton Command1 
-      Caption         =   "Command1"
-      Height          =   375
-      Left            =   2640
-      TabIndex        =   45
-      Top             =   1680
-      Width           =   3495
-   End
    Begin VB.ListBox lstState 
       BeginProperty Font 
          Name            =   "Segoe UI"
@@ -92,68 +84,49 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   6495
+      Height          =   6375
       Left            =   10920
       TabIndex        =   29
       Top             =   0
       Width           =   4815
-      Begin VB.PictureBox Picture5 
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   9
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   735
+      Begin VB.CommandButton cmdDownSelected 
+         Caption         =   "Download Select"
+         Enabled         =   0   'False
+         Height          =   375
          Left            =   120
-         ScaleHeight     =   735
-         ScaleWidth      =   4575
-         TabIndex        =   40
+         TabIndex        =   41
+         ToolTipText     =   "Download Selected Video"
          Top             =   5520
-         Width           =   4575
-         Begin VB.CommandButton cmdClear 
-            Caption         =   "Clear All"
-            Height          =   375
-            Left            =   0
-            TabIndex        =   44
-            ToolTipText     =   "Clear All Entries In The Download List"
-            Top             =   360
-            Width           =   2415
-         End
-         Begin VB.CommandButton cmdDelete 
-            Caption         =   "Delete Selected"
-            Enabled         =   0   'False
-            Height          =   375
-            Left            =   2400
-            TabIndex        =   43
-            ToolTipText     =   "Delect Selected Video Entry"
-            Top             =   360
-            Width           =   2175
-         End
-         Begin VB.CommandButton cmdDownAll 
-            Caption         =   "Download All"
-            Enabled         =   0   'False
-            Height          =   375
-            Left            =   2400
-            TabIndex        =   42
-            ToolTipText     =   "Download All Video In The Download List"
-            Top             =   0
-            Width           =   2175
-         End
-         Begin VB.CommandButton cmdDownSelected 
-            Caption         =   "Download Select"
-            Enabled         =   0   'False
-            Height          =   375
-            Left            =   0
-            TabIndex        =   41
-            ToolTipText     =   "Download Selected Video"
-            Top             =   0
-            Width           =   2415
-         End
+         Width           =   2415
+      End
+      Begin VB.CommandButton cmdDownAll 
+         Caption         =   "Download All"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   2520
+         TabIndex        =   40
+         ToolTipText     =   "Download All Video In The Download List"
+         Top             =   5520
+         Width           =   2175
+      End
+      Begin VB.CommandButton cmdDelete 
+         Caption         =   "Delete Selected"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   2520
+         TabIndex        =   39
+         ToolTipText     =   "Delect Selected Video Entry"
+         Top             =   5880
+         Width           =   2175
+      End
+      Begin VB.CommandButton cmdClear 
+         Caption         =   "Clear All"
+         Height          =   375
+         Left            =   120
+         TabIndex        =   38
+         ToolTipText     =   "Clear All Entries In The Download List"
+         Top             =   5880
+         Width           =   2415
       End
       Begin MSComctlLib.ListView lvwDownloadList 
          Height          =   5175
@@ -226,7 +199,7 @@ Begin VB.Form frmMain
       Height          =   2175
       Left            =   360
       TabIndex        =   28
-      Top             =   2280
+      Top             =   2160
       Width           =   10215
       Begin MSComctlLib.TreeView tvwQuality 
          Height          =   1815
@@ -259,9 +232,9 @@ Begin VB.Form frmMain
    Begin AGYouTubeVideoGrabber.Tray Tray 
       Left            =   0
       Top             =   2520
-      _extentx        =   847
-      _extenty        =   847
-      pictureicon     =   "Form1.frx":61F6
+      _ExtentX        =   847
+      _ExtentY        =   847
+      PictureIcon     =   "Form1.frx":61F6
    End
    Begin VB.Timer trmGetClipData 
       Enabled         =   0   'False
@@ -299,34 +272,15 @@ Begin VB.Form frmMain
       TabIndex        =   3
       Top             =   0
       Width           =   9015
-      Begin VB.PictureBox Picture3 
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   9
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+      Begin VB.CommandButton cmdVisit 
+         Caption         =   "Visit"
+         Enabled         =   0   'False
          Height          =   255
          Left            =   8160
-         ScaleHeight     =   255
-         ScaleWidth      =   735
-         TabIndex        =   34
+         TabIndex        =   37
+         ToolTipText     =   "Visit YouTube Channel"
          Top             =   1320
          Width           =   735
-         Begin VB.CommandButton cmdVisit 
-            Caption         =   "Visit"
-            Enabled         =   0   'False
-            Height          =   255
-            Left            =   0
-            TabIndex        =   35
-            ToolTipText     =   "Visit YouTube Channel"
-            Top             =   0
-            Width           =   735
-         End
       End
       Begin VB.TextBox txtLength 
          Enabled         =   0   'False
@@ -483,56 +437,37 @@ Begin VB.Form frmMain
       Height          =   4455
       Left            =   120
       TabIndex        =   2
-      Top             =   2040
+      Top             =   1920
       Width           =   10695
-      Begin VB.PictureBox Picture4 
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   9
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   1095
-         Left            =   240
-         ScaleHeight     =   1095
-         ScaleWidth      =   10215
+      Begin VB.CommandButton cmdAddDown 
+         Caption         =   "Add To Download List >>>"
+         Enabled         =   0   'False
+         Height          =   975
+         Left            =   7320
          TabIndex        =   36
+         ToolTipText     =   "Add Selected Video To Download List "
          Top             =   3240
-         Width           =   10215
-         Begin VB.CommandButton cmdDown 
-            Caption         =   "Download Selected Video"
-            Enabled         =   0   'False
-            Height          =   495
-            Left            =   0
-            TabIndex        =   39
-            ToolTipText     =   "Download The Selected Video"
-            Top             =   480
-            Width           =   7095
-         End
-         Begin VB.CommandButton cmdBrowse 
-            Caption         =   "Open Selected Video In Browser"
-            Enabled         =   0   'False
-            Height          =   495
-            Left            =   0
-            TabIndex        =   38
-            ToolTipText     =   "Open The Video In Your Default Browser"
-            Top             =   0
-            Width           =   7095
-         End
-         Begin VB.CommandButton cmdAddDown 
-            Caption         =   "Add To Download List >>>"
-            Enabled         =   0   'False
-            Height          =   975
-            Left            =   7080
-            TabIndex        =   37
-            ToolTipText     =   "Add Selected Video To Download List "
-            Top             =   0
-            Width           =   3135
-         End
+         Width           =   3135
+      End
+      Begin VB.CommandButton cmdBrowse 
+         Caption         =   "Open Selected Video In Browser"
+         Enabled         =   0   'False
+         Height          =   495
+         Left            =   240
+         TabIndex        =   35
+         ToolTipText     =   "Open The Video In Your Default Browser"
+         Top             =   3720
+         Width           =   7095
+      End
+      Begin VB.CommandButton cmdDown 
+         Caption         =   "Download Selected Video"
+         Enabled         =   0   'False
+         Height          =   495
+         Left            =   240
+         TabIndex        =   34
+         ToolTipText     =   "Download The Selected Video"
+         Top             =   3240
+         Width           =   7095
       End
       Begin VB.TextBox txtQuality 
          Height          =   315
@@ -835,10 +770,10 @@ End Sub
 
 Private Sub cmdDelete_Click()
     With lvwDownloadList
-        Dim I As Long
-        For I = .ListItems.Count To 1 Step -1
-            If .ListItems(I).Selected = True Then
-                .ListItems.Remove I
+        Dim i As Long
+        For i = .ListItems.Count To 1 Step -1
+            If .ListItems(i).Selected = True Then
+                .ListItems.Remove i
             End If
         Next
     End With
@@ -867,17 +802,17 @@ Private Sub cmdDown_Click()
 End Sub
 
 Private Sub cmdDownAll_Click()
-    Dim I As Long
+    Dim i As Long
     Load frmDownload
     Dim x As ListItem
-    For I = 1 To lvwDownloadList.ListItems.Count
+    For i = 1 To lvwDownloadList.ListItems.Count
         'Debug.Print lvwDownloadList.ListItems.Item(i)
         'Debug.Print lvwDownloadList.ListItems.Item(i).SubItems(1)
-        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
-        x.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
-        x.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
-        x.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
-        x.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
+        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(i))
+        x.SubItems(1) = lvwDownloadList.ListItems.Item(i).SubItems(1)
+        x.SubItems(2) = lvwDownloadList.ListItems.Item(i).SubItems(2)
+        x.SubItems(3) = lvwDownloadList.ListItems.Item(i).SubItems(3)
+        x.SubItems(4) = lvwDownloadList.ListItems.Item(i).SubItems(4)
     Next
     frmDownload.Show 1
 End Sub
@@ -925,14 +860,6 @@ Function ExtractMatch(Text, Pattern)
     
     ExtractMatch = Matches(0).SubMatches(0)
 End Function
-
-Private Sub Command1_Click()
-    txtDownloadLink.Locked = False
-    txtCodec.Locked = False
-    txtExtension.Locked = False
-    txtQuality.Locked = False
-    txtFileSize.Locked = False
-End Sub
 
 Private Sub Form_Activate()
     Static Rn As Integer
@@ -1231,10 +1158,10 @@ Private Sub mnuClearAll_Click()
 End Sub
 
 Private Sub mnuCollapse_Click()
-    Dim I As Long
-    For I = 1 To tvwQuality.Nodes.Count
-        tvwQuality.Nodes(I).Expanded = False
-    Next I
+    Dim i As Long
+    For i = 1 To tvwQuality.Nodes.Count
+        tvwQuality.Nodes(i).Expanded = False
+    Next i
 End Sub
 
 Private Sub mnuConvert_Click()
@@ -1252,10 +1179,10 @@ End Sub
 
 Private Sub mnuDelSelected_Click()
     With lvwDownloadList
-        Dim I As Long
-        For I = .ListItems.Count To 1 Step -1
-            If .ListItems(I).Selected = True Then
-                .ListItems.Remove I
+        Dim i As Long
+        For i = .ListItems.Count To 1 Step -1
+            If .ListItems(i).Selected = True Then
+                .ListItems.Remove i
             End If
         Next
     End With
@@ -1265,17 +1192,17 @@ Private Sub mnuDelSelected_Click()
 End Sub
 
 Private Sub mnuDownloadAll_Click()
-    Dim I As Long
+    Dim i As Long
     Load frmDownload
     Dim x As ListItem
-    For I = 1 To lvwDownloadList.ListItems.Count
+    For i = 1 To lvwDownloadList.ListItems.Count
         'Debug.Print lvwDownloadList.ListItems.Item(i)
         'Debug.Print lvwDownloadList.ListItems.Item(i).SubItems(1)
-        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
-        x.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
-        x.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
-        x.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
-        x.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
+        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(i))
+        x.SubItems(1) = lvwDownloadList.ListItems.Item(i).SubItems(1)
+        x.SubItems(2) = lvwDownloadList.ListItems.Item(i).SubItems(2)
+        x.SubItems(3) = lvwDownloadList.ListItems.Item(i).SubItems(3)
+        x.SubItems(4) = lvwDownloadList.ListItems.Item(i).SubItems(4)
     Next
     frmDownload.Show 1
 End Sub
@@ -1295,10 +1222,10 @@ Private Sub mnuDownSelected_Click()
 End Sub
 
 Private Sub mnuExpand_Click()
-    Dim I As Long
-    For I = 1 To tvwQuality.Nodes.Count
-        tvwQuality.Nodes(I).Expanded = True
-    Next I
+    Dim i As Long
+    For i = 1 To tvwQuality.Nodes.Count
+        tvwQuality.Nodes(i).Expanded = True
+    Next i
 End Sub
 
 Private Sub mnuGetLinkClip_Click()
@@ -1484,18 +1411,18 @@ End Sub
 
 Private Sub tvwQuality_NodeClick(ByVal Node As Node)
     If tvwQuality.SelectedItem = txtDownloadLink.Text Then Exit Sub
-    Dim I As Long
+    Dim i As Long
     If tvwQuality.SelectedItem.children <> 0 Then Exit Sub
     'If tvwQuality.SelectedItem.Child.Selected = False Then Exit Sub
     'If tvwQuality.SelectedItem.Child.Parent.Selected Then Exit Sub
     
     If tvwQuality.SelectedItem.children = 0 Then
         
-        For I = 1 To tvwQuality.Nodes.Count
-            If tvwQuality.Nodes(I).Selected Then
+        For i = 1 To tvwQuality.Nodes.Count
+            If tvwQuality.Nodes(i).Selected Then
                 lstAdd "Quality Selected. Analyzing"
                 
-                txtDownloadLink.Text = tvwQuality.Nodes(I).Text
+                txtDownloadLink.Text = tvwQuality.Nodes(i).Text
                 'Dim h As Long
                 'For h = 0 To cmbDownloadOption.ListCount - 1
                 'If cmbDownloadOption.List(h) = tvwQuality.Nodes(i).Text Then
@@ -1505,7 +1432,7 @@ Private Sub tvwQuality_NodeClick(ByVal Node As Node)
                 '    Next
                 'cmbDownloadOption.List(cmbDownloadOption.ListIndex) = tvwQuality.Nodes(i).Text
             End If
-        Next I
+        Next i
     End If
 End Sub
 
@@ -1598,7 +1525,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         
         
         lstAdd "Getting Web Source Code"
-        
+        SeperateSWF txtLink.Text
         If txtID.Text <> "" Then
             
             Dim WebBin() As Byte

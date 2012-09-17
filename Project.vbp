@@ -19,6 +19,7 @@ Module=modFunc; modFunc.bas
 UserControl=SFProgressBar.ctl
 Module=modSkin; modSkin.bas
 ResFile32="Resources.RES"
+Module=modCore; modCore.bas
 IconForm="frmMain"
 Startup="frmMain"
 HelpFile=""
