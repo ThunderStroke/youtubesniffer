@@ -1,0 +1,3 @@
+18/9/2012
+
+- Done rewriting the source code for the core module.

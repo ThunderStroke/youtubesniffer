@@ -10,4 +10,4 @@ WininetDown = 88, 116, 968, 523,
 modFunc = 0, 0, 880, 407, 
 SFProgressBar = 88, 116, 968, 523, , 22, 29, 902, 436, C
 modSkin = 0, 0, 0, 0, C
-modCore = 4, 275, 884, 686, C
+modCore = 88, 91, 968, 502, 

@@ -698,7 +698,8 @@ Option Explicit
 
 'Dim OldFrmSize As POINTAPI                                                      ' Old Form Size
 'Dim YoutubeDLink As String, WebSwf As String
-Dim DecodeString As String, WebHtml As String
+Dim WebHtml As String
+'DecodeString As String,
 'Public DlFileEx As String
 Dim URLFileSize As String                                                       'For Getting URL size True=Get
 'Dim URLCheckTmp As Boolean
@@ -721,7 +722,7 @@ Dim InetFail As Boolean
 'End If
 'MsgBox cmbDownloadOption.List(0)
 'txtDownloadLink.Text = cmbDownloadOption.List(cmbDownloadOption.ListIndex)
-    'End Sub
+'End Sub
 
 Private Sub cmdAddDown_Click()
     Dim x As ListItem
@@ -1402,18 +1403,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         tvwQuality.SetFocus
         Dim x As Integer
         CleanUp
-        If InStr(LCase(txtLink.Text), "www.youtube.com") = 0 Then lstAdd "Failed To Get Video Info.": txtLink.Text = "": txtLink.SetFocus: Exit Sub
-        lstAdd "Getting Video's ID"
-        
-        Dim VideoId  As String
-        
-        txtID.Text = ExtractMatch(txtLink.Text, "v=([A-Za-z0-9-_]+)")
-        
-        VideoId = ExtractMatch(txtLink.Text, "v=([A-Za-z0-9-_]+)")
-        
-        If txtID.Text = "" Then txtID.Text = "Failed.": lstAdd "Failed To Get Video Info."
-        If txtID.Text = "Failed." Then Exit Sub
-        
+        If InStr(LCase(txtLink.Text), "www.youtube.com") = 0 Then lstAdd "Invalid Link": txtLink.Text = "": txtLink.SetFocus: Exit Sub
         
         lstAdd "Getting Web Source Code"
         If SeperateSWF(txtLink.Text) = "Hey! No data recieved! Check your network connection" Then
@@ -1421,300 +1411,26 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
             CleanUp
             Exit Sub
         End If
+        lstAdd "Loading Video's Info"
         LoadVideoInfo txtLink.Text, txtID, txtTitle, txtView, txtLength, txtUploader, txtHome, Picture1, Picture2
-        Exit Sub
-        
-        
-        If txtID.Text <> "" Then
-            
-            Dim WebBin() As Byte
-            Inet1.Cancel
-            WebBin = Inet1.OpenURL("http://youtube.com/get_video_info?video_id=" & VideoId, icByteArray)
-            Do Until UBound(WebBin) > 0
-                DoEvents
-            Loop
-            WebHtml = Utf8ToUnicode(WebBin)
-            'Inet1.Cancel
-            'Dim WebBin() As Byte
-            'Inet1.Execute txtLink.Text, "Get"
-            'WebBin = Inet1.OpenURL(txtLink.Text, icByteArray)
-            'Do Until UBound(WebBin) > 0
-            'DoEvents
-            'Loop
-            'Debug.Print WebBin
-            'WebHtml = Utf8ToUnicode(WebBin)
-            
-        End If
-        If InStr(WebHtml, "status=fail&errorcode=") Then
-            lstAdd "Sorry,This Video Contain Copyrighted Information, Cannot Be Downloaded"
-            CleanUp
-            txtLink.Text = ""
-            txtLink.Enabled = True
-            Clipboard.Clear
-            txtLink.SetFocus
-            Exit Sub
-        End If
-        'lstAdd "Decoding Web Source Code"
-        
-        'Dim MaxWaitNum As Long
-        
-        'Do Until WebHtml <> ""                                                  'lstState.List(lstState.ListCount - 1) = "Done Getting Web Source Code"
-        'If MaxWaitNum > 10000 Then Exit Sub
-        'MaxWaitNum = MaxWaitNum + 1
-        'DoEvents
-        'Loop                                                                        '
-        
-        ' get rid of all newlines (vbscript regex engine doesn't like them)
-        WebHtml = Replace(WebHtml, Chr(9), "")
-        WebHtml = Replace(WebHtml, vbCrLf, "")
-        WebHtml = Replace(WebHtml, vbLf, "")
-        WebHtml = Replace(WebHtml, vbCr, "")
-        
-        
-        'Dim x As Long
-        For x = 0 To 9
-            WebHtml = URLDecode(WebHtml)
-        Next
-        
-        
-        Dim VideoTitle As String
-        VideoTitle = Trim$(Mid$(WebHtml, InStrRev(WebHtml, "&title=") + Len("&title="), Len(WebHtml) - InStrRev(WebHtml, "&title=") + 1)) 'Mid$(WebHtml, InStr(WebHtml, "<title>") + 7, InStr(WebHtml, "- YouTube  </title>") - InStr(WebHtml, "<title>") - 7))
-        txtTitle.Text = VideoTitle                                              'Mid$(WebHtml, InStrRev(WebHtml, "&title=") + Len("&title="), Len(WebHtml) - InStrRev(WebHtml, "&title=") + 1) 'Trim$(Mid$(WebHtml, InStr(WebHtml, "<title>") + 7, InStr(WebHtml, "- YouTube  </title>") - InStr(WebHtml, "<title>") - 7))
-        
-        If txtTitle.Text Like "*[/\?:*|""<>]*" Then
-            Dim ReX(8) As String
-            ReX(0) = "/"
-            ReX(1) = "\"
-            ReX(2) = "?"
-            ReX(3) = ":"
-            ReX(4) = "*"
-            ReX(5) = "|"
-            ReX(6) = """"
-            ReX(7) = "<"
-            ReX(8) = ">"
-            For x = LBound(ReX) To UBound(ReX)
-                txtTitle.Text = Replace(txtTitle.Text, ReX(x), " - ")
-            Next
-        End If
-        'Debug.Print WebHtml
-        lstAdd "Getting Video Length"
-        
-        'txtLength.Text = Val(Mid$(WebHtml, InStr(WebHtml, """length_seconds"":") + Len("""length_seconds"": "))) & " Seconds"
-        
-        Dim VideoLength As String
-        VideoLength = ConvertToTime(Val(ExtractMatch(WebHtml, "&length_seconds=([0-9]+)"))) 'ConvertToTime(Val(Mid$(WebHtml, InStr(WebHtml, """length_seconds"":") + Len("""length_seconds"": "))))
-        txtLength.Text = VideoLength                                            'ConvertToTime(Val(ExtractMatch(WebHtml, "&length_seconds=([0-9]+)"))) 'ConvertToTime(Val(Mid$(WebHtml, InStr(WebHtml, """length_seconds"":") + Len("""length_seconds"": "))))
-        If txtTitle.Text = "" Then txtTitle.Text = "Failed."
-        
-        lstAdd "Getting Video ScreenShot"
-        'LoadWebImage Me.Picture1, Me.Picture2
-        Set Picture1.Picture = LoadPicture(Mid$(WebHtml, InStrRev(WebHtml, "=", InStrRev(WebHtml, ".jpg")) + Len("="), InStrRev(WebHtml, ".jpg") - InStrRev(WebHtml, "=", InStrRev(WebHtml, ".jpg")) + Len(".jpg") - 1))
-        'Set Picture1.Picture = LoadPicture(Mid$(WebHtml, InStr(WebHtml, "<meta property=""og:image"" content=") + 35, InStr(WebHtml, "mqdefault.jpg"">") - InStr(WebHtml, "<meta property=""og:image"" content=") - 35 + 13))
-        'Debug.Print Mid$(WebHtml, InStr(WebHtml, "<meta property=""og:image"" content=") + 35, InStr(WebHtml, "mqdefault.jpg"">") - InStr(WebHtml, "<meta property=""og:image"" content=") - 35 + 13)
-        FitPictureToBox Picture1, Picture2
-        
-        
-        'lstAdd "Getting Video's Likes and Dislikes Numbers"
-        'txtLike.Text = Val(Replace(Mid$(WebHtml, InStr(WebHtml, "<span class=""likes"">") + 20, InStr(WebHtml, "<span class=""dislikes"">") - InStr(WebHtml, "<span class=""likes"">") - 20), ",", ""))
-        'txtLike.Text = ,  - InStr(WebHtml, "<span class=""likes"">")) 'Mid$(WebHtml, InStr(WebHtml, "<span class=""watch-likes-dislikes""><span class=""likes"">") + 55, InStr(WebHtml, "</span> likes, <span class=""dislikes"">") - InStr(WebHtml, "<span class=""watch-likes-dislikes""><span class=""likes"">") - 55)
-        'If txtLike.Text = "" Then txtLike.Text = "Failed."
-        
-        'Dim VideoLikes As String
-        'VideoLikes = Val(Replace(Mid$(WebHtml, InStr(WebHtml, "<span class=""likes"">") + 20, InStr(WebHtml, "<span class=""dislikes"">") - InStr(WebHtml, "<span class=""likes"">") - 20), ",", ""))
-        'txtDislikes.Text = Val(Replace(Mid$(WebHtml, InStr(WebHtml, "<span class=""dislikes"">") + 23), ",", ""))
-        'Mid$(WebHtml, InStr(WebHtml, "<span class=""dislikes"">") + 23, InStr(WebHtml, "</span> dislikes") - InStr(WebHtml, "<span class=""dislikes"">") - 23)
-        'If txtDislikes.Text = "" Then txtDislikes.Text = "Failed."
-        
-        'Dim VideoDislikes As String
-        'VideoDislikes = Val(Replace(Mid$(WebHtml, InStr(WebHtml, "<span class=""dislikes"">") + 23), ",", ""))
-        
-        lstAdd "Getting Uploader's Username"
-        
-        'Dim usertmp As String
-        'usertmp = Mid$(WebHtml, InStr(WebHtml, "yt-uix-button-group"))
-        'txtUploader.Text = ExtractMatch(WebHtml, """ptchn"": ""([]0-9a-zA-z~!@#\$%\^&\*\(\)\-\+=~`\{\};'/\.,\?\<\>\|]+)""")
-        'If txtUploader.Text = "" Then
-        'txtUploader.Text = usertmp
-        'txtUploader.Text = Mid$(txtUploader.Text, InStr(txtUploader.Text, "button href=") + Len("button href="""), InStr(txtUploader.Text, """ type=""button""") - Len(""" type=""button"" class=""") - Len("button href="""))
-        'txtUploader.Text = ExtractMatch(txtUploader.Text, "user\/([A-Za-z0-9-_]+)")
-        
-        Dim VideoUploader As String
-        VideoUploader = Mid$(WebHtml, InStr(WebHtml, "&author=") + Len("&author="), InStr(WebHtml, "&muted=") - InStr(WebHtml, "&author=") - Len("&author=")) 'ExtractMatch((Mid$(usertmp, InStr(usertmp, "button href=") + Len("button href="""), InStr(usertmp, """ type=""button""") - Len(""" type=""button"" class=""") - Len("button href="""))), "user\/([A-Za-z0-9-_]+)")
-        txtUploader.Text = VideoUploader
-        'Debug.Print VideoUploader
-        'End If
-        'Mid$(WebHtml, InStr(WebHtml, "'VIDEO_USERNAME': """) + 19, InStr(WebHtml, """    });    yt.net.ajax.setToken('") - InStr(WebHtml, "'VIDEO_USERNAME': """) - 19)
-        
-        ', InStr(WebHtml, "yt.net.ajax.setToken") - InStr(WebHtml, "'VIDEO_USERNAME': """)) 'Mid$(WebHtml, InStr(WebHtml, "class=""yt-user-name author"" rel=""author""  dir=""ltr"">") + 52, InStr(WebHtml, "</a> on <span id=""eow-date""") - InStr(WebHtml, "class=""yt-user-name author"" rel=""author""  dir=""ltr"">") - 52)
-        If Len(txtUploader.Text) = 0 Then txtUploader.Text = "Failed."
-        'Debug.Print Len(Trim(txtUploader.Text))
-        lstAdd "Getting Uploader Homepage"
-        
-        If txtUploader.Text <> "Failed." Then
-            txtHome.Text = "http://www.youtube.com" & "/user/" & txtUploader.Text
-            'Dim VideoHomepage As String
-            'VideoHomepage = "http://www.youtube.com/user/" & VideoUploader
-        Else
-            txtHome.Text = "Failed."
-        End If
-        'Mid$(WebHtml, InStr(WebHtml, "<span class=""author """) + 41, InStr(WebHtml, "class=""yt-user-name """) - InStr(WebHtml, "<span class=""author """) - 43)
-        'Mid$(WebHtml, InStr(WebHtml, "<a id=""watch-userbanner"" rel=""author"" href="""), InStr(WebHtml, """ title=" & IIf(Len(txtUploader.Text) <> 0, txtUploader.Text, "") & """><strong>") - InStr(WebHtml, "<a id=""watch-userbanner"" rel=""author"" href="""))
-        'InetCheckedLink.Cancel
-        'InetCheckedLink.Execute txtHome.Text, "GET"
-        
-        'Do Until URLCheckTmp <> ""
-        'DoEvents
-        'Loop
-        
-        'Debug.Print VideoHomepage
-        lstAdd "Getting Video Views"
-        Dim VideoViews As String
-        VideoViews = ExtractMatch(WebHtml, "&view_count=([0-9]+)")              'Val(Replace(Mid$(WebHtml, InStr(WebHtml, "<span class=""watch-view-count"">      <strong>") + Len("<span class=""watch-view-count"">      <strong>")), ",", ""))
-        txtView.Text = VideoViews                                               'Val(Replace(Mid$(WebHtml, InStr(WebHtml, "<span class=""watch-view-count"">      <strong>") + Len("<span class=""watch-view-count"">      <strong>")), ",", ""))
-        
-        
-        'txtInfo = "[Video ID]: " & VideoId & vbCrLf & "[VideoTitle]: " & VideoTitle & vbCrLf & "[VideoLength]: " & _
-        VideoLength & vbCrLf & "[Likes]: " & VideoLikes & vbCrLf & "[Video Dislikes]: " & VideoDislikes & _
-        vbCrLf & "[Video Uploader]: " & VideoUploader & vbCrLf & "[Uploader's Channel]: " & VideoHomepage & vbCrLf & "[Views]: " & VideoViews
-        
-        'Debug.Print Mid$(WebHtml, InStr(WebHtml, "<span class=""watch-view-count"">      <strong>"))
-        '= Val(Replace(Mid$(WebHtml, InStr(WebHtml, "<span class=""watch-view-count"">") + 43), ",", ""))
-        lstAdd "Getting Video Download Link"
-        'DecodeString = Mid$(WebHtml, InStr(WebHtml, "swf"), InStr(WebHtml, "document.getElementById('watch-player').innerHTML = swf") - InStr(WebHtml, "swf") + Len("document.getElementById('watch-player').innerHTML = swf"))
-        'lstAdd "Decoding Video Download Link"
-        'For x = 0 To 10
-        'DecodeString = URLUtility.URLDecode(DecodeString, True)
-        'Next
-        
-        'Debug.Print DecodeString
-        'Dim DLURL() As String
-        'DLURL = Split(Mid$(DecodeString, InStr(DecodeString, "url_encoded_fmt_stream_map"), InStr(DecodeString, "document.getElementById('watch-player').innerHTML = swf") - InStr(DecodeString, "url_encoded_fmt_stream_map")), "url", , vbTextCompare) 'Split(Mid$(DecodeString, InStr(DecodeString, "url_encoded_fmt_stream_map"), InStr(DecodeString, "watermark") - InStr(DecodeString, "url_encoded_fmt_stream_map") + 14), "url", , vbTextCompare)
-        
-        'MsgBox InStr(DecodeString, "url_encoded_fmt_stream_map")
-        'YoutubeDLink = Right(DLURL(UBound(DLURL)), Len(DLURL(UBound(DLURL))) - 1)
-        lstAdd "Splitting Video Download Link"
-        
-        'Dim YoutubeFDL() As String
-        
-        'MsgBox DLURL(1)
-        'ReDim YoutubeFDL(UBound(DLURL) - 1)
-        'For x = LBound(DLURL) + 2 To UBound(DLURL)
-        'If InStr(DLURL(x), "o-o.preferred") <> 0 Then
-        
-        'If x = UBound(DLURL) Then
-        'cmbDownloadOption.AddItem Mid$(DLURL(UBound(DLURL)), 2, InStr(Mid$(DLURL(UBound(DLURL)), InStr(DLURL(UBound(DLURL)), "type=video")), "&") + InStr(DLURL(UBound(DLURL)), "type=video") - 3)
-        'Debug.Print Mid$(DLURL(UBound(DLURL)), 2, InStr(Mid$(DLURL(UBound(DLURL)), InStr(DLURL(UBound(DLURL)), "type=video")), "&") + InStr(DLURL(UBound(DLURL)), "type=video") - 3)
-        'YoutubeFDL(x) = Mid$(DLURL(UBound(DLURL)), 2, InStr(Mid$(DLURL(UBound(DLURL)), InStr(DLURL(UBound(DLURL)), "type=video")), "&") + InStr(DLURL(UBound(DLURL)), "type=video") - 3)
-        ' ElseIf InStrRev(DLURL(x), "; ") <> 0 Then
-        'cmbDownloadOption.AddItem Mid$(DLURL(x), 2, InStrRev(DLURL(x), ";") - 2)
-        'Debug.Print Mid$(DLURL(x), 2, InStrRev(DLURL(x), ";") - 2)
-        'YoutubeFDL(x) = Mid$(DLURL(x), 2, InStrRev(DLURL(x), ";") - 2)
-        'ElseIf InStrRev(DLURL(x), "&") <> 0 Then
-        'cmbDownloadOption.AddItem Mid$(DLURL(x), 2, InStrRev(DLURL(x), "&") - 2)
-        'Debug.Print Mid$(DLURL(x), 2, InStrRev(DLURL(x), "&") - 2)
-        'YoutubeFDL(x) = Mid$(DLURL(x), 2, InStrRev(DLURL(x), "&") - 2)
-        'End If
-        
-        'End If
-        'Next
-        Dim YoutubeFDL() As String
-        ReDim YoutubeFDL(0)
-        Do Until InStr(WebHtml, ";") = 0
-            If InStr(Mid$(WebHtml, InStr(WebHtml, "url="), InStr(WebHtml, ";") - InStr(WebHtml, "url=")), "video/x-flv&itag=") Then
-                'Combo1.AddItem Mid$(WebHtml, InStr(WebHtml, "url="), InStr(WebHtml, "video/x-flv&itag=") - InStr(WebHtml, "url=") + Len("video/x-flv"))
-                YoutubeFDL(UBound(YoutubeFDL)) = Mid$(WebHtml, InStr(WebHtml, "url=") + Len("url="), InStr(WebHtml, "video/x-flv&itag=") - InStr(WebHtml, "url=") + Len("video/x-flv") - Len("url="))
-                WebHtml = Replace(WebHtml, Mid$(WebHtml, InStr(WebHtml, "url="), InStr(WebHtml, "video/x-flv&itag=") - InStr(WebHtml, "url=") + Len("video/x-flv")), "")
-                
-            Else
-                ' Combo1.AddItem Mid$(WebHtml, InStr(WebHtml, "url="), InStr(WebHtml, ";") - InStr(WebHtml, "url="))
-                YoutubeFDL(UBound(YoutubeFDL)) = Mid$(WebHtml, InStr(WebHtml, "url=") + Len("url="), InStr(WebHtml, ";") - InStr(WebHtml, "url=") - Len("url="))
-                WebHtml = Replace(WebHtml, Mid$(WebHtml, InStr(WebHtml, "url="), InStr(WebHtml, ";") - InStr(WebHtml, "url=") + 1), "")
-                
-            End If
-            ReDim Preserve YoutubeFDL(UBound(YoutubeFDL) + 1)
-            DoEvents
-            
-        Loop
-        
-        
-        Dim TVWNode As Node
-        
+        Dim strDownloadLinks() As String
+        lstAdd "Processing Download Links"
+        ProcessDownloadLinks strDownloadLinks
+        Dim tvwNode As Node
         lstAdd "Analyzing And Catergorizing Video Quality"
         
-        Dim tmp As String
-        For x = 1 To UBound(YoutubeFDL) - 1                                     'cmbDownloadOption.ListCount - 1
-            If YoutubeFDL(x) <> "" Then
-                tmp = LCase(ExtractMatch(YoutubeFDL(x), "&quality=([a-zA-Z0-9]*)"))
-                If tmp <> "" Then
-                    Set TVWNode = tvwQuality.Nodes.Add(, , tmp, tmp)
-                    Set TVWNode = tvwQuality.Nodes.Add(tmp, tvwChild, , YoutubeFDL(x))
-                End If
-                'Debug.Print cmbDownloadOption.List(x)
-                'Select Case LCase(ExtractMatch(cmbDownloadOption.List(X), "&quality=([a-zA-Z0-9]*)"))
-                
-                'Case "hd720"
-                'Set TVWNode = tvwQuality.Nodes.Add(, , "hd720", "hd720")
-                'Set TVWNode = tvwQuality.Nodes.Add("hd720", tvwChild, , cmbDownloadOption.List(X))
-                'Case "large"
-                'Set TVWNode = tvwQuality.Nodes.Add(, , "large", "large")
-                'Set TVWNode = tvwQuality.Nodes.Add("large", tvwChild, , cmbDownloadOption.List(X))
-                'Case "medium"
-                'Set TVWNode = tvwQuality.Nodes.Add(, , "medium", "medium")
-                'Set TVWNode = tvwQuality.Nodes.Add("medium", tvwChild, , cmbDownloadOption.List(X))
-                'Case "small"
-                'Set TVWNode = tvwQuality.Nodes.Add(, , "small", "small")
-                'Set TVWNode = tvwQuality.Nodes.Add("small", tvwChild, , cmbDownloadOption.List(X))
-                'End Select
-                DoEvents
+        Dim strQuality As String
+        Dim nI As Long
+        For nI = 1 To UBound(strDownloadLinks)
+            strQuality = LCase(ExtractMatch(strDownloadLinks(nI), "&quality=([a-zA-Z0-9]*)"))
+            If strQuality <> "" Then
+                Set tvwNode = tvwQuality.Nodes.Add(, , strQuality, strQuality)
+                Set tvwNode = tvwQuality.Nodes.Add(strQuality, tvwChild, , strDownloadLinks(nI))
             End If
+            DoEvents
         Next
-        
-        'Debug.Print DLURL(UBound(DLURL))
-        'cmbDownloadOption.RemoveItem cmbDownloadOption.ListCount - 1
-        'cmbDownloadOption.AddItem Mid$(DLURL(UBound(DLURL)), 2, InStr(Mid$(DLURL(UBound(DLURL)), InStr(DLURL(UBound(DLURL)), "type=video")), "&") + InStr(DLURL(UBound(DLURL)), "type=video") - 3)
-        'MsgBox cmbDownloadOption.List(8)
-        'MsgBox cmbDownloadOption.List(UBound(DLURL) - 2)
-        'lstAdd (cmbDownloadOption.ListCount - 1) & " Download Link(s) Found."
-        lstAdd UBound(YoutubeFDL) - 1 & " Download Link(s) Found."
-        'lstadd "Formatting Video Download Link."
-        'Debug.Print InStr(cmbDownloadOption.List(cmbDownloadOption.ListCount - 1), "&")
-        
-        'cmbDownloadOption.AddItem Mid$(cmbDownloadOption.List(cmbDownloadOption.ListCount - 1), 1, InStr(cmbDownloadOption.List(cmbDownloadOption.ListCount - 1), "type=video/x-flv") + 15)
-        
-        
-        'For x = 0 To 7
-        'Debug.Print cmbDownloadOption.List(x)
-        'Next
-        
-        'Debug.Print UBound(DLURL) & cmbDownloadOption.List(UBound(DLURL))
-        
-        'txtDownload(0).Text = Mid(txtDownload(0).Text, 1, InStrRev(txtDownload(0), ";") - 1)
-        'txtDownload(1).Text = Mid(txtDownload(1).Text, 1, InStrRev(txtDownload(1), "&") - 1)
-        
-        'For x = 0 To 2
-        'If txtDownload(x).Text <> "" Then
-        'If mnuNoVideoSize.Checked = False Then
-        'lstadd "Getting Video File Size"
-        'InetFileSize.Cancel
-        'InetFileSize.Execute txtDownload(x).Text, "GET"
-        'Do Until URLFileSize <> ""
-        'DoEvents
-        'Loop
-        'optDownload(x).Caption = "Download this" & vbCrLf & URLFileSize
-        'URLFileSize = ""
-        'End If
-        'optDownload(x).Enabled = True
-        'Else
-        'txtDownload(x).Text = "Failed."
-        'End If
-        'Next
-        'txtDownload.Text = YoutubeDLink
-        'If txtDownload(0).Text = "" Then txtDownload(0).Text = "Failed.": cmdDown.Enabled = False
-        'cmbDownloadOption.Enabled = True
-        lstAdd "Everything Done"
-        mnuExpand_Click
-        'cmbDownloadOption.SetFocus
-        txtLink.Enabled = True
+        lstAdd "Everything Done."
+        Exit Sub
     Else
         txtLink.SetFocus
     End If
