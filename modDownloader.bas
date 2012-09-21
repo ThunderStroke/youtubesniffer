@@ -161,15 +161,5 @@ Public Function CheckFolder(strPath) As Boolean
     End If
 End Function
 
-Public Sub SaveToFile(ByVal DirFilename As String, ByRef FileByte() As Byte)
-    Open DirFilename For Binary As #3
-    Dim x As Double
-    For x = 0 To UBound(FileByte)
-        Put #3, , FileByte(x)
-        DoEvents
-    Next
-    Close #3
-End Sub
-
 
 

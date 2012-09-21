@@ -8,4 +8,5 @@
 	- Auto close in 5 seconds
 	- Added blogger's link and Google Page's links
 - Updater
-	- Popup from bottom right
+	- Updated the core function
+	- Removed download function, changed to manual download the new version

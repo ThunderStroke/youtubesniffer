@@ -38,16 +38,16 @@ Public Declare Function CreateRoundRectRgn Lib "gdi32" (ByVal X1 As Long, ByVal 
 Public Declare Function SetWindowRgn Lib "user32" (ByVal hWnd As Long, ByVal hRgn As Long, ByVal bRedraw As Boolean) As Long
 'Round Form End===
 
-'PopUp From rightbottom===
+'Move rightbottom===
 Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (ByVal uAction As Long, ByVal uParam As Long, ByRef lpvParam As Any, ByVal fuWinIni As Long) As Long
 Public Const SPI_GETWORKAREA = 48
-Public Type rect
+Public Type RECT
     Left As Long
     Top As Long
     Right As Long
     Bottom As Long
 End Type
-'PopUp From rightbottom End===
+'Move rightbottom End===
 
 
 Public Function URLDecode(ByVal URL As String, Optional ByVal PlusSpace As Boolean = True) As String

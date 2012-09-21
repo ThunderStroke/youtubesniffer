@@ -9,7 +9,7 @@ Begin VB.Form frmMain
    ClientHeight    =   7935
    ClientLeft      =   1680
    ClientTop       =   3495
-   ClientWidth     =   18825
+   ClientWidth     =   15885
    BeginProperty Font 
       Name            =   "Segoe UI"
       Size            =   9
@@ -24,7 +24,7 @@ Begin VB.Form frmMain
    MaxButton       =   0   'False
    ScaleHeight     =   529
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   1255
+   ScaleWidth      =   1059
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox Picture2 
       Appearance      =   0  'Flat
@@ -45,18 +45,9 @@ Begin VB.Form frmMain
       ScaleHeight     =   103
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   103
-      TabIndex        =   42
-      Top             =   120
-      Width           =   1575
-   End
-   Begin VB.TextBox Text1 
-      Height          =   6975
-      Left            =   15960
-      MultiLine       =   -1  'True
-      ScrollBars      =   2  'Vertical
       TabIndex        =   41
       Top             =   120
-      Width           =   2655
+      Width           =   1575
    End
    Begin VB.ListBox lstState 
       BeginProperty Font 
@@ -234,9 +225,9 @@ Begin VB.Form frmMain
    Begin AGYouTubeVideoGrabber.Tray Tray 
       Left            =   120
       Top             =   1920
-      _ExtentX        =   847
-      _ExtentY        =   847
-      PictureIcon     =   "Form1.frx":61F6
+      _extentx        =   847
+      _extenty        =   847
+      pictureicon     =   "Form1.frx":61F6
    End
    Begin VB.Timer trmGetClipData 
       Interval        =   100
@@ -683,7 +674,7 @@ Option Explicit
 
 'Dim OldFrmSize As POINTAPI                                                      ' Old Form Size
 'Dim YoutubeDLink As String, WebSwf As String
-Dim WebHtml As String
+'Dim WebHtml As String
 'DecodeString As String,
 'Public DlFileEx As String
 Dim URLFileSize As String                                                       'For Getting URL size True=Get
@@ -710,14 +701,14 @@ Dim URLFileSize As String                                                       
 'End Sub
 
 Private Sub cmdAddDown_Click()
-    Dim x As ListItem
+    Dim X As ListItem
     
-    Set x = lvwDownloadList.ListItems.Add(, , txtDownloadLink.Text)
+    Set X = lvwDownloadList.ListItems.Add(, , txtDownloadLink.Text)
     
-    x.SubItems(1) = txtQuality.Text
-    x.SubItems(2) = "Pending..."
-    x.SubItems(3) = txtTitle.Text
-    x.SubItems(4) = txtExtension.Text
+    X.SubItems(1) = txtQuality.Text
+    X.SubItems(2) = "Pending..."
+    X.SubItems(3) = txtTitle.Text
+    X.SubItems(4) = txtExtension.Text
     If lvwDownloadList.ListItems.Count <> 0 Then cmdDownAll.Enabled = True
 End Sub
 
@@ -744,20 +735,19 @@ Private Sub cmdDelete_Click()
     cmdDownAll.Enabled = False
     cmdDownSelected.Enabled = False
     cmdDelete.Enabled = False
-'??:12.4275000000052
 End Sub
 
 Private Sub cmdDown_Click()
     Load frmDownload
-    Dim x As ListItem
-    Set x = frmDownload.lvwDownload.ListItems.Add(, , txtDownloadLink.Text)
+    Dim X As ListItem
+    Set X = frmDownload.lvwDownload.ListItems.Add(, , txtDownloadLink.Text)
     frmDownload.DownForm.Caption = txtDownloadLink.Text
     frmDownload.DownTo.Text = App.Path & "\" & txtTitle.Text & Right(txtExtension.Text, Len(txtExtension.Text) - 1)
     'lvwDownloadList.SelectedItem
-    x.SubItems(1) = txtQuality.Text
-    x.SubItems(2) = "Pending..."
-    x.SubItems(3) = txtTitle.Text
-    x.SubItems(4) = txtExtension.Text
+    X.SubItems(1) = txtQuality.Text
+    X.SubItems(2) = "Pending..."
+    X.SubItems(3) = txtTitle.Text
+    X.SubItems(4) = txtExtension.Text
     
     
     
@@ -768,41 +758,41 @@ End Sub
 Private Sub cmdDownAll_Click()
     Dim I As Long
     Load frmDownload
-    Dim x As ListItem
+    Dim X As ListItem
     For I = 1 To lvwDownloadList.ListItems.Count
         'Debug.Print lvwDownloadList.ListItems.Item(i)
         'Debug.Print lvwDownloadList.ListItems.Item(i).SubItems(1)
-        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
-        x.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
-        x.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
-        x.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
-        x.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
+        Set X = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
+        X.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
+        X.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
+        X.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
+        X.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
     Next
     frmDownload.Show 1
 End Sub
 
 Private Sub cmdDownSelected_Click()
     Load frmDownload
-    Dim x As ListItem
-    Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.SelectedItem)
+    Dim X As ListItem
+    Set X = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.SelectedItem)
     frmDownload.DownForm.Caption = lvwDownloadList.SelectedItem
     frmDownload.DownTo.Text = App.Path & "\" & lvwDownloadList.SelectedItem.SubItems(3) & Right(lvwDownloadList.SelectedItem.SubItems(4), Len(lvwDownloadList.SelectedItem.SubItems(4)) - 1)
     'lvwDownloadList.SelectedItem
-    x.SubItems(1) = lvwDownloadList.SelectedItem.SubItems(1)
-    x.SubItems(2) = lvwDownloadList.SelectedItem.SubItems(2)
-    x.SubItems(3) = lvwDownloadList.SelectedItem.SubItems(3)
-    x.SubItems(4) = lvwDownloadList.SelectedItem.SubItems(4)
+    X.SubItems(1) = lvwDownloadList.SelectedItem.SubItems(1)
+    X.SubItems(2) = lvwDownloadList.SelectedItem.SubItems(2)
+    X.SubItems(3) = lvwDownloadList.SelectedItem.SubItems(3)
+    X.SubItems(4) = lvwDownloadList.SelectedItem.SubItems(4)
     frmDownload.Show 1
 End Sub
 
 
 
 'Private Sub cmdPlay_Click()
-    'Load frmPlay
-    'Dim lx As ListItem
-    'Set lx = frmPlay.lvwPlayList.ListItems.Add(, , txtDownloadLink.Text)
-    'lx.SubItems(2) = "Network File"
-    'frmPlay.Show 1
+'Load frmPlay
+'Dim lx As ListItem
+'Set lx = frmPlay.lvwPlayList.ListItems.Add(, , txtDownloadLink.Text)
+'lx.SubItems(2) = "Network File"
+'frmPlay.Show 1
 'End Sub
 
 Private Sub cmdVisit_Click()
@@ -810,15 +800,17 @@ Private Sub cmdVisit_Click()
 End Sub
 
 Private Sub Form_Activate()
+    If mnuCheckUpAuto.Checked = False Then Exit Sub
     Static Opened As Integer
     If Opened = 0 Then
         Opened = 1
     Else
         Exit Sub
     End If
+    
     Load frmUpdate
     frmUpdate.Show
-    frmUpdate.SetFocus
+    frmUpdate.Hide
 End Sub
 
 Private Sub Form_Load()
@@ -892,6 +884,7 @@ Private Sub Form_Resize()
         'Form2.Hide
         Tray.Show
         Tray.ShowBubble App.Title, "Click Me To Restore", NIIF_GUID
+        If frmUpdate.Visible = True Then frmUpdate.Visible = False
     End If
     
     
@@ -931,8 +924,8 @@ Private Sub InetFileSize_StateChanged(ByVal State As Integer)
         URLFileSize = VBStrFormatByteSize(Val(Mid$(DataTmp, InStr(LCase$(DataTmp), "content-length: ") + Len("content-length: "), InStr(LCase$(DataTmp), "connection: ") - InStr(LCase$(DataTmp), "content-length: ") - Len("content-length: "))))
     End If
 End Sub
-  
-    Private Sub Label3_Click()
+
+Private Sub Label3_Click()
     txtLink_KeyDown 13, 1
 End Sub
 
@@ -942,7 +935,7 @@ Private Sub lvwDownloadList_ItemClick(ByVal Item As ListItem)
     cmdDownAll.Enabled = True
 End Sub
 
-Private Sub lvwDownloadList_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub lvwDownloadList_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If lvwDownloadList.ListItems.Count = 0 Then Exit Sub
     If Button = 2 And lvwDownloadList.SelectedItem <> "" Then
         PopupMenu mnuPopDL
@@ -1019,30 +1012,30 @@ End Sub
 Private Sub mnuDownloadAll_Click()
     Dim I As Long
     Load frmDownload
-    Dim x As ListItem
+    Dim X As ListItem
     For I = 1 To lvwDownloadList.ListItems.Count
         'Debug.Print lvwDownloadList.ListItems.Item(i)
         'Debug.Print lvwDownloadList.ListItems.Item(i).SubItems(1)
-        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
-        x.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
-        x.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
-        x.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
-        x.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
+        Set X = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
+        X.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
+        X.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
+        X.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
+        X.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
     Next
     frmDownload.Show 1
 End Sub
 
 Private Sub mnuDownSelected_Click()
     Load frmDownload
-    Dim x As ListItem
-    Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.SelectedItem)
+    Dim X As ListItem
+    Set X = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.SelectedItem)
     frmDownload.DownForm.Caption = lvwDownloadList.SelectedItem
     frmDownload.DownTo.Text = App.Path & "\" & lvwDownloadList.SelectedItem.SubItems(3) & Right(lvwDownloadList.SelectedItem.SubItems(4), Len(lvwDownloadList.SelectedItem.SubItems(4)) - 1)
     'lvwDownloadList.SelectedItem
-    x.SubItems(1) = lvwDownloadList.SelectedItem.SubItems(1)
-    x.SubItems(2) = lvwDownloadList.SelectedItem.SubItems(2)
-    x.SubItems(3) = lvwDownloadList.SelectedItem.SubItems(3)
-    x.SubItems(4) = lvwDownloadList.SelectedItem.SubItems(4)
+    X.SubItems(1) = lvwDownloadList.SelectedItem.SubItems(1)
+    X.SubItems(2) = lvwDownloadList.SelectedItem.SubItems(2)
+    X.SubItems(3) = lvwDownloadList.SelectedItem.SubItems(3)
+    X.SubItems(4) = lvwDownloadList.SelectedItem.SubItems(4)
     frmDownload.Show 1
 End Sub
 
@@ -1176,7 +1169,7 @@ End Sub
 
 'End Sub
 
-Private Sub Picture2_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Picture2_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = 2 Then
         PopupMenu mnuSavePic
     End If
@@ -1199,6 +1192,7 @@ Private Sub Tray_Click()
     Me.Show
     'Form2.Show
     Tray.Hide
+    If frmUpdate.Visible = False Then frmUpdate.Visible = True
 End Sub
 
 Private Sub trmGetClipData_Timer()
@@ -1218,7 +1212,7 @@ ClipErr:
     lstAdd Err.Description & Err.Source
 End Sub
 
-Private Sub tvwQuality_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub tvwQuality_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = 2 And tvwQuality.Nodes.Count > 0 Then
         PopupMenu mnuPopQua
     End If
@@ -1318,7 +1312,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         If txtLink.Text = "" Then CleanUp: Exit Sub
         txtLink.Enabled = False
         tvwQuality.SetFocus
-        Dim x As Integer
+        Dim X As Integer
         CleanUp
         If InStr(LCase(txtLink.Text), "www.youtube.com") = 0 Then lstAdd "Invalid Link": txtLink.Text = "": txtLink.SetFocus: Exit Sub
         
