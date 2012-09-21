@@ -32,6 +32,23 @@ Public Declare Function GetCurrentProcess Lib "kernel32" () As Long
 Public Declare Function TerminateProcess Lib "kernel32" (ByVal hProcess As Long, ByVal uExitCode As Long) As Long
 'Terminate Process End===
 
+'Round Form
+Public Declare Function RoundRect Lib "gdi32" (ByVal hDC As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long) As Long
+Public Declare Function CreateRoundRectRgn Lib "gdi32" (ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long) As Long
+Public Declare Function SetWindowRgn Lib "user32" (ByVal hWnd As Long, ByVal hRgn As Long, ByVal bRedraw As Boolean) As Long
+'Round Form End===
+
+'PopUp From rightbottom===
+Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (ByVal uAction As Long, ByVal uParam As Long, ByRef lpvParam As Any, ByVal fuWinIni As Long) As Long
+Public Const SPI_GETWORKAREA = 48
+Public Type rect
+    Left As Long
+    Top As Long
+    Right As Long
+    Bottom As Long
+End Type
+'PopUp From rightbottom End===
+
 
 Public Function URLDecode(ByVal URL As String, Optional ByVal PlusSpace As Boolean = True) As String
     Dim cchUnescaped As Long

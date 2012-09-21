@@ -5,7 +5,7 @@ Begin VB.Form frmUpdate
    ClientHeight    =   3630
    ClientLeft      =   2250
    ClientTop       =   1335
-   ClientWidth     =   6135
+   ClientWidth     =   5265
    FillColor       =   &H80000012&
    BeginProperty Font 
       Name            =   "Segoe UI"
@@ -20,15 +20,15 @@ Begin VB.Form frmUpdate
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    ScaleHeight     =   3630
-   ScaleWidth      =   6135
+   ScaleWidth      =   5265
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin AGYouTubeVideoGrabber.SFProgressBar myProgressBar1 
       Height          =   150
       Left            =   120
       Top             =   2400
-      Width           =   5895
-      _ExtentX        =   10398
+      Width           =   4935
+      _ExtentX        =   8705
       _ExtentY        =   265
    End
    Begin VB.ListBox lstStat 
@@ -46,8 +46,8 @@ Begin VB.Form frmUpdate
       Height          =   2100
       Left            =   120
       TabIndex        =   0
-      Top             =   240
-      Width           =   5895
+      Top             =   120
+      Width           =   4935
    End
    Begin VB.Label Downloading 
       Caption         =   "0 of 0 bytes transferred (0%)"
@@ -55,7 +55,7 @@ Begin VB.Form frmUpdate
       Left            =   1920
       TabIndex        =   4
       Top             =   2760
-      Width           =   4095
+      Width           =   3135
    End
    Begin VB.Label LbMsg 
       BackStyle       =   0  'Transparent
@@ -83,7 +83,7 @@ Begin VB.Form frmUpdate
       Left            =   1560
       TabIndex        =   1
       Top             =   3120
-      Width           =   4335
+      Width           =   3495
    End
 End
 Attribute VB_Name = "frmUpdate"
@@ -113,12 +113,18 @@ Private Sub lstAdd(ByVal lstin As String)
 End Sub
 
 Private Sub Form_Activate()
-    Dim objForm As Object
-    For Each objForm In Me
+    Dim rectForm As rect, nI As Long
+    SystemParametersInfo SPI_GETWORKAREA, 0, rectForm, 0
+    Me.Move Screen.Width - Me.Width, rectForm.Bottom * Screen.TwipsPerPixelX - Me.Height
+    For nI = 0 To Me.Height
+        RoundRect Me.hDC, 0, 0, Me.Width / Screen.TwipsPerPixelX - 1, Me.ScaleHeight / Screen.TwipsPerPixelY - 1, 10, 10
+        Me.Move Screen.Width - Me.Width, rectForm.Bottom * Screen.TwipsPerPixelX - nI
         DoEvents
     Next
+    SetWindowPos Me.hWnd, -1, 0, 0, 0, 0, 2 Or 1
     
-    'Exit Sub
+    
+    
     On Error Resume Next
     
     If RunNum = 0 Then
@@ -274,6 +280,7 @@ Private Sub Form_Activate()
     Else
         
         lstAdd "The Current Version Is The Latest Version"
+        If frmMain.Visible = True Then frmMain.SetFocus
         Dim t As Long
         t = Timer()
         Do
@@ -286,6 +293,8 @@ End Sub
 
 Private Sub Form_Load()
     Set wd = New WininetDown
+    SetWindowRgn Me.hWnd, CreateRoundRectRgn(0, 0, Me.Width / Screen.TwipsPerPixelX, Me.Height / Screen.TwipsPerPixelY, 10, 10), True
+    
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)

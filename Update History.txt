@@ -7,3 +7,5 @@
 - Edited About from 
 	- Auto close in 5 seconds
 	- Added blogger's link and Google Page's links
+- Updater
+	- Popup from bottom right
