@@ -1,0 +1,31 @@
+(no need in generate_204)
+remove &range 
+remove &type
+remove &fallback_host
+remove &quality
+
+(optional)
+plus &title=
+
+new: Retrieve generate_204!
+
+
+240p = 5
+360p = 34
+480p = 35
+720p = 22
+
+
+360p
+http://o-o---preferred---tm-kul1---v1---lscache4.c.youtube.com/generate_204?ip=219.92.142.178&upn=e7M02O3VGp0&sparams=algorithm,burst,cp,factor,id,ip,ipbits,itag,source,upn,expire&fexp=909528,927000,913543,910207,910219,922401,920704,912806,924412,913558,912706&mt=1346589072&ms=au&algorithm=throttle-factor&burst=40&ipbits=8&itag=34&sver=3&signature=9DFC868AC07A2D03CF2DC167CDE1ED575BCC3A11.66A29C109B15D340F03E37D8DE0BED424BDA8187&mv=m&source=youtube&expire=1346611542&key=yt1&factor=1.25&cp=U0hTS1ZMT19JTENOM19ORlNGOjNwajZBZ3ZVNVRX&id=b6966ca07422ff39
+
+720p
+http://o-o---preferred---tm-kul1---v2---lscache7.c.youtube.com/videoplayback?upn=e7M02O3VGp0&sparams=cp,id,ip,ipbits,itag,ratebypass,source,upn,expire&fexp=909528,927000,913543,910207,910219,922401,920704,912806,924412,913558,912706&ms=au&itag=22&ipbits=8&signature=529049877D3E13FF852D57305A51B04A6EF05344.421F2871F64A937CBDC49F82C12C6477E9C281DE&mv=m&sver=3&mt=1346589072&ratebypass=yes&source=youtube&expire=1346611542&key=yt1&ip=219.92.142.178&cp=U0hTS1ZMT19JTENOM19ORlNGOjNwajZBZ3ZVNVRX&id=b6966ca07422ff39   [no &algorithm,&burst, changed signature]
+
+480p
+http://o-o---preferred---kul01s05---v23---nonxt5.c.youtube.com/videoplayback?ip=219.92.142.178&upn=e7M02O3VGp0&sparams=algorithm,burst,cp,factor,id,ip,ipbits,itag,source,upn,expire&fexp=909528,927000,913543,910207,910219,922401,920704,912806,924412,913558,912706&mt=1346589123&ms=nxu&algorithm=throttle-factor&burst=40&ipbits=8&itag=35&sver=3&signature=CACD3960A473430600FA0820F73A8C97C94C9ECE.D893F7E2DD0253C92897434AA477D12091E4183D&mv=m&source=youtube&expire=1346611542&key=yt1&factor=1.25&cp=U0hTS1ZMT19JTENOM19ORlNGOjNwajZBZ3ZVNVRX&id=b6966ca07422ff39&ptk=youtube_none&redirect_counter=1&cms_redirect=yes
+
+
+http://s.youtube.com/s?nsiabblc=64&len=212.133&vtmp=1&nsiabblmean=1361.422&el=detailpage&bc=7602175&rt=21.102&cr=MY&volume=35.649210374485094&vq=auto&sd=B01091804HH1346589100016082&h=360&docid=tpZsoHQi_zk&ns=yt&vw=640&vh=360&vid=iKFi5_H24AoUQd5wU-pFep9AHOJe1xGiR&hbt=8.971&tpmt=19&w=640&idpj=0&uga=m22&hbd=5671223&ldpj=0&tspne=0&cfps=13.84083044982699&tspfdt=578&plid=AATItzS7eJcVZI9s&tsphab=1&screenh=800&playerw=640&screenw=1280&playerh=390&scoville=1&fexp=927000,922401,912706,913558,920704,913543,909528,910219,924412,912806,910207&hl=en_US&md=1&ptk=youtube_none&nsivbblmin=55556.000&bd=1306624&bt=10.954&nsivbblmean=85136.188&fs=0&nsivbblc=64&fmt=34&nsivbblmax=133828.000&mos=0&nsiabblmax=1441.000&csipt=watch5&nsidf=20&et=20.067&nsiabblmin=1298.000&lact=78&st=10&referrer=None&rendering=software&decoding=software&sendtmp=1
+
+http://blog.csdn.net/wellfuture/article/details/6316990

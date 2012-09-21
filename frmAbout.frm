@@ -3,10 +3,10 @@ Begin VB.Form frmAbout
    AutoRedraw      =   -1  'True
    BorderStyle     =   0  'None
    Caption         =   "About MyApp"
-   ClientHeight    =   5475
+   ClientHeight    =   5820
    ClientLeft      =   2295
    ClientTop       =   1590
-   ClientWidth     =   8610
+   ClientWidth     =   5130
    ClipControls    =   0   'False
    BeginProperty Font 
       Name            =   "Segoe UI"
@@ -21,19 +21,11 @@ Begin VB.Form frmAbout
    LinkTopic       =   "Form2"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   365
+   ScaleHeight     =   388
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   574
+   ScaleWidth      =   342
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CommandButton cmdExit 
-      Caption         =   "Exit"
-      Height          =   375
-      Left            =   120
-      TabIndex        =   5
-      Top             =   5040
-      Width           =   8415
-   End
    Begin VB.PictureBox Picture1 
       AutoRedraw      =   -1  'True
       AutoSize        =   -1  'True
@@ -42,7 +34,7 @@ Begin VB.Form frmAbout
       Left            =   120
       ScaleHeight     =   4815
       ScaleWidth      =   4815
-      TabIndex        =   3
+      TabIndex        =   1
       Top             =   120
       Width           =   4815
       Begin VB.Label lblVersion 
@@ -50,7 +42,7 @@ Begin VB.Form frmAbout
          Caption         =   "Version"
          Height          =   225
          Left            =   0
-         TabIndex        =   4
+         TabIndex        =   2
          Top             =   4440
          Width           =   4725
       End
@@ -81,44 +73,27 @@ Begin VB.Form frmAbout
       Visible         =   0   'False
       Width           =   4800
    End
-   Begin VB.Label lblTitle 
-      Alignment       =   2  'Center
-      BackStyle       =   0  'Transparent
-      Caption         =   "Application Title"
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   12
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   960
-      Left            =   6840
-      TabIndex        =   2
-      Top             =   3840
-      Visible         =   0   'False
-      Width           =   2565
+   Begin VB.Label Label2 
+      Caption         =   "Blog: http://garyngzhongbo.blopgspot.com"
+      ForeColor       =   &H00FF0000&
+      Height          =   255
+      Left            =   120
+      MouseIcon       =   "frmAbout.frx":69F74
+      MousePointer    =   99  'Custom
+      TabIndex        =   4
+      Top             =   5400
+      Width           =   4695
    End
-   Begin VB.Label lblDescription 
-      Caption         =   "App Description"
-      BeginProperty Font 
-         Name            =   "Segoe UI"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   4770
-      Left            =   4920
-      TabIndex        =   1
-      Top             =   120
-      Width           =   3555
+   Begin VB.Label Label1 
+      Caption         =   "Google Page: http://code.google.com/p/youtubesniffer/"
+      ForeColor       =   &H00FF0000&
+      Height          =   255
+      Left            =   120
+      MouseIcon       =   "frmAbout.frx":6A0C6
+      MousePointer    =   99  'Custom
+      TabIndex        =   3
+      Top             =   5040
+      Width           =   4695
    End
 End
 Attribute VB_Name = "frmAbout"
@@ -139,10 +114,6 @@ Private Declare Function GdipLoadImageFromStream Lib "GDIPlus" (ByVal Stream As 
 Private Declare Sub CreateStreamOnHGlobal Lib "ole32.dll" (ByRef hGlobal As Any, ByVal fDeleteOnRelease As Long, ByRef ppstm As Any)
 
 
-Private Sub cmdExit_Click()
-    Unload Me
-End Sub
-
 Private Sub Form_Activate()
     'Do While Me.Height < MHeight
     'Me.Height = Me.Height + MHeight / 110
@@ -150,22 +121,23 @@ Private Sub Form_Activate()
     'SetWindowPos Me.hwnd, 0, (Screen.Width - Me.Width) / 2 / Screen.TwipsPerPixelX, (Screen.Height - Me.Height) / 2 / Screen.TwipsPerPixelY, Me.Width / Screen.TwipsPerPixelX, Me.Height / Screen.TwipsPerPixelY, 0
     'DoEvents
     'Loop
+    Dim nTime As Long
+    nTime = Timer()
+    Do
+        DoEvents
+        If Timer() - nTime > 5 Then Unload Me
+    Loop
     
 End Sub
-
-
 
 Private Sub Form_Load()
     'MHeight = Me.Height
     'MWidth = Me.Width
-    
-    Attach Me.hWnd
     RoundRect Me.hDC, 0, 0, Me.Width / Screen.TwipsPerPixelX - 1, Me.Height / Screen.TwipsPerPixelY - 1, 20, 20
-    
     Me.Caption = "About " & App.Title
     lblVersion.Caption = "Current Version: Build " & App.Major & "." & App.Minor & "." & App.Revision
-    lblTitle.Caption = App.Title
-    lblDescription.Caption = App.Title & " is a software that build for download Youtube's video. It has many function that other downloader did not exist such as getting the video information, it also have many option for selecting video download link and other useful function. Brought to you by GaryNg - A member of AG Dev Team"
+    'lblTitle.Caption = App.Title
+    'lblDescription.Caption = App.Title & " is a software that build for download Youtube's video. It has many function that other downloader did not exist such as getting the video information, it also have many option for selecting video download link and other useful function. Brought to you by GaryNg - A member of AG Dev Team"
     
     SetWindowRgn Me.hWnd, CreateRoundRectRgn(0, 0, Me.Width / Screen.TwipsPerPixelX, Me.Height / Screen.TwipsPerPixelY, 20, 20), True
     'Me.Height = 1
@@ -188,15 +160,14 @@ Private Sub Form_Unload(Cancel As Integer)
     'SetWindowPos Me.hwnd, 0, (Screen.Width - Me.Width) / 2 / Screen.TwipsPerPixelX, (Screen.Height - Me.Height) / 2 / Screen.TwipsPerPixelY, Me.Width / Screen.TwipsPerPixelX, Me.Height / Screen.TwipsPerPixelY, 0
     'DoEvents
     'Loop
-    Detach Me.hWnd
 End Sub
 
-Private Sub lblDescription_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
-    If Button = 1 Then MoveForm Me.hWnd
+Private Sub Label1_Click()
+    VisitURL "http://code.google.com/p/youtubesniffer/"
 End Sub
 
-Private Sub lblTitle_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
-    If Button = 1 Then MoveForm Me.hWnd
+Private Sub Label2_Click()
+    VisitURL "http://garyngzhongbo.blopgspot.com"
 End Sub
 
 Private Sub lblVersion_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)

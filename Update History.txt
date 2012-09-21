@@ -1,0 +1,9 @@
+21/9/2012
+
+ 
+- New skin for the program!
+- Fixed the problem for the program doesn't start under Windows XP
+- Removed Windows XP style manifest
+- Edited About from 
+	- Auto close in 5 seconds
+	- Added blogger's link and Google Page's links

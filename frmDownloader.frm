@@ -636,7 +636,6 @@ Private Sub cmdStopAllDownload_Click()
     blnStop_Click
 End Sub
 Private Sub Form_Load()
-    Attach Me.hWnd
     Set wd = New WininetDown
     wd.URL = DownForm.Caption
     
@@ -679,7 +678,6 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    Detach Me.hWnd
     Unload Me
 End Sub
 

@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin VB.Form frmUpdate 
-   BorderStyle     =   1  'Fixed Single
+   BorderStyle     =   0  'None
    Caption         =   "AG Updater"
    ClientHeight    =   3630
-   ClientLeft      =   2295
-   ClientTop       =   1770
+   ClientLeft      =   2250
+   ClientTop       =   1335
    ClientWidth     =   6135
    FillColor       =   &H80000012&
    BeginProperty Font 
@@ -112,13 +112,12 @@ Private Sub lstAdd(ByVal lstin As String)
     lstStat.ListIndex = lstStat.NewIndex
 End Sub
 
-Private Sub cmdCancel_Click()
-
-End Sub
-
-
-
 Private Sub Form_Activate()
+    Dim objForm As Object
+    For Each objForm In Me
+        DoEvents
+    Next
+    
     'Exit Sub
     On Error Resume Next
     
@@ -287,7 +286,6 @@ End Sub
 
 Private Sub Form_Load()
     Set wd = New WininetDown
-    Attach Me.hWnd
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -303,7 +301,6 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     RunNum = 0
-    Detach Me.hWnd
     Unload Me
 End Sub
 
