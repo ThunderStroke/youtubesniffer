@@ -4,7 +4,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmDownload 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "AG Youtube Video Downloader"
-   ClientHeight    =   8085
+   ClientHeight    =   7980
    ClientLeft      =   -15
    ClientTop       =   570
    ClientWidth     =   7605
@@ -20,7 +20,7 @@ Begin VB.Form frmDownload
    Icon            =   "frmDownloader.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   8085
+   ScaleHeight     =   7980
    ScaleWidth      =   7605
    StartUpPosition =   2  'CenterScreen
    Begin VB.Frame Frame3 
@@ -35,7 +35,7 @@ Begin VB.Form frmDownload
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00000000&
-      Height          =   2415
+      Height          =   2295
       Left            =   120
       TabIndex        =   4
       Top             =   120
@@ -301,7 +301,7 @@ Begin VB.Form frmDownload
       Height          =   4695
       Left            =   120
       TabIndex        =   2
-      Top             =   3240
+      Top             =   3120
       Width           =   7335
       Begin VB.CommandButton cmdStopAllDownload 
          Caption         =   "Stop Download All"
@@ -418,7 +418,7 @@ Begin VB.Form frmDownload
       Height          =   495
       Left            =   3840
       TabIndex        =   1
-      Top             =   2640
+      Top             =   2520
       Width           =   3615
    End
    Begin VB.CommandButton blnStart 
@@ -435,7 +435,7 @@ Begin VB.Form frmDownload
       Height          =   495
       Left            =   120
       TabIndex        =   0
-      Top             =   2640
+      Top             =   2520
       Width           =   3735
    End
    Begin VB.Menu mnuOption 

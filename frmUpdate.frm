@@ -3,10 +3,10 @@ Begin VB.Form frmUpdate
    AutoRedraw      =   -1  'True
    BorderStyle     =   0  'None
    Caption         =   "AG Updater"
-   ClientHeight    =   2130
+   ClientHeight    =   2115
    ClientLeft      =   2250
    ClientTop       =   1335
-   ClientWidth     =   5025
+   ClientWidth     =   4995
    FillColor       =   &H80000012&
    BeginProperty Font 
       Name            =   "Segoe UI"
@@ -20,10 +20,18 @@ Begin VB.Form frmUpdate
    Icon            =   "frmUpdate.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   2130
-   ScaleWidth      =   5025
+   ScaleHeight     =   2115
+   ScaleWidth      =   4995
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdExit 
+      Caption         =   "X"
+      Height          =   255
+      Left            =   4680
+      TabIndex        =   2
+      Top             =   120
+      Width           =   255
+   End
    Begin VB.Label lblLink 
       BeginProperty Font 
          Name            =   "Segoe UI"
@@ -83,6 +91,10 @@ Private WithEvents wd As WininetDown
 Attribute wd.VB_VarHelpID = -1
 
 
+Private Sub cmdExit_Click()
+    Unload Me
+End Sub
+
 'Private Sub lstAdd(ByVal lstin As String)
 'lstStat.AddItem lstin
 'lstStat.ListIndex = lstStat.NewIndex
@@ -92,7 +104,7 @@ Private Sub Form_Activate()
     Dim rectForm As RECT, objForm As Object
     SystemParametersInfo SPI_GETWORKAREA, 0, rectForm, 0
     Me.Move Screen.Width - Me.Width, rectForm.Bottom * Screen.TwipsPerPixelX - Me.Height
-    RoundRect Me.hDC, 0, 0, Me.Width / Screen.TwipsPerPixelX - 1, Me.ScaleHeight / Screen.TwipsPerPixelY - 1, 10, 10
+    RoundRect Me.hDC, 0, 0, Me.Width / Screen.TwipsPerPixelX, Me.ScaleHeight / Screen.TwipsPerPixelY, 0, 0
     For Each objForm In Me
         DoEvents
     Next
@@ -103,7 +115,6 @@ Private Sub Form_Activate()
     Else
         Exit Sub
     End If
-    
     CheckUpdate
     Exit Sub
     
@@ -267,8 +278,12 @@ End Sub
 
 Private Sub Form_Load()
     Set wd = New WininetDown
-    SetWindowRgn Me.hWnd, CreateRoundRectRgn(0, 0, Me.Width / Screen.TwipsPerPixelX, Me.Height / Screen.TwipsPerPixelY, 10, 10), True
-    
+    'SetWindowRgn Me.hWnd, CreateRoundRectRgn(0, 0, Me.Width / Screen.TwipsPerPixelX, Me.Height / Screen.TwipsPerPixelY, 10, 10), True
+    lblLink.Font.Underline = True
+End Sub
+
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+ If Button = 1 Then MoveForm Me.hWnd
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -404,6 +419,8 @@ Private Function CheckUpdate() As Boolean
         ElseIf Val(strNewVer(1)) = App.Minor Then
             If Val(strNewVer(2)) < App.Revision Then
                 GoTo NoUpdates
+            ElseIf Val(strNewVer(2)) = App.Revision Then
+                GoTo NoUpdates
             End If
         End If
     End If
@@ -412,15 +429,18 @@ Private Function CheckUpdate() As Boolean
     strHomepage = GetIni("Updatelink", "UpdateHomePage", "http://garyngzhongbo.blogspot.com", Environ$("temp") & "\AGYTVGU.ini")
     lblLink.Caption = "Check and download the new version here: " & vbCrLf & strHomepage
     nTime = Timer()
+    frmMain.SetFocus
     Do Until Timer() - nTime > 5
         DoEvents
     Loop
-    VisitURL strHomepage
+    If Me.Visible = True Then VisitURL strHomepage
     Unload Me
     Exit Function
 NoUpdates:
-    CheckUpdate = False
-    lblNewVer.Caption = "The current version " & App.Major & "." & App.Minor & "." & App.Revision & "is the latest verison."
+    Me.Height = lblNewVer.Height + 150
+    lblLink.Visible = False
+    lblNewVer.Caption = "The current version " & vbCrLf & App.Major & "." & App.Minor & "." & App.Revision & " is the latest verison."
+    nTime = Timer()
     Do Until Timer() - nTime > 5
         DoEvents
     Loop
@@ -431,4 +451,12 @@ End Function
 Private Sub lblLink_Click()
     VisitURL strHomepage
     Unload Me
+End Sub
+
+Private Sub lblLink_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+ If Button = 1 Then MoveForm Me.hWnd
+End Sub
+
+Private Sub lblNewVer_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+ If Button = 1 Then MoveForm Me.hWnd
 End Sub

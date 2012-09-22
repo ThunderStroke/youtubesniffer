@@ -1,12 +1,22 @@
+22/9/2012
+
+- Added close button for About and Updater
+- Fix bug in updater
+- New clear logo!
+
+
 21/9/2012
 
  
 - New skin for the program!
 - Fixed the problem for the program doesn't start under Windows XP
 - Removed Windows XP style manifest
-- Edited About from 
+- About
 	- Auto close in 5 seconds
 	- Added blogger's link and Google Page's links
 - Updater
 	- Updated the core function
 	- Removed download function, changed to manual download the new version
+- Downloader
+	- Auto delete file if download failed
+	- Changed progress bar

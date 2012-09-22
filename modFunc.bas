@@ -1,5 +1,10 @@
 Attribute VB_Name = "modFunc"
 Option Explicit
+'*******************************
+'* Most of the function was not written by me!
+'* I took it from the internet
+'*******************************
+
 'Move Form===
 Private Declare Function ReleaseCapture Lib "user32" () As Long
 Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
@@ -92,29 +97,29 @@ End Function
 Public Function DownHTML(strURL As String, strCharset As String)
     DownHTML = ""
     On Error Resume Next
-    Dim Ado_Stream As Object
-    Set Ado_Stream = CreateObject("ADODB.Stream")
-    Dim Obj_XMLHTTP As MSXML2.XMLHTTP
-    Set Obj_XMLHTTP = New MSXML2.XMLHTTP
-    Obj_XMLHTTP.Open "get", strURL, False
-    Obj_XMLHTTP.send
-    If Obj_XMLHTTP.readyState = 4 Then
+    Dim objAdoStream As Object
+    Set objAdoStream = CreateObject("ADODB.Stream")
+    Dim objXMLHTTP As MSXML2.XMLHTTP
+    Set objXMLHTTP = New MSXML2.XMLHTTP
+    objXMLHTTP.Open "get", strURL, False
+    objXMLHTTP.send
+    If objXMLHTTP.readyState = 4 Then
         If strCharset = "" Then
-            DownHTML = Obj_XMLHTTP.responseBody
+            DownHTML = objXMLHTTP.responseBody
         Else
-            Ado_Stream.Type = 1
-            Ado_Stream.Mode = 3
-            Ado_Stream.Open
-            Ado_Stream.Write Obj_XMLHTTP.responseBody
-            Ado_Stream.Position = 0
-            Ado_Stream.Type = 2
-            Ado_Stream.Charset = strCharset
-            DownHTML = Ado_Stream.ReadText
-            Ado_Stream.Close
+            objAdoStream.Type = 1
+            objAdoStream.Mode = 3
+            objAdoStream.Open
+            objAdoStream.Write objXMLHTTP.responseBody
+            objAdoStream.Position = 0
+            objAdoStream.Type = 2
+            objAdoStream.Charset = strCharset
+            DownHTML = objAdoStream.ReadText
+            objAdoStream.Close
         End If
     End If
-    Set Ado_Stream = Nothing
-    Set Obj_XMLHTTP = Nothing
+    Set objAdoStream = Nothing
+    Set objXMLHTTP = Nothing
     
 End Function
 
