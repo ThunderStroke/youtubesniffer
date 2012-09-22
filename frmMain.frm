@@ -1167,12 +1167,6 @@ End Sub
 
 'End Sub
 
-Private Sub Picture2_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
-    If Button = 2 Then
-        PopupMenu mnuSubSavePicAs
-    End If
-End Sub
-
 'Public Sub LoadWebImage(ByVal PicSource As PictureBox, PicDestination As PictureBox)
 'On Error Resume Next
 'Dim byt() As Byte
