@@ -222,7 +222,7 @@ Begin VB.Form frmMain
          MouseIcon       =   "frmMain.frx":6094
       End
    End
-   Begin AGYouTubeVideoGrabber.Tray Tray 
+   Begin AGYouTubeVideoGrabber.ctlTray Tray 
       Left            =   0
       Top             =   2160
       _ExtentX        =   847
@@ -574,58 +574,15 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuSubSavePicAs 
          Caption         =   "Save Screenshot As..."
       End
-      Begin VB.Menu mnuConvert 
-         Caption         =   "Convert An Existing Video"
-         Visible         =   0   'False
-      End
       Begin VB.Menu mnuCopyLink 
          Caption         =   "Copy Selected Download Link"
       End
-   End
-   Begin VB.Menu mnuOpt 
-      Caption         =   "Option"
-      Begin VB.Menu mnuGeneral 
-         Caption         =   "--Genaral--"
-         Enabled         =   0   'False
-      End
-      Begin VB.Menu mnuMinToTray 
-         Caption         =   "Minimize To Tray"
-      End
-      Begin VB.Menu munDashA 
-         Caption         =   "-"
-      End
-      Begin VB.Menu mnuMain 
-         Caption         =   "--Main--"
-         Enabled         =   0   'False
-      End
-      Begin VB.Menu mnuDash 
-         Caption         =   "-"
-      End
-      Begin VB.Menu mnuGetLinkClip 
-         Caption         =   "Automatically get link from clipboard"
-         Checked         =   -1  'True
-      End
-      Begin VB.Menu mnuAppActivate 
-         Caption         =   "Activate app when got link from clipboard"
-         Checked         =   -1  'True
-      End
-      Begin VB.Menu mnuShowStat 
-         Caption         =   "Show Program Status Window"
-         Checked         =   -1  'True
-         Visible         =   0   'False
-      End
-      Begin VB.Menu mnuRestart 
-         Caption         =   "Restart The Program"
+      Begin VB.Menu mnuOpti 
+         Caption         =   "Optimize My Usage"
       End
    End
-   Begin VB.Menu mnuCheck 
-      Caption         =   "Check For Updates"
-      Begin VB.Menu mnuCheckUpAuto 
-         Caption         =   "Check Update When Program Starts"
-      End
-      Begin VB.Menu mnuCheckUpdateNow 
-         Caption         =   "Check Updates Now"
-      End
+   Begin VB.Menu mnuSetting 
+      Caption         =   "Settings"
    End
    Begin VB.Menu mnuAbout 
       Caption         =   "About"
@@ -674,8 +631,10 @@ Option Explicit
 'Dim WebHtml As String
 'DecodeString As String,
 'Public DlFileEx As String
-Dim URLFileSize As String                                                       'For Getting URL size True=Get
+Dim nVideoFileSize As String                                                       'For Getting URL size True=Get
+Dim strVideoType As String
 Dim Opened As Integer
+
 'Dim URLCheckTmp As Boolean
 'Dim InetFail As Boolean
 'Dim PrevWndProc_frmmain As Long
@@ -699,14 +658,14 @@ Dim Opened As Integer
 'End Sub
 
 Private Sub cmdAddDown_Click()
-    Dim x As ListItem
+    Dim X As ListItem
     
-    Set x = lvwDownloadList.ListItems.Add(, , txtDownloadLink.Text)
+    Set X = lvwDownloadList.ListItems.Add(, , txtDownloadLink.Text)
     
-    x.SubItems(1) = txtQuality.Text
-    x.SubItems(2) = "Pending..."
-    x.SubItems(3) = txtTitle.Text
-    x.SubItems(4) = txtExtension.Text
+    X.SubItems(1) = txtQuality.Text
+    X.SubItems(2) = "Pending..."
+    X.SubItems(3) = txtTitle.Text
+    X.SubItems(4) = txtExtension.Text
     If lvwDownloadList.ListItems.Count <> 0 Then cmdDownAll.Enabled = True
 End Sub
 
@@ -737,15 +696,15 @@ End Sub
 
 Private Sub cmdDown_Click()
     Load frmDownload
-    Dim x As ListItem
-    Set x = frmDownload.lvwDownload.ListItems.Add(, , txtDownloadLink.Text)
+    Dim X As ListItem
+    Set X = frmDownload.lvwDownload.ListItems.Add(, , txtDownloadLink.Text)
     frmDownload.DownForm.Caption = txtDownloadLink.Text
     frmDownload.DownTo.Text = App.Path & "\" & txtTitle.Text & Right(txtExtension.Text, Len(txtExtension.Text) - 1)
     'lvwDownloadList.SelectedItem
-    x.SubItems(1) = txtQuality.Text
-    x.SubItems(2) = "Pending..."
-    x.SubItems(3) = txtTitle.Text
-    x.SubItems(4) = txtExtension.Text
+    X.SubItems(1) = txtQuality.Text
+    X.SubItems(2) = "Pending..."
+    X.SubItems(3) = txtTitle.Text
+    X.SubItems(4) = txtExtension.Text
     
     
     
@@ -756,30 +715,30 @@ End Sub
 Private Sub cmdDownAll_Click()
     Dim I As Long
     Load frmDownload
-    Dim x As ListItem
+    Dim X As ListItem
     For I = 1 To lvwDownloadList.ListItems.Count
         'Debug.Print lvwDownloadList.ListItems.Item(i)
         'Debug.Print lvwDownloadList.ListItems.Item(i).SubItems(1)
-        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
-        x.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
-        x.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
-        x.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
-        x.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
+        Set X = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
+        X.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
+        X.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
+        X.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
+        X.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
     Next
     frmDownload.Show 1
 End Sub
 
 Private Sub cmdDownSelected_Click()
     Load frmDownload
-    Dim x As ListItem
-    Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.SelectedItem)
+    Dim X As ListItem
+    Set X = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.SelectedItem)
     frmDownload.DownForm.Caption = lvwDownloadList.SelectedItem
     frmDownload.DownTo.Text = App.Path & "\" & lvwDownloadList.SelectedItem.SubItems(3) & Right(lvwDownloadList.SelectedItem.SubItems(4), Len(lvwDownloadList.SelectedItem.SubItems(4)) - 1)
     'lvwDownloadList.SelectedItem
-    x.SubItems(1) = lvwDownloadList.SelectedItem.SubItems(1)
-    x.SubItems(2) = lvwDownloadList.SelectedItem.SubItems(2)
-    x.SubItems(3) = lvwDownloadList.SelectedItem.SubItems(3)
-    x.SubItems(4) = lvwDownloadList.SelectedItem.SubItems(4)
+    X.SubItems(1) = lvwDownloadList.SelectedItem.SubItems(1)
+    X.SubItems(2) = lvwDownloadList.SelectedItem.SubItems(2)
+    X.SubItems(3) = lvwDownloadList.SelectedItem.SubItems(3)
+    X.SubItems(4) = lvwDownloadList.SelectedItem.SubItems(4)
     frmDownload.Show 1
 End Sub
 
@@ -797,8 +756,12 @@ Private Sub cmdVisit_Click()
     VisitURL (txtHome.Text)
 End Sub
 
+Private Sub Command1_Click()
+MsgBox frmSettings.swhActivateApp.Value
+End Sub
+
 Private Sub Form_Activate()
-    If mnuCheckUpAuto.Checked = False Then Exit Sub
+    If frmSettings.swhAutoUpdate.Value = False Then Exit Sub
     If Opened = 0 Then
         Opened = 1
     ElseIf Opened = 1 Then
@@ -818,6 +781,10 @@ Private Sub Form_Load()
     ElseIf App.LogMode Then
         Attach Me.hWnd
     End If
+    LoopFormControls Me
+    Load frmSettings
+    frmSettings.Show
+    frmSettings.Hide
     'If Dir$(App.Path & "\ffmpeg.exe") = "" Then
     'MsgBox "ffmpeg.exe not found" & vbNewLine & "Please Redownload!", vbCritical, "Error!"
     'End
@@ -840,14 +807,14 @@ Private Sub Form_Load()
     
     'cmbDownloadOption.ListIndex = 0
     
-    lstAdd "Loading User Settings"
+    'lstAdd "Loading User Settings"
     
-    mnuMinToTray.Checked = GetIni("General", "MinimizeToTray", True, App.Path & "\YoutubeGrabberOption.ini")
-    mnuAppActivate.Checked = GetIni("Main", "ActivateApp", True, App.Path & "\YoutubeGrabberOption.ini")
-    mnuGetLinkClip.Checked = GetIni("Main", "AutoGetLink", True, App.Path & "\YoutubeGrabberOption.ini")
-    mnuCheckUpAuto.Checked = GetIni("Main", "AutoUpdate", True, App.Path & "\YoutubeGrabberOption.ini")
+    'mnuMinToTray.Checked = GetIni("General", "MinimizeToTray", True, App.Path & "\YoutubeGrabberOption.ini")
+    'mnuAppActivate.Checked = GetIni("Main", "ActivateApp", True, App.Path & "\YoutubeGrabberOption.ini")
+    'mnuGetLinkClip.Checked = GetIni("Main", "AutoGetLink", True, App.Path & "\YoutubeGrabberOption.ini")
+    'mnuCheckUpAuto.Checked = GetIni("Main", "AutoUpdate", True, App.Path & "\YoutubeGrabberOption.ini")
     'mnuShowStat.Checked = GetIni("General", "ShowStatusWindow", True, App.Path & "\YoutubeGrabberOption.ini")
-    lstAdd "User Settings Loaded"
+    'lstAdd "User Settings Loaded"
     'If mnuShowStat.Checked Then Form2.Show
     'Form2.Width = Me.Width
     'Form2.lstState.Width = Me.Width
@@ -875,7 +842,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Resize()
-    If Me.WindowState = 1 And mnuMinToTray.Checked = True Then
+    If Me.WindowState = 1 And frmSettings.swhMinimize.Value = True Then
         Me.Hide
         'Form2.Hide
         Tray.Show
@@ -901,6 +868,7 @@ Private Sub Form_Unload(Cancel As Integer)
     Unload frmAbout
     ' Unload frmSupportedFileType
     Unload frmUpdate
+    Unload frmSettings
     Unload Me
     TerminateProcess GetCurrentProcess, ByVal 0&
     
@@ -910,16 +878,20 @@ End Sub
 
 Private Sub InetFileSize_StateChanged(ByVal State As Integer)
     On Error Resume Next
-    Dim vtData As String
+    'Dim vtData As String
     If State = 12 Then
-        vtData = InetFileSize.GetHeader
-        Do While InetFileSize.StillExecuting
-            DoEvents
-        Loop
-        Dim DataTmp As String
-        DataTmp = Replace$(vtData, vbCrLf, "")
-        Debug.Print DataTmp
-        URLFileSize = VBStrFormatByteSize(Val(Mid$(DataTmp, InStr(LCase$(DataTmp), "content-length: ") + Len("content-length: "), InStr(LCase$(DataTmp), "connection: ") - InStr(LCase$(DataTmp), "content-length: ") - Len("content-length: "))))
+        nVideoFileSize = VBStrFormatByteSize(InetFileSize.GetHeader("content-length"))
+        strVideoType = InetFileSize.GetHeader("content-type")
+        'vtData = InetFileSize.GetHeader("content-length")
+        'MsgBox InetFileSize.GetHeader("content-type")
+        'Do While InetFileSize.StillExecuting
+        'DoEvents
+        'Loop
+        'Dim DataTmp As String
+        'DataTmp = Replace$(vtData, vbCrLf, "")
+        'Debug.Print DataTmp
+        
+        'VBStrFormatByteSize (Val(Mid$(DataTmp, InStr(LCase$(DataTmp), "content-length: ") + Len("content-length: "), InStr(LCase$(DataTmp), "connection: ") - InStr(LCase$(DataTmp), "content-length: ") - Len("content-length: "))))
     End If
 End Sub
 
@@ -933,7 +905,7 @@ Private Sub lvwDownloadList_ItemClick(ByVal Item As ListItem)
     cmdDownAll.Enabled = True
 End Sub
 
-Private Sub lvwDownloadList_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub lvwDownloadList_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If lvwDownloadList.ListItems.Count = 0 Then Exit Sub
     If Button = 2 And lvwDownloadList.SelectedItem <> "" Then
         PopupMenu mnuPopDL
@@ -942,28 +914,6 @@ End Sub
 
 Private Sub mnuAbout_Click()
     frmAbout.Show 1
-End Sub
-
-Private Sub mnuAppActivate_Click()
-    If mnuAppActivate.Checked = True Then
-        mnuAppActivate.Checked = False
-        WriteKey "Main", "ActivateApp", False, App.Path & "\YoutubeGrabberOption.ini"
-    Else
-        mnuAppActivate.Checked = True
-        WriteKey "Main", "ActivateApp", True, App.Path & "\YoutubeGrabberOption.ini"
-    End If
-    
-End Sub
-
-
-Private Sub mnuCheckUpAuto_Click()
-    mnuCheckUpAuto.Checked = Not mnuCheckUpAuto.Checked
-    WriteKey "Main", "AutoUpdate", mnuCheckUpAuto.Checked, App.Path & "\YoutubeGrabberOption.ini"
-End Sub
-
-Private Sub mnuCheckUpdateNow_Click()
-    Load frmUpdate
-    frmUpdate.Show
 End Sub
 
 Private Sub mnuClearAll_Click()
@@ -1010,30 +960,30 @@ End Sub
 Private Sub mnuDownloadAll_Click()
     Dim I As Long
     Load frmDownload
-    Dim x As ListItem
+    Dim X As ListItem
     For I = 1 To lvwDownloadList.ListItems.Count
         'Debug.Print lvwDownloadList.ListItems.Item(i)
         'Debug.Print lvwDownloadList.ListItems.Item(i).SubItems(1)
-        Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
-        x.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
-        x.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
-        x.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
-        x.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
+        Set X = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.ListItems.Item(I))
+        X.SubItems(1) = lvwDownloadList.ListItems.Item(I).SubItems(1)
+        X.SubItems(2) = lvwDownloadList.ListItems.Item(I).SubItems(2)
+        X.SubItems(3) = lvwDownloadList.ListItems.Item(I).SubItems(3)
+        X.SubItems(4) = lvwDownloadList.ListItems.Item(I).SubItems(4)
     Next
     frmDownload.Show 1
 End Sub
 
 Private Sub mnuDownSelected_Click()
     Load frmDownload
-    Dim x As ListItem
-    Set x = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.SelectedItem)
+    Dim X As ListItem
+    Set X = frmDownload.lvwDownload.ListItems.Add(, , lvwDownloadList.SelectedItem)
     frmDownload.DownForm.Caption = lvwDownloadList.SelectedItem
     frmDownload.DownTo.Text = App.Path & "\" & lvwDownloadList.SelectedItem.SubItems(3) & Right(lvwDownloadList.SelectedItem.SubItems(4), Len(lvwDownloadList.SelectedItem.SubItems(4)) - 1)
     'lvwDownloadList.SelectedItem
-    x.SubItems(1) = lvwDownloadList.SelectedItem.SubItems(1)
-    x.SubItems(2) = lvwDownloadList.SelectedItem.SubItems(2)
-    x.SubItems(3) = lvwDownloadList.SelectedItem.SubItems(3)
-    x.SubItems(4) = lvwDownloadList.SelectedItem.SubItems(4)
+    X.SubItems(1) = lvwDownloadList.SelectedItem.SubItems(1)
+    X.SubItems(2) = lvwDownloadList.SelectedItem.SubItems(2)
+    X.SubItems(3) = lvwDownloadList.SelectedItem.SubItems(3)
+    X.SubItems(4) = lvwDownloadList.SelectedItem.SubItems(4)
     frmDownload.Show 1
 End Sub
 
@@ -1044,20 +994,7 @@ Private Sub mnuExpand_Click()
     Next I
 End Sub
 
-Private Sub mnuGetLinkClip_Click()
-    If mnuGetLinkClip.Checked = True Then
-        mnuGetLinkClip.Checked = False
-        WriteKey "Main", "AutoGetLink", False, App.Path & "\YoutubeGrabberOption.ini"
-        trmGetClipData.Enabled = False
-        'mnuAppActivate.Checked = False
-    Else
-        mnuGetLinkClip.Checked = True
-        WriteKey "Main", "AutoGetLink", True, App.Path & "\YoutubeGrabberOption.ini"
-        trmGetClipData.Enabled = True
-        'mnuAppActivate.Checked = True
-    End If
-    
-End Sub
+
 
 Private Sub mnuLvwCopy_Click()
     Clipboard.Clear
@@ -1065,25 +1002,18 @@ Private Sub mnuLvwCopy_Click()
     lstAdd "Link Copied"
 End Sub
 
-Private Sub mnuMinToTray_Click()
-    If mnuMinToTray.Checked = True Then
-        mnuMinToTray.Checked = False
-        WriteKey "General", "MinimizeToTray", False, App.Path & "\YoutubeGrabberOption.ini"
-    Else
-        mnuMinToTray.Checked = True
-        WriteKey "General", "MinimizeToTray", True, App.Path & "\YoutubeGrabberOption.ini"
-    End If
+
+Private Sub mnuOpti_Click()
+    OptiUsage GetCurrentProcess
 End Sub
+
 
 'Private Sub mnuPlayer_Click()
 'frmPlay.Show 1
 'End Sub
 
-Private Sub mnuRestart_Click()
-    Do Until OpenProcess(&H400, 0, Shell(App.Path & "\" & App.EXEName & ".exe")) <> 0
-        DoEvents
-    Loop
-    Unload Me
+Private Sub mnuSetting_Click()
+    frmSettings.Show
 End Sub
 
 'Private Sub mnuShowStat_Click()
@@ -1189,12 +1119,12 @@ End Sub
 
 Private Sub trmGetClipData_Timer()
     On Error Resume Next
-    If mnuGetLinkClip.Checked = False Then Exit Sub
+    If frmSettings.swhAutoGetLink.Value = False Then Exit Sub
     If ExtractMatch(Clipboard.GetText, "v=([A-Za-z0-9-_]+)") = "" Then Exit Sub
     If InStr(LCase$(Clipboard.GetText), "www.youtube.com") <> 0 And LCase$(txtLink.Text) <> LCase$(Clipboard.GetText) Then
         lstAdd "Found Link In Clipboard"
         txtLink.Text = Clipboard.GetText
-        If mnuAppActivate.Checked = True Then
+        If frmSettings.swhActivateApp.Value = True Then
             AppActivate Me.Caption
         End If
         txtLink_KeyDown 13, 0
@@ -1204,7 +1134,7 @@ ClipErr:
     lstAdd Err.Description & Err.Source
 End Sub
 
-Private Sub tvwQuality_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub tvwQuality_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = 2 And tvwQuality.Nodes.Count > 0 Then
         PopupMenu mnuPopQua
     End If
@@ -1242,37 +1172,34 @@ Private Sub txtDownloadLink_Change()
     If txtDownloadLink.Text = "" Then Exit Sub
     lstAdd "Getting Video Info"
     tvwQuality.Enabled = False
-    If InStr(txtDownloadLink.Text, "type=video/webm") Then
-        txtCodec.Text = "video/webm"
-        txtExtension.Text = "*.webm"
-    ElseIf InStr(txtDownloadLink.Text, "&type=video/mp4") Then
-        txtCodec.Text = "video/mp4"
-        txtExtension.Text = "*.mp4"
-    ElseIf InStr(txtDownloadLink.Text, "&type=video/x-flv") Then
-        txtCodec.Text = "video/x-flv"
-        txtExtension.Text = "*.flv"
-    End If
-    lstAdd "Video Info Loaded"
+    'If InStr(txtDownloadLink.Text, "type=video/webm") Then
+    'txtCodec.Text = "video/webm"
+    'txtExtension.Text = "*.webm"
+    'ElseIf InStr(txtDownloadLink.Text, "&type=video/mp4") Then
+    'txtCodec.Text = "video/mp4"
+    'txtExtension.Text = "*.mp4"
+    'ElseIf InStr(txtDownloadLink.Text, "&type=video/x-flv") Then
+    'txtCodec.Text = "video/x-flv"
+    'txtExtension.Text = "*.flv"
+    'End If
     
     lstAdd "Getting Video Quality"
     
     txtQuality.Text = ExtractMatch(txtDownloadLink.Text, "&quality=([a-zA-Z0-9]*)")
     lstAdd "Video Quality Loaded"
-    
-    
-    'cmbDownloadOption.Enabled = False
     lstAdd "Getting Video File Size"
     
     InetFileSize.Cancel
     InetFileSize.Execute txtDownloadLink.Text, "GET"
-    Do Until URLFileSize <> ""
+    Do Until nVideoFileSize <> ""
         DoEvents
     Loop
-    'cmbDownloadOption.Enabled = True
-    
-    txtFileSize.Text = URLFileSize
-    URLFileSize = ""
+    txtFileSize.Text = nVideoFileSize
+    nVideoFileSize = ""
     lstAdd "Video File Size Loaded"
+    txtCodec.Text = strVideoType
+    strVideoType = Replace(strVideoType, "x-", "")
+    txtExtension.Text = "*." & Replace(strVideoType, "video/", "")
     
     cmdBrowse.Enabled = True
     cmdDown.Enabled = True
@@ -1283,7 +1210,7 @@ Private Sub txtDownloadLink_Change()
     frmDownload.DownForm.Caption = txtDownloadLink.Text
     'cmbDownloadOption.SetFocus
     lstAdd "Everything Done"
-    
+    OptiUsage GetCurrentProcess
     Exit Sub
 goterr:
     lstAdd Err.Description
@@ -1304,7 +1231,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         If txtLink.Text = "" Then CleanUp: Exit Sub
         txtLink.Enabled = False
         tvwQuality.SetFocus
-        Dim x As Integer
+        Dim X As Integer
         CleanUp
         If InStr(LCase(txtLink.Text), "www.youtube.com") = 0 Then lstAdd "Invalid Link": txtLink.Text = "": txtLink.SetFocus: Exit Sub
         
@@ -1334,6 +1261,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
             DoEvents
         Next
         lstAdd "Everything Done."
+        OptiUsage GetCurrentProcess
         Exit Sub
     Else
         txtLink.SetFocus
@@ -1369,6 +1297,7 @@ Private Sub CleanUp()
     'txtLink.Enabled = True
     Picture1 = LoadPicture(Null)
     Picture2 = LoadPicture(Null)
+    OptiUsage GetCurrentProcess
 End Sub
 
 Private Sub lstAdd(ByVal InName As String)

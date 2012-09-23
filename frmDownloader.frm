@@ -73,7 +73,7 @@ Begin VB.Form frmDownload
          Top             =   480
          Width           =   375
       End
-      Begin AGYouTubeVideoGrabber.SFProgressBar myProgressBar1 
+      Begin AGYouTubeVideoGrabber.ctlProgressBar myProgressBar1 
          Height          =   150
          Left            =   240
          Top             =   1680
@@ -638,12 +638,12 @@ End Sub
 Private Sub Form_Load()
     Set wd = New WininetDown
     wd.URL = DownForm.Caption
-    
+    LoopFormControls Me
     'wd.FileName = App.Path & "\" & frmMain.txtTitle.Text & Right(frmMain.txtExtension.Text, Len(frmMain.txtExtension.Text) - 1)
     wd.FileName = DownTo.Text
     'mnuOpenFolder.Checked = GetIni("Downloader", "AutoConvertVideo", True, App.Path & "\YoutubeGrabberOption.ini")
     mnuOpenFolder.Checked = GetIni("Downloader", "AutoOpenFolder", True, App.Path & "\YoutubeGrabberOption.ini")
-    
+    OptiUsage GetCurrentProcess
     'If Val(GetIni("Downloader", "ProgressBarStyle", XP_Default, App.Path & "\YoutubeGrabberOption.ini")) < 8 Then
     'myProgressBar1.ProgressLook = Val(GetIni("Downloader", "ProgressBarStyle", XP_Default, App.Path & "\YoutubeGrabberOption.ini"))
     'Select Case myProgressBar1.ProgressLook

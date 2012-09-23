@@ -101,13 +101,12 @@ End Sub
 'End Sub
 
 Private Sub Form_Activate()
-    Dim rectForm As RECT, objForm As Object
-    SystemParametersInfo SPI_GETWORKAREA, 0, rectForm, 0
-    Me.Move Screen.Width - Me.Width, rectForm.Bottom * Screen.TwipsPerPixelX - Me.Height
-    RoundRect Me.hDC, 0, 0, Me.Width / Screen.TwipsPerPixelX, Me.ScaleHeight / Screen.TwipsPerPixelY, 0, 0
+    MoveToRightBottom
+    Dim objForm As Object
     For Each objForm In Me
         DoEvents
     Next
+    
     On Error Resume Next
     
     If RunNum = 0 Then
@@ -116,6 +115,7 @@ Private Sub Form_Activate()
         Exit Sub
     End If
     CheckUpdate
+    OptiUsage GetCurrentProcess
     Exit Sub
     
     'lstAdd "Current Version: " & App.Major & "." & App.Minor & "." & App.Revision
@@ -282,7 +282,7 @@ Private Sub Form_Load()
     lblLink.Font.Underline = True
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
  If Button = 1 Then MoveForm Me.hWnd
 End Sub
 
@@ -433,12 +433,18 @@ Private Function CheckUpdate() As Boolean
     Do Until Timer() - nTime > 5
         DoEvents
     Loop
-    If Me.Visible = True Then VisitURL strHomepage
+    If GetIni("Updater", "AutoOpenLink", True, App.Path & "\YoutubeGrabberOption.ini") = True Then
+        If Me.Visible = True Then
+            VisitURL strHomepage
+        End If
+    End If
     Unload Me
     Exit Function
 NoUpdates:
     Me.Height = lblNewVer.Height + 150
     lblLink.Visible = False
+    Me.Cls
+    MoveToRightBottom
     lblNewVer.Caption = "The current version " & vbCrLf & App.Major & "." & App.Minor & "." & App.Revision & " is the latest verison."
     nTime = Timer()
     Do Until Timer() - nTime > 5
@@ -453,10 +459,20 @@ Private Sub lblLink_Click()
     Unload Me
 End Sub
 
-Private Sub lblLink_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub lblLink_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
  If Button = 1 Then MoveForm Me.hWnd
 End Sub
 
-Private Sub lblNewVer_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
- If Button = 1 Then MoveForm Me.hWnd
+Private Sub lblNewVer_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Button = 1 Then MoveForm Me.hWnd
 End Sub
+
+Private Sub MoveToRightBottom()
+    Dim rectForm As RECT
+    
+    SystemParametersInfo SPI_GETWORKAREA, 0, rectForm, 0
+    Me.Move Screen.Width - Me.Width, rectForm.Bottom * Screen.TwipsPerPixelX - Me.Height
+    RoundRect Me.hDC, 0, 0, Me.Width / Screen.TwipsPerPixelX, Me.ScaleHeight / Screen.TwipsPerPixelY, 0, 0
+End Sub
+
+

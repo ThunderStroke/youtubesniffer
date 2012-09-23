@@ -54,6 +54,10 @@ Public Type RECT
 End Type
 'Move rightbottom End===
 
+'Optimize Usage
+Public Declare Function SetProcessWorkingSetSize Lib "kernel32" (ByVal hProcess As Long, ByVal dwMinimumWorkingSetSize As Long, ByVal dwMaximumWorkingSetSize As Long) As Long
+'Optimize Usage End===
+
 
 Public Function URLDecode(ByVal URL As String, Optional ByVal PlusSpace As Boolean = True) As String
     Dim cchUnescaped As Long
@@ -235,4 +239,13 @@ Public Function ExtractMatch(Text, Pattern)
     ExtractMatch = Matches(0).SubMatches(0)
 End Function
 
+Public Sub OptiUsage(ByVal nGetCurrentProcess As Long)
+    SetProcessWorkingSetSize nGetCurrentProcess, -1&, -1&
+End Sub
 
+Public Sub LoopFormControls(ByVal frmForm As Form)
+    Dim objForm As Object
+    For Each objForm In frmForm
+        DoEvents
+    Next
+End Sub

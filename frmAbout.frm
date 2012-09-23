@@ -127,11 +127,11 @@ Private Sub Form_Load()
     'Me.Height = 1
     'Me.Width = 1
     
-    Call LoadResImage(101, "custom", Picture1.hWnd, Picture1.hDC)
+    LoadResImage 101, "custom", Picture1.hWnd, Picture1.hDC
     Picture1.Refresh
     Label1.Font.Underline = True
     Label2.Font.Underline = True
-    
+    OptiUsage GetCurrentProcess
     
 End Sub
 
