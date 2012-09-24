@@ -34,7 +34,7 @@ Begin VB.Form frmSettings
    End
    Begin VB.PictureBox picTools 
       Height          =   4215
-      Left            =   2640
+      Left            =   3840
       ScaleHeight     =   4155
       ScaleWidth      =   6195
       TabIndex        =   21
@@ -334,6 +334,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdCheckUpdateNow_Click()
+    Unload frmUpdate
     Load frmUpdate
     frmUpdate.Show
 End Sub

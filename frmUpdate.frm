@@ -35,7 +35,7 @@ Begin VB.Form frmUpdate
    Begin VB.Label lblLink 
       BeginProperty Font 
          Name            =   "Segoe UI"
-         Size            =   12
+         Size            =   11.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -101,12 +101,8 @@ End Sub
 'End Sub
 
 Private Sub Form_Activate()
-    MoveToRightBottom
-    Dim objForm As Object
-    For Each objForm In Me
-        DoEvents
-    Next
     
+    MoveToRightBottom
     On Error Resume Next
     
     If RunNum = 0 Then
@@ -279,11 +275,13 @@ End Sub
 Private Sub Form_Load()
     Set wd = New WininetDown
     'SetWindowRgn Me.hWnd, CreateRoundRectRgn(0, 0, Me.Width / Screen.TwipsPerPixelX, Me.Height / Screen.TwipsPerPixelY, 10, 10), True
+    LoopFormControls Me
     lblLink.Font.Underline = True
+    
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
- If Button = 1 Then MoveForm Me.hWnd
+    If Button = 1 Then MoveForm Me.hWnd
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -299,7 +297,6 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     RunNum = 0
-    Unload Me
 End Sub
 'Private Sub InetUpdate_StateChanged(ByVal State As Integer)
 'On Error GoTo goterr
@@ -403,7 +400,7 @@ End Sub
 'End Sub
 
 
-Private Function CheckUpdate() As Boolean
+Public Function CheckUpdate() As Boolean
     wd.URL = "dl.dropbox.com/u/43619472/%E6%89%B9%E5%A4%84%E7%90%86/VB6/Youtube%20Downloader/Updates/Update.ini"
     wd.FileName = Environ$("temp") & "\AGYTVGU.ini"
     wd.DownloadToFile
@@ -429,7 +426,6 @@ Private Function CheckUpdate() As Boolean
     strHomepage = GetIni("Updatelink", "UpdateHomePage", "http://garyngzhongbo.blogspot.com", Environ$("temp") & "\AGYTVGU.ini")
     lblLink.Caption = "Check and download the new version here: " & vbCrLf & strHomepage
     nTime = Timer()
-    frmMain.SetFocus
     Do Until Timer() - nTime > 5
         DoEvents
     Loop
@@ -438,7 +434,6 @@ Private Function CheckUpdate() As Boolean
             VisitURL strHomepage
         End If
     End If
-    Unload Me
     Exit Function
 NoUpdates:
     Me.Height = lblNewVer.Height + 150

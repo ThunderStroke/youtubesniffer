@@ -633,7 +633,7 @@ Option Explicit
 'Public DlFileEx As String
 Dim nVideoFileSize As String                                                       'For Getting URL size True=Get
 Dim strVideoType As String
-Dim Opened As Integer
+Public boolCalledByParent As Boolean
 
 'Dim URLCheckTmp As Boolean
 'Dim InetFail As Boolean
@@ -756,21 +756,6 @@ Private Sub cmdVisit_Click()
     VisitURL (txtHome.Text)
 End Sub
 
-Private Sub Command1_Click()
-MsgBox frmSettings.swhActivateApp.Value
-End Sub
-
-Private Sub Form_Activate()
-    If frmSettings.swhAutoUpdate.Value = False Then Exit Sub
-    If Opened = 0 Then
-        Opened = 1
-    ElseIf Opened = 1 Then
-        Exit Sub
-    End If
-    Load frmUpdate
-    frmUpdate.Show
-    frmUpdate.Hide
-End Sub
 
 Private Sub Form_Load()
     'cmbDownloadOption.AddItem "Please select..."
@@ -783,8 +768,7 @@ Private Sub Form_Load()
     End If
     LoopFormControls Me
     Load frmSettings
-    frmSettings.Show
-    frmSettings.Hide
+    
     'If Dir$(App.Path & "\ffmpeg.exe") = "" Then
     'MsgBox "ffmpeg.exe not found" & vbNewLine & "Please Redownload!", vbCritical, "Error!"
     'End
@@ -873,8 +857,6 @@ Private Sub Form_Unload(Cancel As Integer)
     TerminateProcess GetCurrentProcess, ByVal 0&
     
 End Sub
-
-
 
 Private Sub InetFileSize_StateChanged(ByVal State As Integer)
     On Error Resume Next
