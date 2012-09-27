@@ -83,7 +83,7 @@ Begin VB.Form frmMain
       Top             =   0
       Width           =   3495
       Begin VB.CommandButton cmdDownSelected 
-         Caption         =   "Download Select"
+         Caption         =   "Download Selected"
          Enabled         =   0   'False
          Height          =   375
          Left            =   120
@@ -237,7 +237,7 @@ Begin VB.Form frmMain
    End
    Begin MSComDlg.CommonDialog cdSave 
       Left            =   0
-      Top             =   4320
+      Top             =   3600
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
@@ -609,7 +609,6 @@ Option Explicit
 'Public DlFileEx As String
 Dim nVideoFileSize As String                                                       'For Getting URL size True=Get
 Dim strVideoType As String
-Public boolCalledByParent As Boolean
 
 'Dim URLCheckTmp As Boolean
 'Dim InetFail As Boolean
@@ -854,10 +853,6 @@ Private Sub InetFileSize_StateChanged(ByVal State As Integer)
     End If
 End Sub
 
-Private Sub Label3_Click()
-    txtLink_KeyDown 13, 1
-End Sub
-
 Private Sub lvwDownloadList_ItemClick(ByVal Item As ListItem)
     cmdDelete.Enabled = True
     cmdDownSelected.Enabled = True
@@ -887,10 +882,6 @@ Private Sub mnuCollapse_Click()
     For I = 1 To tvwQuality.Nodes.Count
         tvwQuality.Nodes(I).Expanded = False
     Next I
-End Sub
-
-Private Sub mnuConvert_Click()
-    'frmConvert.Show 1
 End Sub
 
 Private Sub mnuCopyLink_Click()
@@ -1193,8 +1184,8 @@ Private Sub txtLink_GotFocus()
 End Sub
 
 Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
-    'Dim tm As Long
-    'tm = timeGetTime
+    Dim nTimeCount As Long
+    nTimeCount = timeGetTime
     On Error Resume Next
     
     If KeyCode = 13 Then
@@ -1230,7 +1221,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
             End If
             DoEvents
         Next
-        lstAdd "Everything Done."
+        lstAdd "Everything Done. " & "TIME:" & timeGetTime - nTimeCount & "ms"
         'MsgBox "TIME ELAPSED : " & timeGetTime - tm & "ms"
         OptiUsage GetCurrentProcess
     End If
@@ -1263,8 +1254,8 @@ Private Sub CleanUp()
     txtFileSize.Text = ""
     'txtLink.Text = ""
     'txtLink.Enabled = True
-    Picture1 = LoadPicture(Null)
-    Picture2 = LoadPicture(Null)
+    Picture1 = LoadPicture("")
+    Picture2 = LoadPicture("")
     OptiUsage GetCurrentProcess
 End Sub
 

@@ -8,6 +8,7 @@ Public Function SeperateSWF(ByVal strVideoURL As String) As String
     Dim strVideoLink As String
     strVideoLink = strVideoURL
     If LCase(Left(strVideoURL, 7)) <> "http://" Then strVideoLink = "http://" & strVideoLink
+    
     strWebHTML = DownHTML(strVideoLink, "UTF-8")
     strWebHTML = Replace(strWebHTML, Chr(9), "")
     strWebHTML = Replace(strWebHTML, vbCrLf, "")
@@ -21,41 +22,45 @@ Public Function SeperateSWF(ByVal strVideoURL As String) As String
 End Function
 
 Public Function LoadVideoInfo(ByVal strVideoLink As String, ByVal txtVideoID As TextBox, ByVal txtVideoTitle As TextBox, ByVal txtVideoViews As TextBox, ByVal txtVideoLength As TextBox, ByVal txtVideoUploader As TextBox, ByVal txtVideoChannel As TextBox, ByVal picVideoScreenShotCon As PictureBox, ByVal picVideoScreenShotView As PictureBox)
-    LoadVideoID strVideoLink, txtVideoID
-    LoadVideoTitle txtVideoTitle
-    LoadVideoViews txtVideoViews
-    LoadVideoLength txtVideoLength
-    LoadAuthorInfo txtVideoUploader, txtVideoChannel
+    txtVideoID.Text = LoadVideoID(strVideoLink)
+    txtVideoTitle.Text = LoadVideoTitle
+    txtVideoViews.Text = LoadVideoViews
+    txtVideoLength.Text = LoadVideoLength
+    
+    Dim strVideoUploader As String, strVideoChannel As String
+    LoadAuthorInfo strVideoUploader, strVideoChannel
+    txtVideoUploader.Text = strVideoUploader
+    txtVideoChannel.Text = strVideoChannel
     LoadPicScreenShot picVideoScreenShotCon, picVideoScreenShotView
 End Function
 
-Private Sub LoadVideoID(ByVal strVideoLink As String, ByVal txtVideoID As TextBox)
-    txtVideoID.Text = ExtractMatch(strVideoLink, "v=([A-Za-z0-9-_]+)")
-End Sub
+Public Function LoadVideoID(ByVal strVideoLink As String)
+    LoadVideoID = ExtractMatch(strVideoLink, "v=([A-Za-z0-9-_]+)")
+End Function
 
-Private Sub LoadVideoTitle(ByVal txtVideoTitle As TextBox)
-    txtVideoTitle.Text = Mid(strWebHTML, InStr(strWebHTML, "<title>") + Len("<title>"), InStr(strWebHTML, "</title>") - InStr(strWebHTML, "<title>") - 7)
-End Sub
+Public Function LoadVideoTitle()
+    LoadVideoTitle = Mid(strWebHTML, InStr(strWebHTML, "<title>") + Len("<title>"), InStr(strWebHTML, "</title>") - InStr(strWebHTML, "<title>") - 7)
+End Function
 
-Private Sub LoadVideoViews(ByVal txtVideoViews As TextBox)
-    txtVideoViews.Text = Mid(Mid(strWebHTML, InStr(strWebHTML, "<span class=""watch-view-count"">") + Len("<span class=""watch-view-count"">"), InStr(InStr(strWebHTML, "<span class=""watch-view-count"">"), strWebHTML, "</span>") - InStr(strWebHTML, "<span class=""watch-view-count"">") - Len("<span class=""watch-view-count"">")), InStr(Mid(strWebHTML, InStr(strWebHTML, "<span class=""watch-view-count"">") + Len("<span class=""watch-view-count"">"), InStr(InStr(strWebHTML, "<span class=""watch-view-count"">"), strWebHTML, "</span>") - InStr(strWebHTML, "<span class=""watch-view-count"">") - Len("<span class=""watch-view-count"">")), "<strong>") + Len("<strong>"), InStr(Mid(strWebHTML, InStr(strWebHTML, "<span class=""watch-view-count"">") + Len("<span class=""watch-view-count"">"), InStr(InStr(strWebHTML, "<span class=""watch-view-count"">"), strWebHTML, "</span>") - InStr(strWebHTML, "<span class=""watch-view-count"">") - Len("<span class=""watch-view-count"">")), "</strong>") - Len("</strong>") - 6)
-End Sub
+Public Function LoadVideoViews()
+    LoadVideoViews = Mid(Mid(strWebHTML, InStr(strWebHTML, "<span class=""watch-view-count"">") + Len("<span class=""watch-view-count"">"), InStr(InStr(strWebHTML, "<span class=""watch-view-count"">"), strWebHTML, "</span>") - InStr(strWebHTML, "<span class=""watch-view-count"">") - Len("<span class=""watch-view-count"">")), InStr(Mid(strWebHTML, InStr(strWebHTML, "<span class=""watch-view-count"">") + Len("<span class=""watch-view-count"">"), InStr(InStr(strWebHTML, "<span class=""watch-view-count"">"), strWebHTML, "</span>") - InStr(strWebHTML, "<span class=""watch-view-count"">") - Len("<span class=""watch-view-count"">")), "<strong>") + Len("<strong>"), InStr(Mid(strWebHTML, InStr(strWebHTML, "<span class=""watch-view-count"">") + Len("<span class=""watch-view-count"">"), InStr(InStr(strWebHTML, "<span class=""watch-view-count"">"), strWebHTML, "</span>") - InStr(strWebHTML, "<span class=""watch-view-count"">") - Len("<span class=""watch-view-count"">")), "</strong>") - Len("</strong>") - 6)
+End Function
 
-Private Sub LoadVideoLength(ByVal txtVideoLength As TextBox)
-    txtVideoLength.Text = ConvertToTime(Val(Mid(strWebHTML, InStr(strWebHTML, ";length_seconds=") + Len(";length_seconds="))))
-End Sub
+Public Function LoadVideoLength()
+    LoadVideoLength = ConvertToTime(Val(Mid(strWebHTML, InStr(strWebHTML, ";length_seconds=") + Len(";length_seconds="))))
+End Function
 
-Private Sub LoadAuthorInfo(ByVal txtVideoUploader As TextBox, ByVal txtVideoChannel As TextBox)
+Public Function LoadAuthorInfo(ByRef strVideoUploader As String, ByRef strVideoChannel As String)
     Dim strTmp As String
     strTmp = Trim(Mid(strWebHTML, InStr(strWebHTML, "<span itemprop=""author"" itemscope itemtype="""), InStr(InStr(strWebHTML, "<span itemprop=""author"" itemscope itemtype="""), strWebHTML, "</span>") - InStr(strWebHTML, "<span itemprop=""author"" itemscope itemtype=""")))
-    txtVideoChannel.Text = Left(Mid(strTmp, InStr(strTmp, "<link itemprop=""url"" href=""") + Len("<link itemprop=""url"" href=""")), Len(Mid(strTmp, InStr(strTmp, "<link itemprop=""url"" href=""") + Len("<link itemprop=""url"" href="""))) - 2)
-    txtVideoUploader.Text = Replace(txtVideoChannel.Text, "http://www.youtube.com/user/", "")
-End Sub
+    strVideoChannel = Left(Mid(strTmp, InStr(strTmp, "<link itemprop=""url"" href=""") + Len("<link itemprop=""url"" href=""")), Len(Mid(strTmp, InStr(strTmp, "<link itemprop=""url"" href=""") + Len("<link itemprop=""url"" href="""))) - 2)
+    strVideoUploader = Replace(strVideoChannel, "http://www.youtube.com/user/", "")
+End Function
 
-Private Sub LoadPicScreenShot(ByVal picVideoScreenShot As PictureBox, ByVal picVideoScreenShotView As PictureBox)
+Public Function LoadPicScreenShot(ByVal picVideoScreenShot As PictureBox, ByVal picVideoScreenShotView As PictureBox)
     Set picVideoScreenShot.Picture = LoadPicture(Mid(Mid(strWebHTML, InStr(strWebHTML, "<meta property=""og:image"" content=") + Len("<meta property=""og:image"" content=")), 2, InStr(Mid(strWebHTML, InStr(strWebHTML, "<meta property=""og:image"" content=") + Len("<meta property=""og:image"" content=")), """>") - 2))
     FitPictureToBox picVideoScreenShot, picVideoScreenShotView
-End Sub
+End Function
 
 Public Function ProcessDownloadLinks(ByRef strDownloadLink() As String)
     Dim nI As Long
