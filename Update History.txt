@@ -21,3 +21,6 @@
 * New Function - Optimize usage (under tools menu)
 * New settings form!
 * Decrease form's size
+
+=27/9/2012=
+* Fix Bugs - URLDecoder may be failed to decode some webpage.

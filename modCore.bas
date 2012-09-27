@@ -16,7 +16,7 @@ Public Function SeperateSWF(ByVal strVideoURL As String) As String
     If strWebHTML = "" Then
         SeperateSWF = "Hey! No data recieved! Check your network connection! Or retry!": Exit Function
     End If
-    strDecodedSWF = UTF8_UrlDecode(UTF8_UrlDecode(UTF8_UrlDecode(Mid(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), InStr(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), "url_encoded_fmt_stream_map")))))
+    strDecodedSWF = URLDecode(URLDecode(URLDecode(Mid(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), InStr(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), "url_encoded_fmt_stream_map")))))
     'frmMain.Text1.Text = strDecodedSWF
 End Function
 

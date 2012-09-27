@@ -45,7 +45,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   103
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   103
-      TabIndex        =   41
+      TabIndex        =   1
       Top             =   120
       Width           =   1575
    End
@@ -61,7 +61,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   255
       Left            =   120
-      TabIndex        =   32
+      TabIndex        =   31
       ToolTipText     =   "Program Status"
       Top             =   6480
       Width           =   14175
@@ -79,7 +79,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   6375
       Left            =   10920
-      TabIndex        =   29
+      TabIndex        =   28
       Top             =   0
       Width           =   3495
       Begin VB.CommandButton cmdDownSelected 
@@ -87,7 +87,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   375
          Left            =   120
-         TabIndex        =   40
+         TabIndex        =   39
          ToolTipText     =   "Download Selected Video"
          Top             =   5520
          Width           =   1815
@@ -97,7 +97,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   375
          Left            =   1920
-         TabIndex        =   39
+         TabIndex        =   38
          ToolTipText     =   "Download All Video In The Download List"
          Top             =   5520
          Width           =   1455
@@ -107,7 +107,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   375
          Left            =   1920
-         TabIndex        =   38
+         TabIndex        =   37
          ToolTipText     =   "Delect Selected Video Entry"
          Top             =   5880
          Width           =   1455
@@ -116,7 +116,7 @@ Begin VB.Form frmMain
          Caption         =   "Clear All"
          Height          =   375
          Left            =   120
-         TabIndex        =   37
+         TabIndex        =   36
          ToolTipText     =   "Clear All Entries In The Download List"
          Top             =   5880
          Width           =   1815
@@ -124,7 +124,7 @@ Begin VB.Form frmMain
       Begin MSComctlLib.ListView lvwDownloadList 
          Height          =   5175
          Left            =   120
-         TabIndex        =   30
+         TabIndex        =   29
          ToolTipText     =   "Download List"
          Top             =   240
          Width           =   3255
@@ -191,13 +191,13 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   2175
       Left            =   360
-      TabIndex        =   28
+      TabIndex        =   27
       Top             =   2040
       Width           =   10215
       Begin MSComctlLib.TreeView tvwQuality 
          Height          =   1815
          Left            =   120
-         TabIndex        =   31
+         TabIndex        =   30
          ToolTipText     =   "Click At The Link To Select A Download Link"
          Top             =   240
          Width           =   9855
@@ -230,6 +230,7 @@ Begin VB.Form frmMain
       PictureIcon     =   "frmMain.frx":61F6
    End
    Begin VB.Timer trmGetClipData 
+      Enabled         =   0   'False
       Interval        =   100
       Left            =   0
       Top             =   2400
@@ -261,7 +262,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   1695
       Left            =   1800
-      TabIndex        =   3
+      TabIndex        =   4
       Top             =   0
       Width           =   9015
       Begin VB.CommandButton cmdVisit 
@@ -269,7 +270,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   255
          Left            =   8040
-         TabIndex        =   36
+         TabIndex        =   35
          ToolTipText     =   "Visit YouTube Channel"
          Top             =   1320
          Width           =   735
@@ -278,7 +279,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   6960
          Locked          =   -1  'True
-         TabIndex        =   24
+         TabIndex        =   23
          ToolTipText     =   "Video's Duration"
          Top             =   600
          Width           =   1815
@@ -287,24 +288,25 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   4080
          Locked          =   -1  'True
-         TabIndex        =   15
+         TabIndex        =   14
          ToolTipText     =   "Video's Views"
          Top             =   600
          Width           =   1575
       End
       Begin VB.TextBox txtLink 
          Height          =   315
-         Left            =   1440
-         TabIndex        =   0
+         Left            =   120
+         TabIndex        =   2
+         Text            =   "Paste your YouTube video link here..."
          ToolTipText     =   "Enter YouTube Video Link Here"
          Top             =   240
-         Width           =   6135
+         Width           =   8655
       End
       Begin VB.TextBox txtID 
          Height          =   315
          Left            =   1440
          Locked          =   -1  'True
-         TabIndex        =   7
+         TabIndex        =   8
          ToolTipText     =   "YouTube Video ID"
          Top             =   600
          Width           =   1935
@@ -313,7 +315,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   1440
          Locked          =   -1  'True
-         TabIndex        =   6
+         TabIndex        =   7
          ToolTipText     =   "Video's Title"
          Top             =   960
          Width           =   7335
@@ -322,7 +324,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   5400
          Locked          =   -1  'True
-         TabIndex        =   5
+         TabIndex        =   6
          ToolTipText     =   "Author's YouTube Channel"
          Top             =   1320
          Width           =   2535
@@ -331,7 +333,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   1440
          Locked          =   -1  'True
-         TabIndex        =   4
+         TabIndex        =   5
          ToolTipText     =   "Video's Author"
          Top             =   1320
          Width           =   2055
@@ -340,7 +342,7 @@ Begin VB.Form frmMain
          Caption         =   "Video Length:"
          Height          =   255
          Left            =   5760
-         TabIndex        =   25
+         TabIndex        =   24
          Top             =   600
          Width           =   1215
       End
@@ -348,17 +350,9 @@ Begin VB.Form frmMain
          Caption         =   "Views:"
          Height          =   255
          Left            =   3480
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   600
          Width           =   615
-      End
-      Begin VB.Label Label1 
-         Caption         =   "Youtube Link:"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   13
-         Top             =   240
-         Width           =   1335
       End
       Begin VB.Label Label4 
          Caption         =   "Youtube ID:"
@@ -384,32 +378,11 @@ Begin VB.Form frmMain
          Top             =   1320
          Width           =   1815
       End
-      Begin VB.Label Label3 
-         BackColor       =   &H8000000B&
-         BackStyle       =   0  'Transparent
-         Caption         =   "Hit Enter When You Are Done"
-         BeginProperty Font 
-            Name            =   "Segoe UI"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000007&
-         Height          =   375
-         Left            =   7680
-         TabIndex        =   9
-         ToolTipText     =   "Hit Enter When You're Done"
-         Top             =   120
-         Width           =   1335
-      End
       Begin VB.Label Label10 
          Caption         =   "Uploaded By:"
          Height          =   255
          Left            =   120
-         TabIndex        =   8
+         TabIndex        =   9
          Top             =   1320
          Width           =   1335
       End
@@ -427,7 +400,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   4575
       Left            =   120
-      TabIndex        =   2
+      TabIndex        =   3
       Top             =   1800
       Width           =   10695
       Begin VB.CommandButton cmdAddDown 
@@ -435,7 +408,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   975
          Left            =   7320
-         TabIndex        =   35
+         TabIndex        =   34
          ToolTipText     =   "Add Selected Video To Download List "
          Top             =   3240
          Width           =   3135
@@ -445,7 +418,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Left            =   240
-         TabIndex        =   34
+         TabIndex        =   33
          ToolTipText     =   "Open The Video In Your Default Browser"
          Top             =   3720
          Width           =   7095
@@ -455,7 +428,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Left            =   240
-         TabIndex        =   33
+         TabIndex        =   32
          ToolTipText     =   "Download The Selected Video"
          Top             =   3240
          Width           =   7095
@@ -464,7 +437,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   6000
          Locked          =   -1  'True
-         TabIndex        =   27
+         TabIndex        =   26
          ToolTipText     =   "Video's Quality"
          Top             =   2880
          Width           =   1455
@@ -473,7 +446,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   8400
          Locked          =   -1  'True
-         TabIndex        =   23
+         TabIndex        =   22
          ToolTipText     =   "Video File Size"
          Top             =   2880
          Width           =   2055
@@ -482,7 +455,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   3720
          Locked          =   -1  'True
-         TabIndex        =   21
+         TabIndex        =   20
          ToolTipText     =   "Video's Format"
          Top             =   2880
          Width           =   1335
@@ -491,7 +464,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   960
          Locked          =   -1  'True
-         TabIndex        =   19
+         TabIndex        =   18
          ToolTipText     =   "Video's Codec"
          Top             =   2880
          Width           =   1455
@@ -501,7 +474,7 @@ Begin VB.Form frmMain
          IMEMode         =   3  'DISABLE
          Left            =   1800
          Locked          =   -1  'True
-         TabIndex        =   17
+         TabIndex        =   16
          ToolTipText     =   "Selected Download Liink"
          Top             =   2520
          Width           =   8655
@@ -510,7 +483,7 @@ Begin VB.Form frmMain
          Caption         =   "Quality:"
          Height          =   255
          Left            =   5160
-         TabIndex        =   26
+         TabIndex        =   25
          Top             =   2880
          Width           =   855
       End
@@ -518,7 +491,7 @@ Begin VB.Form frmMain
          Caption         =   "File Size: "
          Height          =   255
          Left            =   7560
-         TabIndex        =   22
+         TabIndex        =   21
          Top             =   2880
          Width           =   1455
       End
@@ -526,7 +499,7 @@ Begin VB.Form frmMain
          Caption         =   "File Format:"
          Height          =   255
          Left            =   2520
-         TabIndex        =   20
+         TabIndex        =   19
          Top             =   2880
          Width           =   1335
       End
@@ -534,7 +507,7 @@ Begin VB.Form frmMain
          Caption         =   "Codec:"
          Height          =   255
          Left            =   240
-         TabIndex        =   18
+         TabIndex        =   17
          Top             =   2880
          Width           =   1455
       End
@@ -542,7 +515,7 @@ Begin VB.Form frmMain
          Caption         =   "Download Link:"
          Height          =   255
          Left            =   240
-         TabIndex        =   16
+         TabIndex        =   15
          Top             =   2520
          Width           =   1575
       End
@@ -564,7 +537,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   101
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   101
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   120
       Visible         =   0   'False
       Width           =   1575
@@ -580,6 +553,9 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuOpti 
          Caption         =   "Optimize My Usage"
       End
+   End
+   Begin VB.Menu mnuLite 
+      Caption         =   "Lite Version"
    End
    Begin VB.Menu mnuSetting 
       Caption         =   "Settings"
@@ -768,7 +744,8 @@ Private Sub Form_Load()
     End If
     LoopFormControls Me
     Load frmSettings
-    
+    trmGetClipData.Enabled = True
+    txtTips txtLink, "Paste the YouTube video link here... Press enter when you're done", True
     'If Dir$(App.Path & "\ffmpeg.exe") = "" Then
     'MsgBox "ffmpeg.exe not found" & vbNewLine & "Please Redownload!", vbCritical, "Error!"
     'End
@@ -978,6 +955,11 @@ End Sub
 
 
 
+Private Sub mnuLite_Click()
+    Load frmMainLite
+    frmMainLite.Show
+End Sub
+
 Private Sub mnuLvwCopy_Click()
     Clipboard.Clear
     Clipboard.SetText lvwDownloadList.SelectedItem.Text
@@ -1170,7 +1152,6 @@ Private Sub txtDownloadLink_Change()
     txtQuality.Text = ExtractMatch(txtDownloadLink.Text, "&quality=([a-zA-Z0-9]*)")
     lstAdd "Video Quality Loaded"
     lstAdd "Getting Video File Size"
-    
     InetFileSize.Cancel
     InetFileSize.Execute txtDownloadLink.Text, "GET"
     Do Until nVideoFileSize <> ""
@@ -1205,8 +1186,15 @@ goterr:
     Unload frmDownload
 End Sub
 
+Private Sub txtLink_GotFocus()
+    If txtLink.Text = "Paste the YouTube video link here... Press enter when you're done" Then
+        txtTips txtLink, "Paste the YouTube video link here... Press enter when you're done", False
+    End If
+End Sub
+
 Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
-    
+    'Dim tm As Long
+    'tm = timeGetTime
     On Error Resume Next
     
     If KeyCode = 13 Then
@@ -1243,10 +1231,8 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
             DoEvents
         Next
         lstAdd "Everything Done."
+        'MsgBox "TIME ELAPSED : " & timeGetTime - tm & "ms"
         OptiUsage GetCurrentProcess
-        Exit Sub
-    Else
-        txtLink.SetFocus
     End If
     Exit Sub
 goterr:
@@ -1285,4 +1271,10 @@ End Sub
 Private Sub lstAdd(ByVal InName As String)
     lstState.AddItem Date & "-" & Time & ": " & InName
     lstState.ListIndex = lstState.NewIndex
+End Sub
+
+Private Sub txtLink_LostFocus()
+    If txtLink.Text = "" Then
+        txtTips txtLink, "Paste the YouTube video link here... Press enter when you're done", True
+    End If
 End Sub

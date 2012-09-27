@@ -4,6 +4,9 @@ Option Explicit
 '* Most of the function was not written by me!
 '* I took it from the internet
 '*******************************
+'Time===
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+'Time End===
 
 'Move Form===
 Private Declare Function ReleaseCapture Lib "user32" () As Long
@@ -105,7 +108,7 @@ Public Function DownHTML(strURL As String, strCharset As String)
     Set objAdoStream = CreateObject("ADODB.Stream")
     Dim objXMLHTTP As MSXML2.XMLHTTP
     Set objXMLHTTP = New MSXML2.XMLHTTP
-    objXMLHTTP.Open "get", strURL, False
+    objXMLHTTP.Open "GET", strURL, False
     objXMLHTTP.send
     If objXMLHTTP.readyState = 4 Then
         If strCharset = "" Then
@@ -249,3 +252,17 @@ Public Sub LoopFormControls(ByVal frmForm As Form)
         DoEvents
     Next
 End Sub
+
+Public Sub txtTips(ByVal txtDest As TextBox, ByVal strTips As String, ByVal boolGotFocus As Boolean)
+    If boolGotFocus = True Then
+        txtDest.Text = strTips
+        txtDest.Font.Italic = True
+        txtDest.ForeColor = RGB(255 / 2, 255 / 2, 255 / 2)
+    Else
+        txtDest.Text = ""
+        txtDest.Font.Italic = False
+        txtDest.ForeColor = vbBlack
+    End If
+End Sub
+
+
