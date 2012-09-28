@@ -26,12 +26,19 @@ Public Function LoadVideoInfo(ByVal strVideoLink As String, ByVal txtVideoID As 
     txtVideoTitle.Text = LoadVideoTitle
     txtVideoViews.Text = LoadVideoViews
     txtVideoLength.Text = LoadVideoLength
-    
     Dim strVideoUploader As String, strVideoChannel As String
     LoadAuthorInfo strVideoUploader, strVideoChannel
     txtVideoUploader.Text = strVideoUploader
     txtVideoChannel.Text = strVideoChannel
     LoadPicScreenShot picVideoScreenShotCon, picVideoScreenShotView
+End Function
+
+Public Function LoadVideoInfoLite(ByVal strVideoLink As String, ByRef strVideoTitle As String, ByRef strVideoUploader As String, ByRef strVideoChannel As String, ByRef strVideoID As String, ByRef strVideoViews As String, ByRef strVideoLength As String)
+    strVideoTitle = LoadVideoTitle
+    LoadAuthorInfo strVideoUploader, strVideoChannel
+    strVideoID = LoadVideoID(strVideoLink)
+    strVideoViews = LoadVideoViews
+    strVideoLength = LoadVideoLength
 End Function
 
 Public Function LoadVideoID(ByVal strVideoLink As String)

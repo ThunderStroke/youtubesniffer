@@ -22,6 +22,102 @@ Begin VB.Form frmSettings
    ScaleHeight     =   4980
    ScaleWidth      =   9435
    StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox picLite 
+      Height          =   4215
+      Left            =   2760
+      ScaleHeight     =   4155
+      ScaleWidth      =   6195
+      TabIndex        =   26
+      Top             =   1320
+      Visible         =   0   'False
+      Width           =   6255
+      Begin AGYouTubeVideoGrabber.cltSwitch swhLiteDef 
+         Height          =   345
+         Left            =   4920
+         TabIndex        =   27
+         Top             =   120
+         Width           =   1170
+         _ExtentX        =   2064
+         _ExtentY        =   609
+      End
+      Begin AGYouTubeVideoGrabber.cltSwitch swhAutoClipLite 
+         Height          =   345
+         Left            =   4920
+         TabIndex        =   29
+         Top             =   480
+         Width           =   1170
+         _ExtentX        =   2064
+         _ExtentY        =   609
+      End
+      Begin AGYouTubeVideoGrabber.cltSwitch swhActAppLite 
+         Height          =   345
+         Left            =   4920
+         TabIndex        =   31
+         Top             =   840
+         Width           =   1170
+         _ExtentX        =   2064
+         _ExtentY        =   609
+      End
+      Begin VB.Label Label9 
+         Caption         =   "Activate program when got link in clipboard"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   11.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   120
+         TabIndex        =   32
+         Top             =   840
+         Width           =   4575
+      End
+      Begin VB.Label Label8 
+         Caption         =   "Auto get video link from clipboard"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   11.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   120
+         TabIndex        =   30
+         Top             =   480
+         Width           =   4575
+      End
+      Begin VB.Label Label5 
+         Caption         =   "Set lite version to default"
+         BeginProperty Font 
+            Name            =   "Segoe UI"
+            Size            =   11.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   120
+         TabIndex        =   28
+         Top             =   120
+         Width           =   4575
+      End
+   End
+   Begin VB.CommandButton cmdLite 
+      Caption         =   "Lite"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   25
+      Top             =   2280
+      Width           =   1815
+   End
    Begin VB.PictureBox picArrow 
       AutoRedraw      =   -1  'True
       Height          =   375
@@ -34,11 +130,11 @@ Begin VB.Form frmSettings
    End
    Begin VB.PictureBox picTools 
       Height          =   4215
-      Left            =   3840
+      Left            =   4080
       ScaleHeight     =   4155
       ScaleWidth      =   6195
       TabIndex        =   21
-      Top             =   1680
+      Top             =   1080
       Visible         =   0   'False
       Width           =   6255
       Begin VB.CommandButton cmdUsage 
@@ -238,7 +334,7 @@ Begin VB.Form frmSettings
       ScaleHeight     =   4155
       ScaleWidth      =   6195
       TabIndex        =   0
-      Top             =   120
+      Top             =   -120
       Width           =   6255
       Begin AGYouTubeVideoGrabber.cltSwitch swhMinimize 
          Height          =   345
@@ -285,7 +381,7 @@ Begin VB.Form frmSettings
          Width           =   4575
       End
       Begin VB.Label Label3 
-         Caption         =   "Auto get link from clipboard"
+         Caption         =   "Auto video get link from clipboard"
          BeginProperty Font 
             Name            =   "Segoe UI"
             Size            =   11.25
@@ -354,17 +450,29 @@ Private Sub cmdDownloader_Click()
     picGeneral.Visible = False
     picUpdater.Visible = False
     picTools.Visible = False
+        picLite.Visible = False
     picDownloader.Move cmdDownloader.Left + cmdDownloader.Width + 400, cmdGeneral.Top, picDownloader.Width, picDownloader.Height
     
 End Sub
 
 Private Sub cmdGeneral_Click()
-picArrow.Top = cmdGeneral.Top
+    picArrow.Top = cmdGeneral.Top
     picGeneral.Visible = True
     picUpdater.Visible = False
     picDownloader.Visible = False
     picTools.Visible = False
+    picLite.Visible = False
     picGeneral.Move cmdGeneral.Left + cmdGeneral.Width + 400, cmdGeneral.Top, picGeneral.Width, picGeneral.Height
+End Sub
+
+Private Sub cmdLite_Click()
+    picArrow.Top = cmdLite.Top
+    picGeneral.Visible = False
+    picUpdater.Visible = False
+    picDownloader.Visible = False
+    picTools.Visible = False
+    picLite.Visible = True
+    picLite.Move cmdLite.Left + cmdLite.Width + 400, cmdGeneral.Top, picLite.Width, picLite.Height
 End Sub
 
 Private Sub cmdRestart_Click()
@@ -379,6 +487,7 @@ Private Sub cmdTools_Click()
     picUpdater.Visible = False
     picDownloader.Visible = False
     picGeneral.Visible = False
+    picLite.Visible = False
     picTools.Visible = True
     picTools.Move cmdTools.Left + cmdTools.Width + 400, cmdGeneral.Top, picTools.Width, picTools.Height
     
@@ -390,6 +499,7 @@ Private Sub cmdUpdater_Click()
     picDownloader.Visible = False
     picGeneral.Visible = False
     picTools.Visible = False
+        picLite.Visible = False
     picUpdater.Move cmdUpdater.Left + cmdUpdater.Width + 400, cmdGeneral.Top, picUpdater.Width, picUpdater.Height
 End Sub
 
@@ -404,6 +514,7 @@ Private Sub Form_Load()
     picDownloader.BorderStyle = 0
     picTools.BorderStyle = 0
     picArrow.BorderStyle = 0
+    picLite.BorderStyle = 0
     picArrow.Left = cmdGeneral.Left + cmdGeneral.Width + 100
     LoadResImage 102, "custom", picArrow.hWnd, picArrow.hDC
     picArrow.Refresh
