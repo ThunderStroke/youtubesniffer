@@ -62,6 +62,13 @@ Public Declare Function SetProcessWorkingSetSize Lib "kernel32" (ByVal hProcess 
 'Optimize Usage End===
 
 
+'Remove Menu===
+Public Declare Function GetSystemMenu Lib "user32" (ByVal hWnd As Long, ByVal bRevert As Long) As Long
+Public Declare Function RemoveMenu Lib "user32" (ByVal hMenu As Long, ByVal nPosition As Long, ByVal wFlags As Long) As Long
+Public Const MF_REMOVE = &H1000&
+Public Const SC_CLOSE = &HF060
+'Remove Menu End===
+
 Public Function URLDecode(ByVal URL As String, Optional ByVal PlusSpace As Boolean = True) As String
     Dim cchUnescaped As Long
     Dim HRESULT As Long
@@ -168,39 +175,37 @@ Public Function VisitURL(VisitUrlink As String)
     Shell "rundll32.exe url.dll,FileProtocolHandler " & Chr(34) & VisitUrlink & Chr(34), 1
 End Function
 
-' Copy the image from pic_src into pic_dst so
-' it fits and has the same aspect ratio as the
-' original picture.
-Public Sub FitPictureToBox(ByVal pic_src As PictureBox, pic_dst As PictureBox)
+
+Public Sub FitPictureToBox(ByVal picSource As PictureBox, picDestination As PictureBox)
     On Error Resume Next
-    Dim aspect_src As Single
-    Dim wid As Single
-    Dim hgt As Single
+    Dim nAspectRatio As Single
+    Dim nWidth As Single
+    Dim nHeight As Single
     
     ' get the original picture's aspect ratio.
-    aspect_src = pic_src.ScaleWidth / pic_src.ScaleHeight
+    nAspectRatio = picSource.ScaleWidth / picSource.ScaleHeight
     
     ' get the size available.
-    wid = pic_dst.ScaleWidth
-    hgt = pic_dst.ScaleHeight
+    nWidth = picDestination.ScaleWidth
+    nHeight = picDestination.ScaleHeight
     
-    ' Adjust the wid/hgt ratio to match aspect_src.
-    If wid / hgt > aspect_src Then
+    ' Adjust the nWidth/nHeight ratio to match nAspectRatio.
+    If nWidth / nHeight > nAspectRatio Then
         ' The area is too short and wide.
         ' Make it narrower.
-        wid = aspect_src * hgt
+        nWidth = nAspectRatio * nHeight
     Else
         ' The area is too tall and thin.
         ' Make it shorter.
-        hgt = wid / aspect_src
+        nHeight = nWidth / nAspectRatio
     End If
     
     ' Center the image at the correct size.
-    pic_dst.Cls
-    pic_dst.PaintPicture pic_src.Picture, _
-    (pic_dst.ScaleWidth - wid) / 2, _
-    (pic_dst.ScaleHeight - hgt) / 2, _
-    wid, hgt
+    picDestination.Cls
+    picDestination.PaintPicture picSource.Picture, _
+    (picDestination.ScaleWidth - nWidth) / 2, _
+    (picDestination.ScaleHeight - nHeight) / 2, _
+    nWidth, nHeight
 End Sub
 
 Public Function LoadPicture(ByVal strFileName As String) As Picture

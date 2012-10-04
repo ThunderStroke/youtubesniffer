@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.Form frmMain 
    AutoRedraw      =   -1  'True
    BorderStyle     =   1  'Fixed Single
@@ -734,11 +734,11 @@ End Sub
 
 Private Sub Form_Load()
     'cmbDownloadOption.AddItem "Please select..."
-    If App.LogMode = 0 Then
-        'MsgBox "Don't Run At IDE Please!", vbInformation
-        RemoveMenu GetSystemMenu(hWnd, 0), SC_CLOSE, MF_REMOVE
-        'End
-    ElseIf App.LogMode Then
+    'If App.LogMode = 0 Then
+    'MsgBox "Don't Run At IDE Please!", vbInformation
+    'RemoveMenu GetSystemMenu(hWnd, 0), SC_CLOSE, MF_REMOVE
+    'End
+    If App.LogMode Then
         Attach Me.hWnd
     End If
     LoopFormControls Me
@@ -817,9 +817,7 @@ Private Sub Form_Unload(Cancel As Integer)
     'SetWindowLong Me.hwnd, GWL_WNDPROC, pWndProc
     Tray.Hide
     
-    If App.LogMode Then
-        Detach Me.hWnd
-    End If
+    
     'Unload Form2
     'Unload frmConvert
     Unload frmDownload
@@ -830,7 +828,11 @@ Private Sub Form_Unload(Cancel As Integer)
     Unload frmUpdate
     Unload frmSettings
     Unload Me
-    TerminateProcess GetCurrentProcess, ByVal 0&
+    If App.LogMode Then
+        Detach Me.hWnd
+        TerminateProcess GetCurrentProcess, ByVal 0&
+    End If
+    
     
 End Sub
 

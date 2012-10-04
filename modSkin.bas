@@ -3,11 +3,12 @@ Attribute VB_Name = "modSkin"
 '*用法：在需要更改按钮外观的窗体的Load事件中加入 Attach Me.hwnd '更改按钮外观
 '*                              Unload事件中加入 Detach Me.hwnd '还原按钮外观
 '****************************************************************************
+'From http://www.vbgood.com/thread-102563-1-1.html
 Option Explicit
 
 Private Type POINTAPI
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Private Type RECT
@@ -55,8 +56,8 @@ End Type
 Private Type WINDOWPOS
     hWnd                     As Long
     hWndInsertAfter          As Long
-    x                        As Long
-    y                        As Long
+    X                        As Long
+    Y                        As Long
     cX                       As Long
     cY                       As Long
     Flags                    As Long
@@ -444,7 +445,7 @@ Private Declare Function KillTimer Lib "user32" (ByVal hWnd As Long, ByVal nIDEv
 Private Declare Function RedrawWindow Lib "user32" (ByVal hWnd As Long, lprcUpdate As Any, ByVal hrgnUpdate As Long, ByVal fuRedraw As Long) As Long
 Private Declare Function GetParent Lib "user32" (ByVal hWnd As Long) As Long
 Private Declare Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
-Private Declare Function CreateWindowEx Lib "user32" Alias "CreateWindowExA" (ByVal dwExStyle As Long, ByVal lpClassName As String, ByVal lpWindowName As String, ByVal dwStyle As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hWndParent As Long, ByVal hMenu As Long, ByVal hInstance As Long, lpParam As Any) As Long
+Private Declare Function CreateWindowEx Lib "user32" Alias "CreateWindowExA" (ByVal dwExStyle As Long, ByVal lpClassName As String, ByVal lpWindowName As String, ByVal dwStyle As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hWndParent As Long, ByVal hMenu As Long, ByVal hInstance As Long, lpParam As Any) As Long
 
 Private Declare Function CreateDCAsNull Lib "gdi32" Alias "CreateDCA" (ByVal lpDriverName As String, lpDeviceName As Any, lpOutput As Any, lpInitData As Any) As Long
 Private Declare Function CreateDC Lib "gdi32" Alias "CreateDCA" (ByVal lpDriverName As String, ByVal lpDeviceName As String, ByVal lpOutput As String, lpInitData As Any) As Long
@@ -456,11 +457,11 @@ Private Declare Function SelectObject Lib "gdi32" (ByVal hDC As Long, ByVal hObj
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 Private Declare Function DeleteDC Lib "gdi32" (ByVal hDC As Long) As Long
 Private Declare Function ReleaseDC Lib "user32" (ByVal hWnd As Long, ByVal hDC As Long) As Long
-Private Declare Function GetPixel Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal y As Long) As Long
-Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal y As Long, ByVal crColor As Long) As Long
-Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
-Private Declare Function StretchBlt Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal nSrcWidth As Long, ByVal nSrcHeight As Long, ByVal dwRop As Long) As Long
-Private Declare Function AlphaBlend Lib "msimg32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal widthSrc As Long, ByVal heightSrc As Long, ByVal blendFunct As Long) As Boolean
+Private Declare Function GetPixel Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal Y As Long) As Long
+Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
+Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Private Declare Function StretchBlt Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal nSrcWidth As Long, ByVal nSrcHeight As Long, ByVal dwRop As Long) As Long
+Private Declare Function AlphaBlend Lib "msimg32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal widthSrc As Long, ByVal heightSrc As Long, ByVal blendFunct As Long) As Boolean
 Private Declare Function GetTextColor Lib "gdi32" (ByVal hDC As Long) As Long
 Private Declare Function SetTextColor Lib "gdi32" (ByVal hDC As Long, ByVal crColor As Long) As Long
 Private Declare Function DrawText Lib "user32" Alias "DrawTextA" (ByVal hDC As Long, ByVal lpStr As String, ByVal nCount As Long, lpRect As RECT, ByVal wFormat As Long) As Long
@@ -1317,7 +1318,7 @@ Private Function OnLButtonUp(OrigProc As Long, hWnd As Long, uMsg As Long, wPara
         OnLButtonUp = CallWindowProc(OrigProc, hWnd, uMsg, wParam, lParam)
         Dim Pt As POINTAPI
         Call GetCursorPos(Pt)
-        If WindowFromPoint(Pt.x, Pt.y) = hWnd Then
+        If WindowFromPoint(Pt.X, Pt.Y) = hWnd Then
             pDrawComboBox hWnd, 0, 1
         Else
             pDrawComboBox hWnd, 0, 0
@@ -1328,7 +1329,7 @@ Private Function OnLButtonUp(OrigProc As Long, hWnd As Long, uMsg As Long, wPara
     Case "thunderdrivelistbox", "thunderrt6drivelistbox"
         OnLButtonUp = CallWindowProc(OrigProc, hWnd, uMsg, wParam, lParam)
         Call GetCursorPos(Pt)
-        If WindowFromPoint(Pt.x, Pt.y) = hWnd Then
+        If WindowFromPoint(Pt.X, Pt.Y) = hWnd Then
             pDrawComboBox hWnd, 0, 1
         Else
             pDrawComboBox hWnd, 0, 0
@@ -1355,7 +1356,7 @@ Private Function OnLButtonUp(OrigProc As Long, hWnd As Long, uMsg As Long, wPara
         SetProp hWnd, "HDINDEX", -1
         If m_oIndex >= 0 Then
             Call GetCursorPos(Pt)
-            If WindowFromPoint(Pt.x, Pt.y) = hWnd Then
+            If WindowFromPoint(Pt.X, Pt.Y) = hWnd Then
                 Call pDrawHeader(hWnd, 0, m_oIndex, 0)
             Else
                 Call pDrawHeader(hWnd, 0, m_oIndex, 1)
@@ -1451,7 +1452,7 @@ Private Function OnMouseMove(OrigProc As Long, hWnd As Long, uMsg As Long, wPara
         Else
             Dim Pt As POINTAPI
             Call GetCursorPos(Pt)
-            If Not WindowFromPoint(Pt.x, Pt.y) = hWnd Then
+            If Not WindowFromPoint(Pt.X, Pt.Y) = hWnd Then
                 Call pKillTimer(hWnd)
                 Call SetProp(hWnd, "ALPHALEVEL", 255)
                 Call pDrawButton(hWnd, 0)
@@ -1893,13 +1894,13 @@ Private Function pDrawText(ByVal hDC As Long, ByVal Text As String, ByVal X1 As 
     pDrawText = DrawText(hDC, Text, -1, TmpRect, lpFlag)
 End Function
 
-Private Function pDrawTextL(ByVal hDC As Long, ByVal Text As String, ByVal x As Long, ByVal y As Long, ByVal Width As Long, ByVal Height As Long, ByVal lpFlag As DTSTYLE) As Long
+Private Function pDrawTextL(ByVal hDC As Long, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal Width As Long, ByVal Height As Long, ByVal lpFlag As DTSTYLE) As Long
     Dim TmpRect As RECT
     With TmpRect
-        .Left = x
-        .Top = y
-        .Right = x + Width
-        .Bottom = y + Height
+        .Left = X
+        .Top = Y
+        .Right = X + Width
+        .Bottom = Y + Height
     End With
     pDrawTextL = DrawText(hDC, Text, -1, TmpRect, lpFlag)
 End Function
@@ -1918,14 +1919,14 @@ Private Function pFillRect(ByVal hDC As Long, ByVal X1 As Long, ByVal Y1 As Long
     DeleteObject TmpBrush
 End Function
 
-Private Function pFillRectL(ByVal hDC As Long, ByVal x As Long, ByVal y As Long, ByVal Width As Long, ByVal Height As Long, ByVal Color As Long) As Long
+Private Function pFillRectL(ByVal hDC As Long, ByVal X As Long, ByVal Y As Long, ByVal Width As Long, ByVal Height As Long, ByVal Color As Long) As Long
     Dim TmpRect     As RECT
     Dim TmpBrush    As Long
     With TmpRect
-        .Left = x
-        .Top = y
-        .Right = x + Width
-        .Bottom = y + Height
+        .Left = X
+        .Top = Y
+        .Right = X + Width
+        .Bottom = Y + Height
     End With
     TmpBrush = CreateSolidBrush(Color)
     pFillRectL = FillRect(hDC, TmpRect, TmpBrush)
@@ -1958,25 +1959,25 @@ Private Sub pSetRectW(ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVa
     End With
 End Sub
 
-Private Function pDrawFocusRect(ByVal hDC As Long, ByVal x As Long, ByVal y As Long, ByVal Width As Long, ByVal Height As Long) As Long
+Private Function pDrawFocusRect(ByVal hDC As Long, ByVal X As Long, ByVal Y As Long, ByVal Width As Long, ByVal Height As Long) As Long
     Dim TmpRect As RECT
     With TmpRect
-        .Left = x
-        .Top = y
-        .Right = x + Width
-        .Bottom = y + Height
+        .Left = X
+        .Top = Y
+        .Right = X + Width
+        .Bottom = Y + Height
     End With
     pDrawFocusRect = DrawFocusRect(hDC, TmpRect)
 End Function
 
-Private Function pFrameRect(ByVal hDC As Long, ByVal x As Long, y As Long, ByVal Width As Long, ByVal Height As Long, ByVal Color As Long) As Long
+Private Function pFrameRect(ByVal hDC As Long, ByVal X As Long, Y As Long, ByVal Width As Long, ByVal Height As Long, ByVal Color As Long) As Long
     Dim TmpRect     As RECT
     Dim m_hBrush    As Long
     With TmpRect
-        .Left = x
-        .Top = y
-        .Right = x + Width
-        .Bottom = y + Height
+        .Left = X
+        .Top = Y
+        .Right = X + Width
+        .Bottom = Y + Height
     End With
     m_hBrush = CreateSolidBrush(Color)
     pFrameRect = FrameRect(hDC, TmpRect, m_hBrush)

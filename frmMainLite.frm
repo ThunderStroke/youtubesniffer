@@ -1,10 +1,10 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.Form frmMainLite 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "AG YouTube Video Grabber - Lite"
-   ClientHeight    =   5040
+   ClientHeight    =   5145
    ClientLeft      =   45
    ClientTop       =   735
    ClientWidth     =   11010
@@ -20,7 +20,7 @@ Begin VB.Form frmMainLite
    Icon            =   "frmMainLite.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   5040
+   ScaleHeight     =   5145
    ScaleWidth      =   11010
    StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdDownload 
@@ -112,7 +112,7 @@ Begin VB.Form frmMainLite
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   120
+         Left            =   0
          TabIndex        =   3
          Top             =   120
          Width           =   8175
@@ -145,10 +145,10 @@ Begin VB.Form frmMainLite
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   3015
+      Height          =   2775
       Left            =   240
       MouseIcon       =   "frmMainLite.frx":6094
-      ScaleHeight     =   2985
+      ScaleHeight     =   2745
       ScaleWidth      =   5025
       TabIndex        =   0
       Top             =   1440
@@ -174,8 +174,15 @@ Option Explicit
 Dim nVideoFileSize As String
 Dim strVideoType As String
 Public strVideoID As String, strVideoTitle As String, strVideoViews As String, strVideoLength As String
-Public strVideoUploader As String, strVideoChannel As String
+Public strVideoUploader As String, strVideoChannel As String, strDownloadLink As String
 
+
+Private Sub cmdDownload_Click()
+    strDownloadLink = lvwDownloadLinks.SelectedItem.SubItems(1)
+    Load frmDownloaderLite
+    frmDownloaderLite.Show
+    
+End Sub
 
 Private Sub cmdMoreInfo_Click()
     Load frmMoreInfoLite
@@ -198,7 +205,7 @@ End Sub
 Private Sub inetLinkInfo_StateChanged(ByVal State As Integer)
     If State = 12 Then
         nVideoFileSize = VBStrFormatByteSize(inetLinkInfo.GetHeader("content-length"))
-        strVideoType = inetLinkInfo.GetHeader("content-type")
+        strVideoType = Replace(Replace(inetLinkInfo.GetHeader("content-type"), "x-", ""), "video/", "")
     End If
     
 End Sub
@@ -218,7 +225,7 @@ Private Sub lvwDownloadLinks_ItemClick(ByVal Item As MSComctlLib.ListItem)
     Loop
     
     lblInfo.Caption = lblInfo.Caption & nVideoFileSize & "      "
-    lblInfo.Caption = lblInfo.Caption & "*." & Replace(Replace(strVideoType, "x-", ""), "video/", "")
+    lblInfo.Caption = lblInfo.Caption & "*." & strVideoType
     lblInfo.AutoSize = True
     lvwDownloadLinks.Enabled = True
     cmdDownload.Enabled = True
@@ -268,6 +275,7 @@ End Sub
 Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
     
     If KeyCode = 13 Then
+        Dim lvwItems As ListItem, nI As Long, strDownloadLinks() As String
         If txtLink.Text = "" Then CleanUp: Exit Sub
         txtLink.Enabled = False
         tmrGetClipData.Enabled = False
@@ -279,13 +287,9 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         lblTitle.Caption = txtLink.Text
         SeperateSWF txtLink.Text
         LoadPicScreenShot picScreenShot, picScreenShot
-        
         LoadVideoInfoLite txtLink.Text, strVideoTitle, strVideoUploader, strVideoChannel, strVideoID, strVideoViews, strVideoLength
-        
         lblTitle.Caption = strVideoTitle & "        " & IIf(strVideoUploader <> "", "By - " & strVideoUploader, "")
-        Dim strDownloadLinks() As String
         ProcessDownloadLinks strDownloadLinks
-        Dim lvwItems As ListItem, nI As Long
         For nI = 0 To UBound(strDownloadLinks)
             Set lvwItems = lvwDownloadLinks.ListItems.Add(, , ExtractMatch(strDownloadLinks(nI), "&quality=([a-zA-Z0-9]*)"))
             lvwItems.SubItems(1) = strDownloadLinks(nI)

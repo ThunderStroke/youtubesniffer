@@ -3,7 +3,7 @@ Begin VB.Form frmMoreInfoLite
    AutoRedraw      =   -1  'True
    BorderStyle     =   1  'Fixed Single
    Caption         =   "AG YouTube Video Grabber - Lite - More Info"
-   ClientHeight    =   4800
+   ClientHeight    =   4395
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   11415
@@ -19,7 +19,7 @@ Begin VB.Form frmMoreInfoLite
    Icon            =   "frmMoreInfoLite.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   4800
+   ScaleHeight     =   4395
    ScaleWidth      =   11415
    StartUpPosition =   3  'Windows Default
    Begin VB.TextBox txtInfo 
@@ -111,10 +111,6 @@ Private Sub Form_Load()
     lblTitle.Caption = frmMainLite.strVideoTitle
     picScrollCon.BorderStyle = 0
     LoadInfo
-End Sub
-
-Private Sub picInfo_Click()
-    
 End Sub
 
 Private Sub tmrScrolling_Timer()
