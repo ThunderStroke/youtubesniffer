@@ -14,9 +14,7 @@ Public Function SeperateSWF(ByVal strVideoURL As String) As String
     strWebHTML = Replace(strWebHTML, vbCrLf, "")
     strWebHTML = Replace(strWebHTML, vbLf, "")
     strWebHTML = Replace(strWebHTML, vbCr, "")
-    If strWebHTML = "" Then
-        SeperateSWF = "Hey! No data recieved! Check your network connection! Or retry!": Exit Function
-    End If
+    If strWebHTML = "" Then Exit Function
     strDecodedSWF = URLDecode(URLDecode(URLDecode(Mid(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), InStr(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), "url_encoded_fmt_stream_map")))))
     'frmMain.Text1.Text = strDecodedSWF
 End Function

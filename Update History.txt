@@ -24,3 +24,9 @@
 
 =27/9/2012=
 * Fix Bugs - URLDecoder may be failed to decode some webpage.
+ 
+=4/9/2012=
+* Main
+	* Fixed bug in textbox for typing the YouTube video link, not restore to orginal state if get link from the clipboard automaticaly
+	* Fixed bug when not connected to internet
+

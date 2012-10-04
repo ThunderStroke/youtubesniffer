@@ -24,11 +24,11 @@ Begin VB.Form frmSettings
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox picLite 
       Height          =   4215
-      Left            =   2760
+      Left            =   2880
       ScaleHeight     =   4155
       ScaleWidth      =   6195
       TabIndex        =   26
-      Top             =   1320
+      Top             =   1680
       Visible         =   0   'False
       Width           =   6255
       Begin AGYouTubeVideoGrabber.cltSwitch swhLiteDef 
@@ -516,7 +516,7 @@ Private Sub Form_Load()
     picArrow.BorderStyle = 0
     picLite.BorderStyle = 0
     picArrow.Left = cmdGeneral.Left + cmdGeneral.Width + 100
-    LoadResImage 102, "custom", picArrow.hWnd, picArrow.hDC
+    LoadResImage 102, "custom", picArrow.hWnd, picArrow.hdc
     picArrow.Refresh
     
     lnDivider.Y2 = Me.Height

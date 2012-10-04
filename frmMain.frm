@@ -297,7 +297,7 @@ Begin VB.Form frmMain
          Height          =   315
          Left            =   120
          TabIndex        =   2
-         Text            =   "Paste your YouTube video link here..."
+         Text            =   "Paste the YouTube video link here... Press enter when you're done"
          ToolTipText     =   "Enter YouTube Video Link Here"
          Top             =   240
          Width           =   8655
@@ -552,6 +552,9 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu mnuOpti 
          Caption         =   "Optimize My Usage"
+      End
+      Begin VB.Menu mnuRestart 
+         Caption         =   "Restart Grabber"
       End
    End
    Begin VB.Menu mnuLite 
@@ -836,6 +839,8 @@ Private Sub Form_Unload(Cancel As Integer)
     
 End Sub
 
+
+
 Private Sub InetFileSize_StateChanged(ByVal State As Integer)
     On Error Resume Next
     'Dim vtData As String
@@ -966,6 +971,13 @@ Private Sub mnuOpti_Click()
 End Sub
 
 
+Private Sub mnuRestart_Click()
+    Do Until OpenProcess(&H400, 0, Shell(App.Path & "\" & App.EXEName & ".exe")) <> 0
+        DoEvents
+    Loop
+    End
+End Sub
+
 'Private Sub mnuPlayer_Click()
 'frmPlay.Show 1
 'End Sub
@@ -985,21 +997,21 @@ Private Sub mnuSubSavePicAs_Click()
         .DefaultExt = ".bmp"
         .Filter = "Bitmap File (*.BMP)|*.BMP"
         .ShowSave
-        If Len(.FileName) = 0 Then
+        If Len(.filename) = 0 Then
             Exit Sub
         Else
-            If Dir$(.FileName) <> "" Then
+            If Dir$(.filename) <> "" Then
                 Static Num As Integer
                 Dim TextPicTmp As String
-                If TextPicTmp = "" Then TextPicTmp = .FileName
-                Do Until Dir$(.FileName) = ""
+                If TextPicTmp = "" Then TextPicTmp = .filename
+                Do Until Dir$(.filename) = ""
                     If Num = 0 Then Num = 1
-                    .FileName = Mid$(TextPicTmp, 1, InStrRev(TextPicTmp, ".") - 1) & "(" & Num & ")" & Right$(TextPicTmp, Len(TextPicTmp) - InStrRev(TextPicTmp, ".") + 1)
+                    .filename = Mid$(TextPicTmp, 1, InStrRev(TextPicTmp, ".") - 1) & "(" & Num & ")" & Right$(TextPicTmp, Len(TextPicTmp) - InStrRev(TextPicTmp, ".") + 1)
                     Num = Num + 1
                 Loop
             End If
             Picture1.Picture = Picture1.Image
-            SavePicture Picture1.Picture, .FileName
+            SavePicture Picture1.Picture, .filename
             lstAdd "ScreenShot Saved."
             
         End If
@@ -1188,17 +1200,18 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
     Dim nTimeCount As Long
     nTimeCount = timeGetTime
     On Error Resume Next
-    
     If KeyCode = 13 Then
         If txtLink.Text = "" Then CleanUp: Exit Sub
         txtLink.Enabled = False
         tvwQuality.SetFocus
         'Dim lvwItems As Integer
         CleanUp
-        If InStr(LCase(txtLink.Text), "www.youtube.com") = 0 Then lstAdd "Invalid Link": txtLink.Text = "": txtLink.SetFocus: Exit Sub
+        txtLink.Font.Italic = False
+        txtLink.ForeColor = vbBlack
         trmGetClipData.Enabled = False
+        If InStr(LCase(txtLink.Text), "www.youtube.com") = 0 Then lstAdd "Invalid Link": txtLink.Text = "": txtLink.SetFocus: Exit Sub
         lstAdd "Getting Web Source Code"
-        If SeperateSWF(txtLink.Text) = "Hey! No data recieved! Check your network connection" Then
+        If SeperateSWF(txtLink.Text) = "" Then
             lstAdd "Hey! No data recieved! Check your network connection"
             CleanUp
             Exit Sub
@@ -1236,7 +1249,6 @@ goterr:
 End Sub
 
 Private Sub CleanUp()
-    lstAdd "Reseting.."
     'cmbDownloadOption.Clear
     'cmbDownloadOption.AddItem "Please Select..."
     'cmbDownloadOption.ListIndex = 0
@@ -1259,6 +1271,7 @@ Private Sub CleanUp()
     'txtLink.Enabled = True
     Picture1 = LoadPicture("")
     Picture2 = LoadPicture("")
+    'txtTips txtLink, "Paste the YouTube video link here... Press enter when you're done", False
     OptiUsage GetCurrentProcess
 End Sub
 

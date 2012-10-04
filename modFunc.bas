@@ -27,10 +27,10 @@ Private Const CP_UTF8 = 65001
 
 'Load Picture
 Private Type TGUID
-    Data1 As Long
-    Data2 As Integer
-    Data3 As Integer
-    Data4(0 To 7) As Byte
+    data1 As Long
+    data2 As Integer
+    data3 As Integer
+    data4(0 To 7) As Byte
 End Type
 Private Declare Function OleLoadPicturePath Lib "oleaut32.dll" (ByVal szURLorPath As Long, ByVal punkCaller As Long, ByVal dwReserved As Long, ByVal clrReserved As OLE_COLOR, ByRef riid As TGUID, ByRef ppvRet As IPicture) As Long
 'Load Picture End===
@@ -41,7 +41,7 @@ Public Declare Function TerminateProcess Lib "kernel32" (ByVal hProcess As Long,
 'Terminate Process End===
 
 'Round Form
-Public Declare Function RoundRect Lib "gdi32" (ByVal hDC As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long) As Long
+Public Declare Function RoundRect Lib "gdi32" (ByVal hdc As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long) As Long
 Public Declare Function CreateRoundRectRgn Lib "gdi32" (ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long) As Long
 Public Declare Function SetWindowRgn Lib "user32" (ByVal hWnd As Long, ByVal hRgn As Long, ByVal bRedraw As Boolean) As Long
 'Round Form End===
@@ -60,7 +60,6 @@ End Type
 'Optimize Usage
 Public Declare Function SetProcessWorkingSetSize Lib "kernel32" (ByVal hProcess As Long, ByVal dwMinimumWorkingSetSize As Long, ByVal dwMaximumWorkingSetSize As Long) As Long
 'Optimize Usage End===
-
 
 'Remove Menu===
 Public Declare Function GetSystemMenu Lib "user32" (ByVal hWnd As Long, ByVal bRevert As Long) As Long
@@ -108,7 +107,9 @@ Public Function Utf8ToUnicode(ByRef Utf() As Byte) As String
     End If
 End Function
 
-Public Function DownHTML(strURL As String, strCharset As String)
+Public Function DownHTML(strURL As String, strCharset As String) As String
+    
+    
     DownHTML = ""
     On Error Resume Next
     Dim objAdoStream As Object
@@ -137,38 +138,38 @@ Public Function DownHTML(strURL As String, strCharset As String)
     
 End Function
 
-Public Function UTF8_UrlDecode(ByVal URL As String)
-    Dim B, ub
-    Dim UtfB
-    Dim UtfB1, UtfB2, UtfB3
-    Dim I, n, s
-    n = 0
-    ub = 0
-    For I = 1 To Len(URL)
-        DoEvents
-        B = Mid(URL, I, 1)
-        Select Case B
-        Case "+"
-            s = s & " "
-        Case "%"
-            ub = Mid(URL, I + 1, 2)
-            UtfB = Val("&H" & ub)
-            If UtfB < 128 Then
-                I = I + 2
-                s = s & ChrW(UtfB)
-            Else
-                UtfB1 = (UtfB And &HF) * &H1000
-                UtfB2 = (CInt("&H" & Mid(URL, I + 4, 2)) And &H3F) * &H40
-                UtfB3 = CInt("&H" & Mid(URL, I + 7, 2)) And &H3F
-                s = s & ChrW(UtfB1 Or UtfB2 Or UtfB3)
-                I = I + 8
-            End If
-        Case Else
-            s = s & B
-        End Select
-    Next
-    UTF8_UrlDecode = s
-End Function
+'Public Function UTF8_UrlDecode(ByVal URL As String)
+'    Dim B, ub
+'    Dim UtfB
+'    Dim UtfB1, UtfB2, UtfB3
+'    Dim I, n, s
+'    n = 0
+'    ub = 0
+'    For I = 1 To Len(URL)
+'        DoEvents
+'        B = Mid(URL, I, 1)
+'        Select Case B
+'        Case "+"
+'            s = s & " "
+'        Case "%"
+'            ub = Mid(URL, I + 1, 2)
+'            UtfB = Val("&H" & ub)
+'            If UtfB < 128 Then
+'                I = I + 2
+'                s = s & ChrW(UtfB)
+'            Else
+'                UtfB1 = (UtfB And &HF) * &H1000
+'                UtfB2 = (CInt("&H" & Mid(URL, I + 4, 2)) And &H3F) * &H40
+'                UtfB3 = CInt("&H" & Mid(URL, I + 7, 2)) And &H3F
+'                s = s & ChrW(UtfB1 Or UtfB2 Or UtfB3)
+'                I = I + 8
+'            End If
+'        Case Else
+'            s = s & B
+'        End Select
+'    Next
+'    UTF8_UrlDecode = s
+'End Function
 
 Public Function VisitURL(VisitUrlink As String)
     On Error Resume Next
@@ -212,17 +213,17 @@ Public Function LoadPicture(ByVal strFileName As String) As Picture
     
     Dim IID  As TGUID
     With IID
-        .Data1 = &H7BF80980
-        .Data2 = &HBF32
-        .Data3 = &H101A
-        .Data4(0) = &H8B
-        .Data4(1) = &HBB
-        .Data4(2) = &H0
-        .Data4(3) = &HAA
-        .Data4(4) = &H0
-        .Data4(5) = &H30
-        .Data4(6) = &HC
-        .Data4(7) = &HAB
+        .data1 = &H7BF80980
+        .data2 = &HBF32
+        .data3 = &H101A
+        .data4(0) = &H8B
+        .data4(1) = &HBB
+        .data4(2) = &H0
+        .data4(3) = &HAA
+        .data4(4) = &H0
+        .data4(5) = &H30
+        .data4(6) = &HC
+        .data4(7) = &HAB
     End With
     On Error GoTo ERR_LINE
     OleLoadPicturePath StrPtr(strFileName), 0&, 0&, 0&, IID, LoadPicture
@@ -269,5 +270,4 @@ Public Sub txtTips(ByVal txtDest As TextBox, ByVal strTips As String, ByVal bool
         txtDest.ForeColor = vbBlack
     End If
 End Sub
-
 

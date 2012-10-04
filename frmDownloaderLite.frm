@@ -2,15 +2,15 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.Form frmDownloaderLite 
    Caption         =   "AG YouTube Video Grabber - Lite - Downloader"
-   ClientHeight    =   4350
+   ClientHeight    =   4230
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   10320
+   ClientWidth     =   10200
    Icon            =   "frmDownloaderLite.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   290
+   ScaleHeight     =   282
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   688
+   ScaleWidth      =   680
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox picScrollCon 
       Height          =   495

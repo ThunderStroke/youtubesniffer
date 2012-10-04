@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.Form frmDownload 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "AG Youtube Video Downloader"
@@ -478,12 +478,12 @@ Private Sub blnStart_Click()
     wd.URL = DownForm.Caption
     
     
-    wd.FileName = DownTo.Text
+    wd.filename = DownTo.Text
     
     'DownTo.Text = wd.FileName
     
-    If wd.FileName <> "" Then
-        DownTo.Text = wd.FileName
+    If wd.filename <> "" Then
+        DownTo.Text = wd.filename
     Else
         'Dim DownX As Long, dx As Long
         'For dx = 1 To lvwDownload.ListItems.Count
@@ -497,14 +497,14 @@ Private Sub blnStart_Click()
             DownForm.Caption = lvwDownload.ListItems.Item(1)
         End If
         DownTo.Text = App.Path & "\" & lvwDownload.ListItems.Item(1).SubItems(3) & Right(lvwDownload.ListItems.Item(1).SubItems(4), Len(lvwDownload.ListItems.Item(1).SubItems(4)) - 1)
-        wd.FileName = DownTo.Text
+        wd.filename = DownTo.Text
     End If
     
     DownloadedOrCanceled = wd.DownloadToFile
     
     'IsDownloading = DownloadedOrCanceled
     If DownloadedOrCanceled = False Then
-        Kill wd.FileName
+        Kill wd.filename
     ElseIf mnuOpenFolder.Checked = True Then
         Shell "explorer /select," & DownTo.Text
     End If
@@ -602,14 +602,16 @@ End Sub
 
 Private Sub cmdSelectFile_Click()
     With cdFile
+        .filename = DownTo.Text
         .DefaultExt = frmMain.txtExtension.Text
         .Filter = frmMain.txtCodec.Text & " (" & frmMain.txtExtension.Text & ")" & "|" & frmMain.txtExtension.Text
         .ShowSave
-        If Len(.FileName) = 0 Then
+        
+        If Len(.filename) = 0 Then
             Exit Sub
         Else
             
-            DownTo.Text = .FileName
+            DownTo.Text = .filename
             If Dir$(DownTo.Text) <> "" Then
                 Static Num As Integer
                 Dim TextToTmp As String
@@ -617,7 +619,7 @@ Private Sub cmdSelectFile_Click()
                 Do Until Dir$(DownTo.Text) = ""
                     If Num = 0 Then Num = 1
                     DownTo.Text = Mid$(TextToTmp, 1, InStrRev(TextToTmp, ".") - 1) & "(" & Num & ")" & Right$(TextToTmp, Len(TextToTmp) - InStrRev(TextToTmp, ".") + 1)
-                    wd.FileName = DownTo.Text
+                    wd.filename = DownTo.Text
                     Num = Num + 1
                 Loop
             End If
@@ -640,7 +642,7 @@ Private Sub Form_Load()
     wd.URL = DownForm.Caption
     LoopFormControls Me
     'wd.FileName = App.Path & "\" & frmMain.txtTitle.Text & Right(frmMain.txtExtension.Text, Len(frmMain.txtExtension.Text) - 1)
-    wd.FileName = DownTo.Text
+    wd.filename = DownTo.Text
     'mnuOpenFolder.Checked = GetIni("Downloader", "AutoConvertVideo", True, App.Path & "\YoutubeGrabberOption.ini")
     mnuOpenFolder.Checked = GetIni("Downloader", "AutoOpenFolder", True, App.Path & "\YoutubeGrabberOption.ini")
     OptiUsage GetCurrentProcess
