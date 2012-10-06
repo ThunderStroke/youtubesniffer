@@ -14,7 +14,7 @@ Public Function SeperateSWF(ByVal strVideoURL As String) As String
     strWebHTML = Replace(strWebHTML, vbCrLf, "")
     strWebHTML = Replace(strWebHTML, vbLf, "")
     strWebHTML = Replace(strWebHTML, vbCr, "")
-    If strWebHTML = "" Then Exit Function
+    If strWebHTML = "" Then strWebHTML = "ERROR": Exit Function
     strDecodedSWF = URLDecode(URLDecode(URLDecode(Mid(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), InStr(Mid(strWebHTML, InStr(strWebHTML, "var swf ="), InStr(strWebHTML, ".innerHTML = swf;") - InStr(strWebHTML, "var swf =")), "url_encoded_fmt_stream_map")))))
     'frmMain.Text1.Text = strDecodedSWF
 End Function
@@ -84,5 +84,13 @@ Public Function ProcessDownloadLinks(ByRef strDownloadLink() As String)
             nLinkCount = nLinkCount + 1
             ReDim Preserve strDownloadLink(nLinkCount)
         End If
+    Next
+End Function
+
+Public Function FilterInvalidChar(ByRef strVideoTitle As String)
+    Dim strInvalidStr() As String, nI As Long
+    strInvalidStr = Split("\ / : * ? "" < > |", " ")
+    For nI = 0 To UBound(strInvalidStr)
+        strVideoTitle = Replace(strVideoTitle, strInvalidStr(nI), "-")
     Next
 End Function

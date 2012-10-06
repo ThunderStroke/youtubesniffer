@@ -41,7 +41,7 @@ Public Declare Function TerminateProcess Lib "kernel32" (ByVal hProcess As Long,
 'Terminate Process End===
 
 'Round Form
-Public Declare Function RoundRect Lib "gdi32" (ByVal hdc As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long) As Long
+Public Declare Function RoundRect Lib "gdi32" (ByVal hDC As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long) As Long
 Public Declare Function CreateRoundRectRgn Lib "gdi32" (ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal X3 As Long, ByVal Y3 As Long) As Long
 Public Declare Function SetWindowRgn Lib "user32" (ByVal hWnd As Long, ByVal hRgn As Long, ByVal bRedraw As Boolean) As Long
 'Round Form End===
@@ -108,8 +108,6 @@ Public Function Utf8ToUnicode(ByRef Utf() As Byte) As String
 End Function
 
 Public Function DownHTML(strURL As String, strCharset As String) As String
-    
-    
     DownHTML = ""
     On Error Resume Next
     Dim objAdoStream As Object
@@ -249,7 +247,7 @@ Public Function ExtractMatch(Text, Pattern)
 End Function
 
 Public Sub OptiUsage(ByVal nGetCurrentProcess As Long)
-    SetProcessWorkingSetSize nGetCurrentProcess, -1&, -1&
+    'SetProcessWorkingSetSize nGetCurrentProcess, -1&, -1&
 End Sub
 
 Public Sub LoopFormControls(ByVal frmForm As Form)

@@ -172,7 +172,7 @@ Private TimeConsuming           As Double                                       
 Private dbSpeed                 As Double                                       '下载速度
 
 '下载库通过该事件通知文件下载进度
-Event Progress(ByVal dbFileSize As Double, ByVal dbFinished As Double, ByVal dbSpeed As Double)
+Event Progress(ByVal dbFileSize As Double, ByVal dbFinished As Double, ByVal dbSpeed As Double, ByVal strTimeElapsed As String)
 '下载库通过该事件通知下载过程结束
 Event DownloadEnd(ByVal bSuccess As Boolean)
 '下载库通过该函数通知下载状态
@@ -547,7 +547,9 @@ Public Function DownLoadToText() As String
             ' 开始接收数据
             RaiseEvent Status(s5)
             ' 进度信息
-            RaiseEvent Progress(TatolSize, ReadTatols, dbSpeed)
+            Dim strTime As String
+            strTime = ConvertToTime(Int(Timer() - dtTimerStart))
+            RaiseEvent Progress(TatolSize, ReadTatols, dbSpeed, strTime)
         Else
             Exit Do
         End If
@@ -658,11 +660,10 @@ Public Function DownloadToFile() As Boolean
             ' 开始接收数据
             RaiseEvent Status(s5)
             ' 进度信息
-            RaiseEvent Progress(TatolSize, ReadTatols, dbSpeed)
+            Dim strTime As Long
+            strTime = ConvertToTime(Int(Timer() - dtTimerStart))
+            RaiseEvent Progress(TatolSize, ReadTatols, dbSpeed, strTime)
             'frmDownload.lblTime = Format(CDate(Int(Timer())) - CDate(Int(dtTimerStart)), "hh:mm:ss")
-            If frmDownload.Visible = True Then
-                frmDownload.lblTime = ConvertToTime(Int(Timer() - dtTimerStart))
-            End If
         Else
             Exit Do
         End If

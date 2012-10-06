@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmDownload 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "AG Youtube Video Downloader"
@@ -67,11 +67,11 @@ Begin VB.Form frmDownload
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   255
+         Height          =   375
          Left            =   6720
          TabIndex        =   6
          Top             =   480
-         Width           =   375
+         Width           =   495
       End
       Begin AGYouTubeVideoGrabber.ctlProgressBar myProgressBar1 
          Height          =   150
@@ -478,12 +478,12 @@ Private Sub blnStart_Click()
     wd.URL = DownForm.Caption
     
     
-    wd.filename = DownTo.Text
+    wd.FileName = DownTo.Text
     
     'DownTo.Text = wd.FileName
     
-    If wd.filename <> "" Then
-        DownTo.Text = wd.filename
+    If wd.FileName <> "" Then
+        DownTo.Text = wd.FileName
     Else
         'Dim DownX As Long, dx As Long
         'For dx = 1 To lvwDownload.ListItems.Count
@@ -497,14 +497,14 @@ Private Sub blnStart_Click()
             DownForm.Caption = lvwDownload.ListItems.Item(1)
         End If
         DownTo.Text = App.Path & "\" & lvwDownload.ListItems.Item(1).SubItems(3) & Right(lvwDownload.ListItems.Item(1).SubItems(4), Len(lvwDownload.ListItems.Item(1).SubItems(4)) - 1)
-        wd.filename = DownTo.Text
+        wd.FileName = DownTo.Text
     End If
     
     DownloadedOrCanceled = wd.DownloadToFile
     
     'IsDownloading = DownloadedOrCanceled
     If DownloadedOrCanceled = False Then
-        Kill wd.filename
+        Kill wd.FileName
     ElseIf mnuOpenFolder.Checked = True Then
         Shell "explorer /select," & DownTo.Text
     End If
@@ -601,32 +601,41 @@ Private Sub cmdDownSelected_Click()
 End Sub
 
 Private Sub cmdSelectFile_Click()
+    On Error GoTo errCancel
     With cdFile
-        .filename = DownTo.Text
+        .FileName = DownTo.Text
+        .Flags = 2
+        .CancelError = True
         .DefaultExt = frmMain.txtExtension.Text
         .Filter = frmMain.txtCodec.Text & " (" & frmMain.txtExtension.Text & ")" & "|" & frmMain.txtExtension.Text
         .ShowSave
         
-        If Len(.filename) = 0 Then
-            Exit Sub
-        Else
-            
-            DownTo.Text = .filename
-            If Dir$(DownTo.Text) <> "" Then
-                Static Num As Integer
-                Dim TextToTmp As String
-                If TextToTmp = "" Then TextToTmp = DownTo.Text
-                Do Until Dir$(DownTo.Text) = ""
-                    If Num = 0 Then Num = 1
-                    DownTo.Text = Mid$(TextToTmp, 1, InStrRev(TextToTmp, ".") - 1) & "(" & Num & ")" & Right$(TextToTmp, Len(TextToTmp) - InStrRev(TextToTmp, ".") + 1)
-                    wd.filename = DownTo.Text
-                    Num = Num + 1
-                Loop
-            End If
-        End If
+        If Len(.FileName) = 0 Then Exit Sub
+        DownTo.Text = .FileName
+        wd.FileName = .FileName
+        '        Exit Sub
+        '    Else
+        '
+        '        DownTo.Text = .FileName
+        '        If Dir$(DownTo.Text) <> "" Then
+        '            Static Num As Integer
+        '            Dim TextToTmp As String
+        '            If TextToTmp = "" Then TextToTmp = DownTo.Text
+        '            Do Until Dir$(DownTo.Text) = ""
+        '                If Num = 0 Then Num = 1
+        '                DownTo.Text = Mid$(TextToTmp, 1, InStrRev(TextToTmp, ".") - 1) & "(" & Num & ")" & Right$(TextToTmp, Len(TextToTmp) - InStrRev(TextToTmp, ".") + 1)
+        '                wd.FileName = DownTo.Text
+        '                Num = Num + 1
+        '            Loop
+        '        End If
+        '    End If
         
         
     End With
+errCancel:
+    If Err.Number = cdlCancel Then
+        DownTo.Text = App.Path & "\" & frmMainLite.strVideoTitle & frmMainLite.strExtension
+    End If
 End Sub
 
 
@@ -642,7 +651,7 @@ Private Sub Form_Load()
     wd.URL = DownForm.Caption
     LoopFormControls Me
     'wd.FileName = App.Path & "\" & frmMain.txtTitle.Text & Right(frmMain.txtExtension.Text, Len(frmMain.txtExtension.Text) - 1)
-    wd.filename = DownTo.Text
+    wd.FileName = DownTo.Text
     'mnuOpenFolder.Checked = GetIni("Downloader", "AutoConvertVideo", True, App.Path & "\YoutubeGrabberOption.ini")
     mnuOpenFolder.Checked = GetIni("Downloader", "AutoOpenFolder", True, App.Path & "\YoutubeGrabberOption.ini")
     OptiUsage GetCurrentProcess
@@ -701,7 +710,7 @@ Private Sub mnuOpenFolder_Click()
 End Sub
 
 ' 下载进度
-Private Sub wd_Progress(ByVal dbFileSize As Double, ByVal dbFinished As Double, ByVal dbSpeed As Double)
+Private Sub wd_Progress(ByVal dbFileSize As Double, ByVal dbFinished As Double, ByVal dbSpeed As Double, ByVal strTimeElapsed As String)
     Dim BFile       As String
     Dim BRead       As String
     Dim BShare      As Double
@@ -720,6 +729,7 @@ Private Sub wd_Progress(ByVal dbFileSize As Double, ByVal dbFinished As Double, 
         BSpeed = VBStrFormatByteSize(dbSpeed)
         DownSpeed.Caption = "Throughput " & BSpeed & " /s"
     End If
+    lblTime.Caption = strTimeElapsed
 End Sub
 
 ' 下载结束

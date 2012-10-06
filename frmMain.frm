@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    AutoRedraw      =   -1  'True
    BorderStyle     =   1  'Fixed Single
@@ -839,14 +839,12 @@ Private Sub Form_Unload(Cancel As Integer)
     
 End Sub
 
-
-
 Private Sub InetFileSize_StateChanged(ByVal State As Integer)
     On Error Resume Next
     'Dim vtData As String
     If State = 12 Then
         nVideoFileSize = VBStrFormatByteSize(InetFileSize.GetHeader("content-length"))
-        strVideoType = InetFileSize.GetHeader("content-type")
+        strVideoType = Replace(Replace(Replace(InetFileSize.GetHeader("content-type"), "x-", ""), "video/", ""), "3gpp", "3gp")
         'vtData = InetFileSize.GetHeader("content-length")
         'MsgBox InetFileSize.GetHeader("content-type")
         'Do While InetFileSize.StillExecuting
@@ -997,21 +995,21 @@ Private Sub mnuSubSavePicAs_Click()
         .DefaultExt = ".bmp"
         .Filter = "Bitmap File (*.BMP)|*.BMP"
         .ShowSave
-        If Len(.filename) = 0 Then
+        If Len(.FileName) = 0 Then
             Exit Sub
         Else
-            If Dir$(.filename) <> "" Then
+            If Dir$(.FileName) <> "" Then
                 Static Num As Integer
                 Dim TextPicTmp As String
-                If TextPicTmp = "" Then TextPicTmp = .filename
-                Do Until Dir$(.filename) = ""
+                If TextPicTmp = "" Then TextPicTmp = .FileName
+                Do Until Dir$(.FileName) = ""
                     If Num = 0 Then Num = 1
-                    .filename = Mid$(TextPicTmp, 1, InStrRev(TextPicTmp, ".") - 1) & "(" & Num & ")" & Right$(TextPicTmp, Len(TextPicTmp) - InStrRev(TextPicTmp, ".") + 1)
+                    .FileName = Mid$(TextPicTmp, 1, InStrRev(TextPicTmp, ".") - 1) & "(" & Num & ")" & Right$(TextPicTmp, Len(TextPicTmp) - InStrRev(TextPicTmp, ".") + 1)
                     Num = Num + 1
                 Loop
             End If
             Picture1.Picture = Picture1.Image
-            SavePicture Picture1.Picture, .filename
+            SavePicture Picture1.Picture, .FileName
             lstAdd "ScreenShot Saved."
             
         End If
@@ -1166,7 +1164,7 @@ Private Sub txtDownloadLink_Change()
     lstAdd "Video File Size Loaded"
     txtCodec.Text = strVideoType
     strVideoType = Replace(strVideoType, "lvwItems-", "")
-    txtExtension.Text = "*." & Replace(strVideoType, "video/", "")
+    txtExtension.Text = "*." & strVideoType
     
     cmdBrowse.Enabled = True
     cmdDown.Enabled = True
@@ -1211,7 +1209,7 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         trmGetClipData.Enabled = False
         If InStr(LCase(txtLink.Text), "www.youtube.com") = 0 Then lstAdd "Invalid Link": txtLink.Text = "": txtLink.SetFocus: Exit Sub
         lstAdd "Getting Web Source Code"
-        If SeperateSWF(txtLink.Text) = "" Then
+        If SeperateSWF(txtLink.Text) = "ERROR" Then
             lstAdd "Hey! No data recieved! Check your network connection"
             CleanUp
             Exit Sub

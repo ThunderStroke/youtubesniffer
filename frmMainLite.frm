@@ -1,10 +1,10 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMainLite 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "AG YouTube Video Grabber - Lite"
-   ClientHeight    =   5145
+   ClientHeight    =   5925
    ClientLeft      =   45
    ClientTop       =   735
    ClientWidth     =   11010
@@ -20,7 +20,7 @@ Begin VB.Form frmMainLite
    Icon            =   "frmMainLite.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   5145
+   ScaleHeight     =   5925
    ScaleWidth      =   11010
    StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdDownload 
@@ -35,11 +35,11 @@ Begin VB.Form frmMainLite
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   375
-      Left            =   5520
+      Height          =   975
+      Left            =   240
       TabIndex        =   7
-      Top             =   4560
-      Width           =   5295
+      Top             =   4800
+      Width           =   10575
    End
    Begin VB.CommandButton cmdMoreInfo 
       Caption         =   "<<<More About This Video>>>"
@@ -47,7 +47,7 @@ Begin VB.Form frmMainLite
       Height          =   375
       Left            =   240
       TabIndex        =   6
-      Top             =   4560
+      Top             =   4320
       Width           =   5055
    End
    Begin VB.Timer tmrGetClipData 
@@ -57,7 +57,7 @@ Begin VB.Form frmMainLite
    End
    Begin MSComctlLib.ListView lvwDownloadLinks 
       Height          =   2775
-      Left            =   5520
+      Left            =   5400
       TabIndex        =   4
       Top             =   1440
       Width           =   5295
@@ -87,8 +87,8 @@ Begin VB.Form frmMainLite
       EndProperty
    End
    Begin InetCtlsObjects.Inet inetLinkInfo 
-      Left            =   9120
-      Top             =   1680
+      Left            =   240
+      Top             =   1560
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
@@ -174,13 +174,23 @@ Option Explicit
 Dim nVideoFileSize As String
 Dim strVideoType As String
 Public strVideoID As String, strVideoTitle As String, strVideoViews As String, strVideoLength As String
-Public strVideoUploader As String, strVideoChannel As String, strDownloadLink As String
+Public strVideoUploader As String, strVideoChannel As String
+'For Downloader
+Public strDownloadLink As String, strExtension As String, strQuality As String
 
 
 Private Sub cmdDownload_Click()
-    strDownloadLink = lvwDownloadLinks.SelectedItem.SubItems(1)
+    
+    With lvwDownloadLinks
+        strDownloadLink = .SelectedItem.SubItems(1)
+        strQuality = .SelectedItem
+    End With
+    strExtension = "." & strVideoType
     Load frmDownloaderLite
-    frmDownloaderLite.Show
+    With frmDownloaderLite
+        .txtSaveTo = App.Path & "\" & strVideoTitle & strExtension
+        .Show 1
+    End With
     
 End Sub
 
@@ -205,13 +215,14 @@ End Sub
 Private Sub inetLinkInfo_StateChanged(ByVal State As Integer)
     If State = 12 Then
         nVideoFileSize = VBStrFormatByteSize(inetLinkInfo.GetHeader("content-length"))
-        strVideoType = Replace(Replace(inetLinkInfo.GetHeader("content-type"), "x-", ""), "video/", "")
+        strVideoType = Replace(Replace(Replace(inetLinkInfo.GetHeader("content-type"), "x-", ""), "video/", ""), "3gpp", "3gp")
     End If
     
 End Sub
 
 
 Private Sub lvwDownloadLinks_ItemClick(ByVal Item As MSComctlLib.ListItem)
+    If lvwDownloadLinks.SelectedItem.SubItems(1) = "" Then Exit Sub
     Dim lvwItems As ListItem
     lblInfo.Caption = ""
     nVideoFileSize = ""
@@ -285,9 +296,11 @@ Private Sub txtLink_KeyDown(KeyCode As Integer, Shift As Integer)
         lvwDownloadLinks.ListItems.Clear
         lblInfo.Caption = ""
         lblTitle.Caption = txtLink.Text
+        
         SeperateSWF txtLink.Text
         LoadPicScreenShot picScreenShot, picScreenShot
         LoadVideoInfoLite txtLink.Text, strVideoTitle, strVideoUploader, strVideoChannel, strVideoID, strVideoViews, strVideoLength
+        FilterInvalidChar strVideoTitle
         lblTitle.Caption = strVideoTitle & "        " & IIf(strVideoUploader <> "", "By - " & strVideoUploader, "")
         ProcessDownloadLinks strDownloadLinks
         For nI = 0 To UBound(strDownloadLinks)
