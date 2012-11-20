@@ -1,0 +1,48 @@
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\bin\Debug\YouTube Grabber.exe
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\bin\Debug\YouTube Grabber.pdb
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.frmMain.resources
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.Properties.Resources.resources
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe
+C:\Documents and Settings\GaryNg\Local Settings\Application Data\Temporary Projects\YouTube Grabber\obj\x86\Debug\YouTube Grabber.pdb
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.pdb
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\bin\Debug\YouTube Grabber.exe.config
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\bin\Debug\YouTube Grabber.exe
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\bin\Debug\YouTube Grabber.pdb
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.frmMain.resources
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.Properties.Resources.resources
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Documents and Settings\GaryNg\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\bin\Debug\YouTube Grabber.exe.config
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.pdb
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\bin\Debug\YouTube Grabber.exe
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\bin\Debug\YouTube Grabber.pdb
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.frmMain.resources
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.Properties.Resources.resources
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.csproj.GenerateResource.Cache
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\bin\Debug\YouTube Grabber.exe.manifest
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\bin\Debug\YouTube Grabber.application
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.TrustInfo.xml
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe.manifest
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.application
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube Grabber.csprojResolveAssemblyReference.cache
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\bin\Debug\YouTube Grabber.exe.config
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube Grabber.pdb
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\bin\Debug\YouTube Grabber.exe.manifest
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\bin\Debug\YouTube Grabber.application
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\bin\Debug\YouTube Grabber.exe
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\bin\Debug\YouTube Grabber.pdb
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube Grabber.csprojResolveAssemblyReference.cache
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.frmAbout.resources
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.frmMain.resources
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.Properties.Resources.resources
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube Grabber.csproj.GenerateResource.Cache
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube Grabber.TrustInfo.xml
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe.manifest
+C:\Users\ZhongBo\Desktop\YouTube Grabber - Copy\YouTube Grabber\obj\x86\Debug\YouTube Grabber.application
