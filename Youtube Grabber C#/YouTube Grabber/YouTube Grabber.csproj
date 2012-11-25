@@ -126,17 +126,6 @@
   <ItemGroup>
     <None Include="Resources\Loading.gif" />
     <None Include="Resources\GrabberLogo.png" />
-    <None Include="bin\Debug\Youtube.png" />
-    <None Include="bin\Debug\loading.gif" />
-    <None Include="bin\Debug\20_634_6470b6fc56852eb.gif" />
-    <None Include="bin\Debug\Blue-004-loading.gif" />
-    <None Include="bin\Debug\325.gif" />
-    <None Include="bin\Debug\Switch\Diable_Click.png" />
-    <None Include="bin\Debug\Switch\Disable_Hover.png" />
-    <None Include="bin\Debug\Switch\Disable_Normal.png" />
-    <None Include="bin\Debug\Switch\Enable_Click.png" />
-    <None Include="bin\Debug\Switch\Enable_Hover.png" />
-    <None Include="bin\Debug\Switch\Enable_Normal.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
