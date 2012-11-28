@@ -32,6 +32,7 @@ namespace YouTube_Grabber
             time = (DateTime.Now.Ticks - dt.Ticks) / (TimeSpan.TicksPerMillisecond * 1000);
             //System.Diagnostics.Debug.Print(((DateTime.Now.Ticks - dt.Ticks) / (TimeSpan.TicksPerMillisecond*1000) ).ToString());
             //System.Diagnostics.Debug.Print(((time / 60) % 60).ToString());
+            //System.Diagnostics.Debug.Print((e.BytesReceived.ToString() + "\t" + (DateTime.Now.Ticks - dt.Ticks).ToString()));
             DownloadProgressChangedIndex(e, intCurrentClassIndex, String.Format("{0:00}:{1:00}:{2:00}", (int)time / 3600, (int)((time / 60) % 60), (int)(time % 60)));
                 
             }

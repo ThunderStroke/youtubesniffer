@@ -451,6 +451,10 @@ namespace YouTube_Grabber
             {
                 return;
             }
+            if (diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strStatus == "Done")
+            {
+                return;
+            }
 
             DownloadQueue[lvwDonwloadList.SelectedIndices[0]].CancelAsync();
             DownloadInfo diTmp = diDownloadQueue[lvwDonwloadList.SelectedIndices[0]];
@@ -479,6 +483,24 @@ namespace YouTube_Grabber
         private void lblGoogle_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://code.google.com/p/youtubesniffer/");
+        }
+
+        private void startDownloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lvwDonwloadList.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            if (diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strStatus == "Canceled...")
+            {
+                DownloadQueue[lvwDonwloadList.SelectedIndices[0]].DownloadFileAsync(new Uri(liDonwloadList[lvwDonwloadList.SelectedIndices[0]].strVideoLink), diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strFilePath); ;
+                DownloadInfo diTmp = diDownloadQueue[lvwDonwloadList.SelectedIndices[0]];
+                diTmp.strStatus = "Downloading...";
+                diTmp.intDownloadPercentage = 0;
+                diDownloadQueue[lvwDonwloadList.SelectedIndices[0]] = diTmp;
+                UpdateListView(lvwDonwloadList.SelectedIndices[0]);
+            }
+
         }
 
 
