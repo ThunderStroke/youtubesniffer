@@ -116,7 +116,9 @@ namespace YouTube_Grabber
                 {
                     txtUrl.Text = Clipboard.GetText();
                     KeyEventArgs e  =  new KeyEventArgs(Keys.Enter);
+                    txtUrl_GotFocus(this, e);
                     txtUrl_KeyUp(this, e);
+                    
                 }
 
             }
@@ -135,6 +137,7 @@ namespace YouTube_Grabber
             btnDownload.Enabled = false;
             intCurrentSelectedDownloadLinks = 0;
             strDownloadLinks.Clear();
+            txtLinkInfo.Text = "";
 
         }
 
