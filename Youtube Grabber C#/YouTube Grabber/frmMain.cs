@@ -117,6 +117,7 @@ namespace YouTube_Grabber
             {
                 if (txtUrl.Text != Clipboard.GetText())
                 {
+                    this.Activate();
                     txtUrl.Text = Clipboard.GetText();
                     KeyEventArgs e = new KeyEventArgs(Keys.Enter);
                     txtUrl_GotFocus(this, e);
