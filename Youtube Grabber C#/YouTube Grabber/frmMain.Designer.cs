@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopUp = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.startDownloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tpAbout = new System.Windows.Forms.TabPage();
             this.lblAbout = new System.Windows.Forms.Label();
             this.lblGoogle = new System.Windows.Forms.LinkLabel();
@@ -61,7 +62,6 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.picVideoPic = new System.Windows.Forms.PictureBox();
             this.tcMain = new System.Windows.Forms.TabControl();
-            this.startDownloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopUp.SuspendLayout();
             this.tpAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -80,7 +80,7 @@
             this.mnuStop,
             this.startDownloadToolStripMenuItem});
             this.mnuPopUp.Name = "mnuPopUp";
-            this.mnuPopUp.Size = new System.Drawing.Size(156, 70);
+            this.mnuPopUp.Size = new System.Drawing.Size(156, 48);
             // 
             // mnuStop
             // 
@@ -88,6 +88,13 @@
             this.mnuStop.Size = new System.Drawing.Size(155, 22);
             this.mnuStop.Text = "Stop Download";
             this.mnuStop.Click += new System.EventHandler(this.mnuStop_Click);
+            // 
+            // startDownloadToolStripMenuItem
+            // 
+            this.startDownloadToolStripMenuItem.Name = "startDownloadToolStripMenuItem";
+            this.startDownloadToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.startDownloadToolStripMenuItem.Text = "Start Download";
+            this.startDownloadToolStripMenuItem.Click += new System.EventHandler(this.startDownloadToolStripMenuItem_Click);
             // 
             // tpAbout
             // 
@@ -225,7 +232,7 @@
             // 
             // tpMain
             // 
-            this.tpMain.BackColor = System.Drawing.SystemColors.Control;
+            this.tpMain.BackColor = System.Drawing.Color.Transparent;
             this.tpMain.Controls.Add(this.pnlScroll);
             this.tpMain.Controls.Add(this.groupBox1);
             this.tpMain.Controls.Add(this.txtUrl);
@@ -375,19 +382,14 @@
             this.tcMain.TabIndex = 21;
             this.tcMain.TabStop = false;
             // 
-            // startDownloadToolStripMenuItem
-            // 
-            this.startDownloadToolStripMenuItem.Name = "startDownloadToolStripMenuItem";
-            this.startDownloadToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.startDownloadToolStripMenuItem.Text = "Start Download";
-            this.startDownloadToolStripMenuItem.Click += new System.EventHandler(this.startDownloadToolStripMenuItem_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(916, 439);
             this.Controls.Add(this.tcMain);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

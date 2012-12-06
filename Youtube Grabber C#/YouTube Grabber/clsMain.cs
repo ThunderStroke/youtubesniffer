@@ -93,7 +93,12 @@ namespace YouTube_Grabber
                 ReportProgress("Started");
                 wbDown.Encoding = System.Text.Encoding.UTF8;
                 //wbDown.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:50";
-                if (strVideoUrl.Substring(0, 7) != "http://") strVideoUrl = "http://" + strVideoUrl;
+                if (strVideoUrl.Substring(0, 4) != "http") 
+                {
+                strVideoUrl = "http://" + strVideoUrl;
+                }
+
+
                 wbDown.DownloadStringAsync(new Uri(strVideoUrl));
                 wbDown.DownloadStringCompleted += new DownloadStringCompletedEventHandler(wbDown_DownloadStringCompleted);
             }
@@ -120,6 +125,7 @@ namespace YouTube_Grabber
                 strHtml = e.Result.ToString();
                 strHtml = Regex.Replace(strHtml, @"\r\n?|\n", "");
                 strDecode = HttpUtility.UrlDecode(HttpUtility.UrlDecode(HttpUtility.UrlDecode(strHtml.Substring(strHtml.IndexOf("var swf = "), strHtml.IndexOf(".innerHTML = swf") - strHtml.IndexOf("var swf = ")))));
+                System.Diagnostics.Debug.Print(strDecode);
                 tDownloadLinks = new Thread(ProcessDownloadLinks);
                 tGetVideoInfo = new Thread(GetVideoInfo);
                 tDownloadLinks.Start();
@@ -135,21 +141,20 @@ namespace YouTube_Grabber
         void ProcessDownloadLinks()
         {
                 string[] strDownloadLinks = Regex.Split(strDecode, "&url=http://");
+
                 for (int i = 1; i < strDownloadLinks.Count(); i++)
                 {
                     {
-                        if (!strDownloadLinks[i].Contains("o-o---preferred---")) continue;
+                        //if (!strDownloadLinks[i].Contains("o-o---preferred---")) continue;
  
                         if (strDownloadLinks[i].Contains(@"\u0026amp;"))
                         {
                             strDownloadLinks[i] = strDownloadLinks[i].Substring(0, strDownloadLinks[i].IndexOf(@"\u0026amp;"));
                         }
-                        //System.Diagnostics.Debug.Print(strDownloadLinks[i]);
                         strDownloadLinks[i] = strDownloadLinks[i].Replace("&sig=", "&signature=");
                         strDownloadLinks[i] = "http://" + strDownloadLinks[i];
-                        
-                        GetVideoType(strDownloadLinks[i]);
 
+                        GetVideoType(strDownloadLinks[i]);
                         peaStatus.strDownloadLinks.Add(strDownloadLinks[i]);
                         string strQuality = RegexMatch(strDownloadLinks[i], "&quality=([0-9a-z]+)");
                         if (strQuality.Contains("large"))
@@ -227,6 +232,7 @@ namespace YouTube_Grabber
             if (bDone == true)
             {
                 DownloadLinksDone(peaStatus);
+
             }
             Monitor.Exit(this);
         }

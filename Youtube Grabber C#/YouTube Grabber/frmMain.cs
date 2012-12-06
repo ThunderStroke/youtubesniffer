@@ -110,18 +110,29 @@ namespace YouTube_Grabber
         void SetConPos(Control cntControl, int Left)
         {
             cntControl.Left = Left;
-            if (Clipboard.GetText().Contains("www.youtube.com/watch?"))
+            string strClip = Clipboard.GetText();
+            strClip = strClip.Remove(0, strClip.IndexOf("://") + 3);
+            if (strClip.Substring(0, "www.youtube.com/watch?".Length) == "www.youtube.com/watch?")
             {
                 if (txtUrl.Text != Clipboard.GetText())
                 {
                     txtUrl.Text = Clipboard.GetText();
-                    KeyEventArgs e  =  new KeyEventArgs(Keys.Enter);
+                    KeyEventArgs e = new KeyEventArgs(Keys.Enter);
                     txtUrl_GotFocus(this, e);
                     txtUrl_KeyUp(this, e);
-                    
                 }
-
             }
+            //if (Clipboard.GetText().Contains("www.youtube.com/watch?"))
+            //{
+            //    if (txtUrl.Text != Clipboard.GetText())
+            //    {
+            //        txtUrl.Text = Clipboard.GetText();
+            //        KeyEventArgs e  =  new KeyEventArgs(Keys.Enter);
+            //        txtUrl_GotFocus(this, e);
+            //        txtUrl_KeyUp(this, e);
+            //    }
+
+            //}
         }
 
         void CleanUp()
@@ -418,11 +429,17 @@ namespace YouTube_Grabber
             txtUrl.LostFocus += new EventHandler(txtUrl_LostFocus);
 
             lblVersion.Text = "Current Build Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major.ToString() + "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString() + "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString() + "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString();
-            
+
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            tpMain.BackColor = Color.Transparent;
+            tpDownload.BackColor = Color.Transparent;
+            tpAbout.BackColor = Color.Transparent;
 
             tScroll = new Thread(ThreadScrollFunc);
             tScroll.Start();
+
         }
+        
         void txtUrl_LostFocus(object sender, EventArgs e)
         {
             GotLostFocus(txtUrl, false);
