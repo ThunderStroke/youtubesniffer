@@ -1,3 +1,5 @@
 6/12/2012
 1.2.3.511
-- fixed bug when the link is https://
+- [fixed bug]	error occur when the video link started with https://
+- [fixed bug]	error when automatically getting video link from clipboard
+- [core updated]	YouTube's video download link format change

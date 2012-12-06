@@ -111,6 +111,7 @@ namespace YouTube_Grabber
         {
             cntControl.Left = Left;
             string strClip = Clipboard.GetText();
+            if (strClip == "") return;
             strClip = strClip.Remove(0, strClip.IndexOf("://") + 3);
             if (strClip.Substring(0, "www.youtube.com/watch?".Length) == "www.youtube.com/watch?")
             {
