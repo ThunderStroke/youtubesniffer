@@ -10,3 +10,7 @@
 - [core updated]	YouTube's renew it's whole site
 - [fixed bug]	logical error when getting the video link from clipboard
 - [fixed bug]	will automatically reset, the program will enter into a infinity loop at getting video info and download links
+
+9/12/2012
+1.4.6.606
+- [bug fixed]	Download links process error
