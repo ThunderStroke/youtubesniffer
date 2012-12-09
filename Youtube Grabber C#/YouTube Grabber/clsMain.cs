@@ -165,16 +165,25 @@ namespace YouTube_Grabber
                         string strQuality = RegexMatch(strDownloadLinks[i], "&quality=([0-9a-z]+)");
                         if (strQuality.Contains("large"))
                         {
-                            strQuality = strQuality.Replace("large", "480p");
+                            strQuality = strQuality.Replace("large", "480p - Medium Quality");
                         }
                         else if (strQuality.Contains("medium"))
                         {
-                            strQuality = strQuality.Replace("medium", "320p");
+                            strQuality = strQuality.Replace("medium", "320p - Low Quality");
                         }
                         else if (strQuality.Contains("small"))
                         {
-                            strQuality = strQuality.Replace("small", "240p");
+                            strQuality = strQuality.Replace("small", "240p - Lowest Quality");
                         }
+                        else if (strQuality.Contains("hd720"))
+                        {
+                            strQuality = strQuality.Replace("hd720", "720p - High Quality");
+                        }
+                        else if (strQuality.Contains("hd1080"))
+                        {
+                            strQuality = strQuality.Replace("hd1080", "1080p - Highest Quality");
+                        }
+
                         peaStatus.strQuality.Add(strQuality);
                            
                     }
