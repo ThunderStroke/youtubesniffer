@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="YouTube Grabber" version="1.4.6.606" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="YouTube Grabber" version="1.4.6.608" language="neutral" processorArchitecture="x86" />
     <commandLine file="YouTube Grabber.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -14,18 +14,6 @@
         <defaultAssemblyRequest permissionSetReference="Custom" />
       </applicationRequestMinimum>
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
-        <!-- UAC Manifest Options
-            If you want to change the Windows User Account Control level replace the 
-            requestedExecutionLevel node with one of the following.
-
-        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
-        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
-        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
-
-            Specifying requestedExecutionLevel node will disable file and registry virtualization.
-            If you want to utilize File and Registry Virtualization for backward 
-            compatibility then delete the requestedExecutionLevel node.
-        -->
         <!-- UAC Manifest Options
             If you want to change the Windows User Account Control level replace the 
             requestedExecutionLevel node with one of the following.
@@ -56,13 +44,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="YouTube Grabber.exe" size="148480">
-      <assemblyIdentity name="YouTube Grabber" version="1.4.6.606" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="YouTube Grabber" version="1.4.6.608" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>t/EcV71umlRJpmG3hDKR2ebT8jQ=</dsig:DigestValue>
+        <dsig:DigestValue>twVQi1DfQtJ+sInrSiQbQQi9VxU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
