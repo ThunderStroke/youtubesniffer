@@ -4,3 +4,9 @@
 1.2.3.544
 - [fixed bug]	error when automatically getting video link from clipboard
 - [core updated]	YouTube's video download link format change
+
+8/12/2012
+1.4.6.603
+- [core updated]	YouTube's renew it's whole site
+- [fixed bug]	logical error when getting the video link from clipboard
+- [fixed bug]	will automatically reset, the program will enter into a infinity loop at getting video info and download links

@@ -125,7 +125,7 @@ namespace YouTube_Grabber
                 strHtml = e.Result.ToString();
                 strHtml = Regex.Replace(strHtml, @"\r\n?|\n", "");
                 strDecode = HttpUtility.UrlDecode(HttpUtility.UrlDecode(HttpUtility.UrlDecode(strHtml.Substring(strHtml.IndexOf("var swf = "), strHtml.IndexOf(".innerHTML = swf") - strHtml.IndexOf("var swf = ")))));
-                System.Diagnostics.Debug.Print(strDecode);
+                //System.Diagnostics.Debug.Print(strDecode);
                 tDownloadLinks = new Thread(ProcessDownloadLinks);
                 tGetVideoInfo = new Thread(GetVideoInfo);
                 tDownloadLinks.Start();
@@ -138,6 +138,7 @@ namespace YouTube_Grabber
 
             //ProcessDownloadLinks();
         }
+
         void ProcessDownloadLinks()
         {
                 string[] strDownloadLinks = Regex.Split(strDecode, "&url=http://");
@@ -145,6 +146,7 @@ namespace YouTube_Grabber
                 for (int i = 1; i < strDownloadLinks.Count(); i++)
                 {
                     {
+                        //System.Diagnostics.Debug.Print(strDownloadLinks[i]);
                         //if (!strDownloadLinks[i].Contains("o-o---preferred---")) continue;
  
                         if (strDownloadLinks[i].Contains(@"\u0026amp;"))
@@ -155,6 +157,10 @@ namespace YouTube_Grabber
                         strDownloadLinks[i] = "http://" + strDownloadLinks[i];
 
                         GetVideoType(strDownloadLinks[i]);
+                        if (peaStatus.strType[peaStatus.strType.Count-1].Contains("text"))
+                        {
+                            continue;
+                        }
                         peaStatus.strDownloadLinks.Add(strDownloadLinks[i]);
                         string strQuality = RegexMatch(strDownloadLinks[i], "&quality=([0-9a-z]+)");
                         if (strQuality.Contains("large"))
@@ -247,6 +253,11 @@ namespace YouTube_Grabber
             return String.Format("{0:0.00} {1}", dblSByte, Suffix[i]);
         }
 
+        void StringAddComma(ref string strInput)
+        {
+            strInput = Convert.ToInt32(strInput).ToString("N0");
+        }
+
         #region VideoInfoFunc
         void GetVideoInfo()
         {
@@ -288,9 +299,11 @@ namespace YouTube_Grabber
         {
             try
             {
-                int i = strHtml.IndexOf("<span class=\"likes\">");
-                int h = strHtml.IndexOf("</span>", i) - i;
-                string strVideoLikes = strHtml.Substring(i, h).Replace("<span class=\"likes\">", "").Replace("</span>", "").Trim();
+                int i = strHtml.IndexOf("<img class=\"icon-watch-stats-like\"");
+                int h = strHtml.IndexOf("<img class=\"icon-watch-stats-dislike\" ", i) - i;
+                int j = strHtml.IndexOf(">", i) - i + 1;
+                string strVideoLikes = HttpUtility.HtmlDecode(strHtml.Substring(i, h)).Remove(0, j).Replace(",", "").Trim();
+                StringAddComma(ref strVideoLikes);
                 return strVideoLikes;
             }
             catch
@@ -302,21 +315,32 @@ namespace YouTube_Grabber
         {
             try
             {
-                int i = strHtml.IndexOf("<span class=\"dislikes\">");
-                int h = strHtml.IndexOf("</span>", i) - i;
-                string strVideoDislikes = strHtml.Substring(i, h).Replace("<span class=\"dislikes\">", "").Replace("</span>", "").Trim();
+                //int i = strHtml.IndexOf("<span class=\"dislikes\">");
+                //int h = strHtml.IndexOf("</span>", i) - i;
+                //string strVideoDislikes = strHtml.Substring(i, h).Replace("<span class=\"dislikes\">", "").Replace("</span>", "").Trim();
+                //return strVideoDislikes;
+
+                int i = strHtml.IndexOf("<img class=\"icon-watch-stats-dislike\"");
+                int h = strHtml.IndexOf("</span>",i) -i;
+                int j = strHtml.IndexOf(">", i) - i + 1;
+                string strVideoDislikes = HttpUtility.HtmlDecode(strHtml.Substring(i,h)).Remove(0,j).Replace(",","").Trim();
+                StringAddComma(ref strVideoDislikes);
                 return strVideoDislikes;
+
             }
             catch
             {
                 return "Unable to receive video's dislikes number";
             }
         }
+
         string GetVideoViews()
         {
             int i = strHtml.IndexOf("<span class=\"watch-view-count\">");
-            int h = strHtml.IndexOf("</strong>", i) - i;
-            string strVideoViews = strHtml.Substring(i, h).Replace("<span class=\"watch-view-count\">", "").Replace("<strong>", "").Replace("</strong>", "").Trim();
+            int h = strHtml.IndexOf("</span>", i) - i;
+            string strVideoViews = strHtml.Substring(i, h).Replace("<span class=\"watch-view-count\">", "").Replace("<strong>", "").Replace("</strong>", "").Trim().Replace(",", "");
+            strVideoViews = RegexMatch(strVideoViews, "([0-9]+)");
+            StringAddComma(ref strVideoViews);
             return strVideoViews;
         }
         string GetVideoLength()
@@ -333,6 +357,7 @@ namespace YouTube_Grabber
             {
                 tDownloadLinks.Abort();
                 tGetVideoInfo.Abort();
+
             }
         }
 

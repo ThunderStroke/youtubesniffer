@@ -109,21 +109,34 @@ namespace YouTube_Grabber
 
         void SetConPos(Control cntControl, int Left)
         {
-            cntControl.Left = Left;
-            string strClip = Clipboard.GetText();
-            if (strClip == "") return;
-            strClip = strClip.Remove(0, strClip.IndexOf("://") + 3);
-            if (strClip.Substring(0, "www.youtube.com/watch?".Length) == "www.youtube.com/watch?")
+            try
             {
-                if (txtUrl.Text != Clipboard.GetText())
+                cntControl.Left = Left;
+                string strClip = Clipboard.GetText();
+                string strTxtUrl = txtUrl.Text;
+                if (strClip == "") return;
+                if (strClip.IndexOf("://") !=-1)
                 {
-                    this.Activate();
-                    txtUrl.Text = Clipboard.GetText();
-                    KeyEventArgs e = new KeyEventArgs(Keys.Enter);
-                    txtUrl_GotFocus(this, e);
-                    txtUrl_KeyUp(this, e);
+                    strClip = strClip.Remove(0, strClip.IndexOf("://") + 3);
+                }
+
+                if (strTxtUrl.IndexOf("://") !=-1)
+                {
+                    strTxtUrl =  strTxtUrl.Remove(0,strTxtUrl.IndexOf("://") + 3);
+                }
+                if (strClip.Substring(0, "www.youtube.com/watch?".Length) == "www.youtube.com/watch?")
+                {
+                    if (strTxtUrl != strClip)
+                    {
+                        this.Activate();
+                        txtUrl.Text = Clipboard.GetText();
+                        KeyEventArgs e = new KeyEventArgs(Keys.Enter);
+                        txtUrl_GotFocus(this, e);
+                        txtUrl_KeyUp(this, e);
+                    }
                 }
             }
+            catch { }
             //if (Clipboard.GetText().Contains("www.youtube.com/watch?"))
             //{
             //    if (txtUrl.Text != Clipboard.GetText())
