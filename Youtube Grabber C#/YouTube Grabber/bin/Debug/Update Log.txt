@@ -15,3 +15,4 @@
 1.4.6.606
 - [bug fixed]	Download links process error
 - [improved UI]	More details for quality (higest,high,medium,low,lowest quality)
+- [improved UI]	New video screenshot loading logo
