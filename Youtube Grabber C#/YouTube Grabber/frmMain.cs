@@ -27,6 +27,33 @@ namespace YouTube_Grabber
         delegate void EnDisableControlHandler(Control cnt, bool bControlState);
         delegate void SetControlPos(Control cntControl, int Left);
         delegate void ComboBoxAddItemhandler(ComboBox cbBox, string str);
+        delegate void SetGlowHandler(PictureBox piCon);
+
+        void DrawGlow(PictureBox picCon)
+        {
+            GraphicsPath gpGlow = new GraphicsPath();
+            gpGlow.AddRectangle(new Rectangle(Point.Empty, picCon.Size));
+            PathGradientBrush pgbGlow = new PathGradientBrush(gpGlow);
+            pgbGlow.SurroundColors = new Color[] { Color.Transparent };
+            //pgbGlow.CenterPoint = new Point(picCon.Width / 2, picCon.Height / 2);
+            pgbGlow.CenterColor = Color.Red;
+            pgbGlow.FocusScales = new PointF(0.95f, 0.6f);
+            Bitmap bGlow = new Bitmap(picCon.Width, picCon.Height);
+            Graphics gGlow = Graphics.FromImage(bGlow);
+            gGlow.FillRectangle(pgbGlow, new Rectangle(Point.Empty, picCon.Size));
+            picCon.Image = bGlow;
+
+
+        }
+
+        void SetPicGlow(Control ctlCon, Control ctlChild)
+        {
+            ctlCon.Left = ctlChild.Left - 8;
+            ctlCon.Top = ctlChild.Top - 8;
+            ctlCon.Width = ctlChild.Width + 16;
+            ctlCon.Height = ctlChild.Height + 16;
+            ctlChild.BringToFront();
+        }
         public struct LinkInfo
         {
             public string strVideoTitle;
@@ -164,11 +191,12 @@ namespace YouTube_Grabber
             intCurrentSelectedDownloadLinks = 0;
             strDownloadLinks.Clear();
             txtLinkInfo.Text = "";
+            picButtonDownload.Image = null;
+            picDownloadOpt.Image = null;
 
         }
 
         #endregion
-
         #region DownloaderFunc
         List<LinkInfo> liDonwloadList;
         int intDownloadListCount;
@@ -205,11 +233,84 @@ namespace YouTube_Grabber
             }
         }
 
+        void UpdateListView(int index)
+        {
+            lvwDonwloadList.Items[index].SubItems[2].Text = diDownloadQueue[index].intDownloadPercentage.ToString() + "%";
+            lvwDonwloadList.Items[index].SubItems[3].Text = diDownloadQueue[index].strTimeEplased;
+            lvwDonwloadList.Items[index].SubItems[4].Text = diDownloadQueue[index].strStatus;
+        }
+
+        void frmMain_DownloadProgressChangedIndex(System.Net.DownloadProgressChangedEventArgs e, int Index, string time, string speed)
+        {
+
+            DownloadInfo diTmp = diDownloadQueue[Index];
+            diTmp.intDownloadPercentage = e.ProgressPercentage;
+            diTmp.strTimeEplased = time + " ( " + speed + "/s" + " ) ";
+            diTmp.strStatus = "Downloading...";
+            diDownloadQueue[Index] = diTmp;
+            UpdateListView(Index);
+            System.Diagnostics.Debug.Print(speed);
+
+
+        }
+        void frmMain_DownloadFileCompletedIndex(AsyncCompletedEventArgs e, int Index)
+        {
+            if (!e.Cancelled)
+            {
+                DownloadInfo diTmp = diDownloadQueue[Index];
+                diTmp.strStatus = "Done";
+                diDownloadQueue[Index] = diTmp;
+                UpdateListView(Index);
+            }
+
+        }
+
+        private void mnuStop_Click(object sender, EventArgs e)
+        {
+            if (lvwDonwloadList.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            if (diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strStatus == "Done")
+            {
+                return;
+            }
+
+            DownloadQueue[lvwDonwloadList.SelectedIndices[0]].CancelAsync();
+            DownloadInfo diTmp = diDownloadQueue[lvwDonwloadList.SelectedIndices[0]];
+            //File.Delete(diTmp.strFilePath);
+            diTmp.strStatus = "Canceled...";
+            diTmp.intDownloadPercentage = 0;
+            diDownloadQueue[lvwDonwloadList.SelectedIndices[0]] = diTmp;
+            UpdateListView(lvwDonwloadList.SelectedIndices[0]);
+
+
+
+        }
+        private void startDownloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lvwDonwloadList.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            if (diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strStatus == "Canceled...")
+            {
+                DownloadQueue[lvwDonwloadList.SelectedIndices[0]].DownloadFileAsync(new Uri(liDonwloadList[lvwDonwloadList.SelectedIndices[0]].strVideoLink), diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strFilePath); ;
+                DownloadInfo diTmp = diDownloadQueue[lvwDonwloadList.SelectedIndices[0]];
+                diTmp.strStatus = "Downloading...";
+                diTmp.intDownloadPercentage = 0;
+                diDownloadQueue[lvwDonwloadList.SelectedIndices[0]] = diTmp;
+                UpdateListView(lvwDonwloadList.SelectedIndices[0]);
+            }
+
+        }
+
         #endregion
-
-
+        #region MainFormEvent
+        
         private void btnDownload_Click(object sender, EventArgs e)
         {
+            picButtonDownload.Image = null;
             liDonwloadList.Add(strDownloadLinks[intCurrentSelectedDownloadLinks]);
             string filename = liDonwloadList[intDownloadListCount].strVideoTitle;
             string extension = liDonwloadList[intDownloadListCount].strVideoType.Replace("*", "");
@@ -260,35 +361,6 @@ namespace YouTube_Grabber
             //liDonwloadList[intDownloadListCount] = liTmp;
         }
 
-        void frmMain_DownloadProgressChangedIndex(System.Net.DownloadProgressChangedEventArgs e, int Index, string time, string speed)
-        {
-
-            DownloadInfo diTmp = diDownloadQueue[Index];
-            diTmp.intDownloadPercentage = e.ProgressPercentage;
-            diTmp.strTimeEplased = time +" ( " + speed + "/s" + " ) ";
-            diTmp.strStatus = "Downloading...";
-            diDownloadQueue[Index] = diTmp;
-            UpdateListView(Index);
-            System.Diagnostics.Debug.Print(speed);
-
-
-        }
-
-        void frmMain_DownloadFileCompletedIndex(AsyncCompletedEventArgs e, int Index)
-        {
-            if (!e.Cancelled)
-            {
-                DownloadInfo diTmp = diDownloadQueue[Index];
-                diTmp.strStatus = "Done";
-                diDownloadQueue[Index] = diTmp;
-                UpdateListView(Index);
-            }
-
-        }
-
-
-
-        #region MainFormEvent
         private void txtUrl_MouseEnter(object sender, EventArgs e)
         {
             ToolTip tt = new ToolTip();
@@ -296,6 +368,9 @@ namespace YouTube_Grabber
         }
         private void cbDownOpt_SelectedIndexChanged(object sender, EventArgs e)
         {
+            picDownloadOpt.Image = null;
+            DrawGlow(picButtonDownload);
+
             btnDownload.Enabled = true;
             intCurrentSelectedDownloadLinks = cbDownOpt.SelectedIndex;
             LinkInfo liTmp = strDownloadLinks[cbDownOpt.SelectedIndex];
@@ -418,6 +493,10 @@ namespace YouTube_Grabber
             EnDisableControlHandler edch = new EnDisableControlHandler(EnDisableControl);
             object[] objEnable = { cbDownOpt, true };
             cbDownOpt.Invoke(edch, objEnable);
+            SetGlowHandler sgh = new SetGlowHandler(DrawGlow);
+            object[] objGlow = { picDownloadOpt };
+            cbDownOpt.Invoke(sgh, objGlow);
+
         }
         private void frmMain_Load(object sender, EventArgs e)
         {
@@ -447,6 +526,8 @@ namespace YouTube_Grabber
             tScroll = new Thread(ThreadScrollFunc);
             tScroll.Start();
 
+            SetPicGlow(picDownloadOpt, cbDownOpt);
+            SetPicGlow(picButtonDownload, btnDownload);
         }
 
         void txtUrl_LostFocus(object sender, EventArgs e)
@@ -472,66 +553,17 @@ namespace YouTube_Grabber
                 e.SuppressKeyPress = true;
             }
         }
-        #endregion
-
-        private void mnuStop_Click(object sender, EventArgs e)
-        {
-            if (lvwDonwloadList.SelectedItems.Count == 0)
-            {
-                return;
-            }
-            if (diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strStatus == "Done")
-            {
-                return;
-            }
-
-            DownloadQueue[lvwDonwloadList.SelectedIndices[0]].CancelAsync();
-            DownloadInfo diTmp = diDownloadQueue[lvwDonwloadList.SelectedIndices[0]];
-            //File.Delete(diTmp.strFilePath);
-            diTmp.strStatus = "Canceled...";
-            diTmp.intDownloadPercentage = 0;
-            diDownloadQueue[lvwDonwloadList.SelectedIndices[0]] = diTmp;
-            UpdateListView(lvwDonwloadList.SelectedIndices[0]);
-
-
-
-        }
-
-        void UpdateListView(int index)
-        {
-            lvwDonwloadList.Items[index].SubItems[2].Text = diDownloadQueue[index].intDownloadPercentage.ToString() + "%";
-            lvwDonwloadList.Items[index].SubItems[3].Text = diDownloadQueue[index].strTimeEplased;
-            lvwDonwloadList.Items[index].SubItems[4].Text = diDownloadQueue[index].strStatus;
-        }
-
+        #endregion        
+        #region AboutFromEvent
         private void lblBlog_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://garyngzhongbo.blogspot.com");
         }
-
         private void lblGoogle_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://code.google.com/p/youtubesniffer/");
         }
-
-        private void startDownloadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (lvwDonwloadList.SelectedItems.Count == 0)
-            {
-                return;
-            }
-            if (diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strStatus == "Canceled...")
-            {
-                DownloadQueue[lvwDonwloadList.SelectedIndices[0]].DownloadFileAsync(new Uri(liDonwloadList[lvwDonwloadList.SelectedIndices[0]].strVideoLink), diDownloadQueue[lvwDonwloadList.SelectedIndices[0]].strFilePath); ;
-                DownloadInfo diTmp = diDownloadQueue[lvwDonwloadList.SelectedIndices[0]];
-                diTmp.strStatus = "Downloading...";
-                diTmp.intDownloadPercentage = 0;
-                diDownloadQueue[lvwDonwloadList.SelectedIndices[0]] = diTmp;
-                UpdateListView(lvwDonwloadList.SelectedIndices[0]);
-            }
-
-        }
-
+        #endregion
     }
 
 }

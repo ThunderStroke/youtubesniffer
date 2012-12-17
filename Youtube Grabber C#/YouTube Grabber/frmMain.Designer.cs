@@ -62,6 +62,8 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.picVideoPic = new System.Windows.Forms.PictureBox();
             this.tcMain = new System.Windows.Forms.TabControl();
+            this.picDownloadOpt = new System.Windows.Forms.PictureBox();
+            this.picButtonDownload = new System.Windows.Forms.PictureBox();
             this.mnuPopUp.SuspendLayout();
             this.tpAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -72,6 +74,8 @@
             this.pnlStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picVideoPic)).BeginInit();
             this.tcMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picDownloadOpt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picButtonDownload)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuPopUp
@@ -270,6 +274,8 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.cbDownOpt);
             this.groupBox1.Controls.Add(this.btnDownload);
+            this.groupBox1.Controls.Add(this.picDownloadOpt);
+            this.groupBox1.Controls.Add(this.picButtonDownload);
             this.groupBox1.Location = new System.Drawing.Point(624, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(245, 357);
@@ -383,6 +389,22 @@
             this.tcMain.TabIndex = 21;
             this.tcMain.TabStop = false;
             // 
+            // picDownloadOpt
+            // 
+            this.picDownloadOpt.Location = new System.Drawing.Point(6, 29);
+            this.picDownloadOpt.Name = "picDownloadOpt";
+            this.picDownloadOpt.Size = new System.Drawing.Size(226, 44);
+            this.picDownloadOpt.TabIndex = 21;
+            this.picDownloadOpt.TabStop = false;
+            // 
+            // picButtonDownload
+            // 
+            this.picButtonDownload.Location = new System.Drawing.Point(6, 307);
+            this.picButtonDownload.Name = "picButtonDownload";
+            this.picButtonDownload.Size = new System.Drawing.Size(238, 49);
+            this.picButtonDownload.TabIndex = 22;
+            this.picButtonDownload.TabStop = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -414,6 +436,8 @@
             this.pnlStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picVideoPic)).EndInit();
             this.tcMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picDownloadOpt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picButtonDownload)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -452,6 +476,8 @@
         private System.Windows.Forms.PictureBox picVideoPic;
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.ToolStripMenuItem startDownloadToolStripMenuItem;
+        private System.Windows.Forms.PictureBox picDownloadOpt;
+        private System.Windows.Forms.PictureBox picButtonDownload;
 
     }
 }
