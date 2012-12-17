@@ -252,7 +252,7 @@ namespace YouTube_Grabber
             Monitor.Exit(this);
         }
 
-        string formatBytes(float bytes)
+         public static string formatBytes(float bytes)
         {
             string[] Suffix = { "B", "KB", "MB", "GB", "TB" };
             int i;
@@ -373,7 +373,6 @@ namespace YouTube_Grabber
 
         #endregion
         #endregion
-
 
     }
 }

@@ -9,8 +9,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Drawing.Drawing2D;
 using System.IO;
-
 using System.Text.RegularExpressions;
+
 namespace YouTube_Grabber
 {
     public partial class frmMain : Form
@@ -115,14 +115,14 @@ namespace YouTube_Grabber
                 string strClip = Clipboard.GetText();
                 string strTxtUrl = txtUrl.Text;
                 if (strClip == "") return;
-                if (strClip.IndexOf("://") !=-1)
+                if (strClip.IndexOf("://") != -1)
                 {
                     strClip = strClip.Remove(0, strClip.IndexOf("://") + 3);
                 }
 
-                if (strTxtUrl.IndexOf("://") !=-1)
+                if (strTxtUrl.IndexOf("://") != -1)
                 {
-                    strTxtUrl =  strTxtUrl.Remove(0,strTxtUrl.IndexOf("://") + 3);
+                    strTxtUrl = strTxtUrl.Remove(0, strTxtUrl.IndexOf("://") + 3);
                 }
                 if (strClip.Substring(0, "www.youtube.com/watch?".Length) == "www.youtube.com/watch?")
                 {
@@ -258,25 +258,19 @@ namespace YouTube_Grabber
             //LinkInfo liTmp = liDonwloadList[intDownloadListCount];
             //liTmp.strVideoTitle = newFilename;
             //liDonwloadList[intDownloadListCount] = liTmp;
-
-
-
-
-
-
-
-
         }
 
-        void frmMain_DownloadProgressChangedIndex(System.Net.DownloadProgressChangedEventArgs e, int Index, string time)
+        void frmMain_DownloadProgressChangedIndex(System.Net.DownloadProgressChangedEventArgs e, int Index, string time, string speed)
         {
 
-           DownloadInfo diTmp = diDownloadQueue[Index];
-           diTmp.intDownloadPercentage = e.ProgressPercentage;
-           diTmp.strTimeEplased = time;
-           diTmp.strStatus = "Downloading...";
-           diDownloadQueue[Index] = diTmp;
-           UpdateListView(Index);
+            DownloadInfo diTmp = diDownloadQueue[Index];
+            diTmp.intDownloadPercentage = e.ProgressPercentage;
+            diTmp.strTimeEplased = time +" ( " + speed + "/s" + " ) ";
+            diTmp.strStatus = "Downloading...";
+            diDownloadQueue[Index] = diTmp;
+            UpdateListView(Index);
+            System.Diagnostics.Debug.Print(speed);
+
 
         }
 
@@ -454,7 +448,7 @@ namespace YouTube_Grabber
             tScroll.Start();
 
         }
-        
+
         void txtUrl_LostFocus(object sender, EventArgs e)
         {
             GotLostFocus(txtUrl, false);
@@ -538,36 +532,6 @@ namespace YouTube_Grabber
 
         }
 
-
-
     }
-
-    //private void btnStartCancel_Click(object sender, EventArgs e)
-    //{
-    //    string filename = liDonwloadList[lvwDonwloadList.SelectedIndices[0]].strVideoTitle;
-    //    string extension = liDonwloadList[lvwDonwloadList.SelectedIndices[0]].strVideoType.Replace("*", "");
-    //    string newFilename = CheckForDupFileName(filename, extension);
-    //    LinkInfo liTmp = liDonwloadList[lvwDonwloadList.SelectedIndices[0]];
-    //    liTmp.strVideoTitle = newFilename;
-    //    liDonwloadList[lvwDonwloadList.SelectedIndices[0]] = liTmp;
-    //    lvwDonwloadList.Items[lvwDonwloadList.SelectedIndices[0]].Text = newFilename + extension ;
-    //    DownloadAddQueue(lvwDonwloadList.SelectedIndices[0], liDonwloadList[lvwDonwloadList.SelectedIndices[0]].strVideoLink, newFilename + extension);
-    //}
-
-    //void DownloadAddQueue(int Index, string url,string filename)
-    //{
-    //    DownloadQueue.Add(new clsDownloader(Index));
-
-    //    diDownloadQueue.Add(new DownloadInfo());
-    //    DownloadInfo diTmp= diDownloadQueue[Index];
-    //    diTmp.strTimeEplased = "";
-    //    diTmp.intDownloadPercentage = 0;
-    //    diDownloadQueue[Index] = diTmp;
-    //    DownloadQueue[Index].DownloadFileCompletedIndex += new clsDownloader.OnDownloadFileCompletedIndexEventHandler(frmMain_DownloadFileCompletedIndex);
-    //    DownloadQueue[Index].DownloadProgressChangedIndex += new clsDownloader.OnDownloadProgressChangedIndexEventHandler(frmMain_DownloadProgressChangedIndex);
-    //    DownloadQueue[Index].DownloadFileAsync(new Uri(url), filename);
-    //}
-
-
 
 }

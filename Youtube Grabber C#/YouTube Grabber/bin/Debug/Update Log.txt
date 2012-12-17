@@ -16,3 +16,7 @@
 - [bug fixed]	Download links process error
 - [improved UI]	More details for quality (higest,high,medium,low,lowest quality)
 - [improved UI]	New video screenshot loading logo
+
+17/12/2012
+1.4.6.641
+- [new function]	Display download speed

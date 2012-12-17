@@ -38,6 +38,7 @@
             this.lblGoogle = new System.Windows.Forms.LinkLabel();
             this.lblBlog = new System.Windows.Forms.LinkLabel();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tpDownload = new System.Windows.Forms.TabPage();
             this.lvwDonwloadList = new System.Windows.Forms.ListView();
             this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -59,19 +60,18 @@
             this.txtInfo = new System.Windows.Forms.TextBox();
             this.pnlStatus = new System.Windows.Forms.Panel();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.tcMain = new System.Windows.Forms.TabControl();
             this.picVideoPic = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.tcMain = new System.Windows.Forms.TabControl();
             this.mnuPopUp.SuspendLayout();
             this.tpAbout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tpDownload.SuspendLayout();
             this.tpMain.SuspendLayout();
             this.pnlScroll.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.pnlStatus.SuspendLayout();
-            this.tcMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picVideoPic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tcMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuPopUp
@@ -80,19 +80,19 @@
             this.mnuStop,
             this.startDownloadToolStripMenuItem});
             this.mnuPopUp.Name = "mnuPopUp";
-            this.mnuPopUp.Size = new System.Drawing.Size(149, 48);
+            this.mnuPopUp.Size = new System.Drawing.Size(156, 48);
             // 
             // mnuStop
             // 
             this.mnuStop.Name = "mnuStop";
-            this.mnuStop.Size = new System.Drawing.Size(148, 22);
+            this.mnuStop.Size = new System.Drawing.Size(155, 22);
             this.mnuStop.Text = "Stop Download";
             this.mnuStop.Click += new System.EventHandler(this.mnuStop_Click);
             // 
             // startDownloadToolStripMenuItem
             // 
             this.startDownloadToolStripMenuItem.Name = "startDownloadToolStripMenuItem";
-            this.startDownloadToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.startDownloadToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.startDownloadToolStripMenuItem.Text = "Start Download";
             this.startDownloadToolStripMenuItem.Click += new System.EventHandler(this.startDownloadToolStripMenuItem_Click);
             // 
@@ -152,6 +152,16 @@
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "Current Version";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::YouTube_Grabber.Properties.Resources.GrabberLogo;
+            this.pictureBox1.Location = new System.Drawing.Point(144, 35);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(320, 320);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
             // tpDownload
             // 
             this.tpDownload.BackColor = System.Drawing.SystemColors.Control;
@@ -198,12 +208,12 @@
             // chProgress
             // 
             this.chProgress.Text = "Progress";
-            this.chProgress.Width = 98;
+            this.chProgress.Width = 69;
             // 
             // chTimeElapsed
             // 
             this.chTimeElapsed.Text = "Time Elapsed";
-            this.chTimeElapsed.Width = 93;
+            this.chTimeElapsed.Width = 146;
             // 
             // chStatus
             // 
@@ -350,6 +360,17 @@
             this.lblStatus.Size = new System.Drawing.Size(0, 15);
             this.lblStatus.TabIndex = 16;
             // 
+            // picVideoPic
+            // 
+            this.picVideoPic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picVideoPic.InitialImage = null;
+            this.picVideoPic.Location = new System.Drawing.Point(6, 97);
+            this.picVideoPic.Name = "picVideoPic";
+            this.picVideoPic.Size = new System.Drawing.Size(320, 240);
+            this.picVideoPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picVideoPic.TabIndex = 10;
+            this.picVideoPic.TabStop = false;
+            // 
             // tcMain
             // 
             this.tcMain.Controls.Add(this.tpMain);
@@ -362,33 +383,12 @@
             this.tcMain.TabIndex = 21;
             this.tcMain.TabStop = false;
             // 
-            // picVideoPic
-            // 
-            this.picVideoPic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picVideoPic.InitialImage = null;
-            this.picVideoPic.Location = new System.Drawing.Point(6, 97);
-            this.picVideoPic.Name = "picVideoPic";
-            this.picVideoPic.Size = new System.Drawing.Size(320, 240);
-            this.picVideoPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picVideoPic.TabIndex = 10;
-            this.picVideoPic.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::YouTube_Grabber.Properties.Resources.GrabberLogo;
-            this.pictureBox1.Location = new System.Drawing.Point(144, 35);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(320, 320);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(916, 439);
+            this.ClientSize = new System.Drawing.Size(917, 439);
             this.Controls.Add(this.tcMain);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -402,6 +402,7 @@
             this.mnuPopUp.ResumeLayout(false);
             this.tpAbout.ResumeLayout(false);
             this.tpAbout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tpDownload.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
             this.tpMain.PerformLayout();
@@ -411,9 +412,8 @@
             this.groupBox1.PerformLayout();
             this.pnlStatus.ResumeLayout(false);
             this.pnlStatus.PerformLayout();
-            this.tcMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picVideoPic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tcMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
