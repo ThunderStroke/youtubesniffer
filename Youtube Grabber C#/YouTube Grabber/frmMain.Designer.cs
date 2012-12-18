@@ -34,6 +34,7 @@
             this.mnuStop = new System.Windows.Forms.ToolStripMenuItem();
             this.startDownloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tpAbout = new System.Windows.Forms.TabPage();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.lblAbout = new System.Windows.Forms.Label();
             this.lblGoogle = new System.Windows.Forms.LinkLabel();
             this.lblBlog = new System.Windows.Forms.LinkLabel();
@@ -62,8 +63,6 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.picVideoPic = new System.Windows.Forms.PictureBox();
             this.tcMain = new System.Windows.Forms.TabControl();
-            this.picDownloadOpt = new System.Windows.Forms.PictureBox();
-            this.picButtonDownload = new System.Windows.Forms.PictureBox();
             this.mnuPopUp.SuspendLayout();
             this.tpAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -74,8 +73,6 @@
             this.pnlStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picVideoPic)).BeginInit();
             this.tcMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picDownloadOpt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picButtonDownload)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuPopUp
@@ -103,6 +100,7 @@
             // tpAbout
             // 
             this.tpAbout.BackColor = System.Drawing.SystemColors.Control;
+            this.tpAbout.Controls.Add(this.linkLabel1);
             this.tpAbout.Controls.Add(this.lblAbout);
             this.tpAbout.Controls.Add(this.lblGoogle);
             this.tpAbout.Controls.Add(this.lblBlog);
@@ -115,12 +113,25 @@
             this.tpAbout.TabIndex = 2;
             this.tpAbout.Text = "About";
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.Location = new System.Drawing.Point(470, 142);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(367, 17);
+            this.linkLabel1.TabIndex = 10;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "YouTube Video Grabber Homepage : http://youtubesniffer.tk/";
+            this.linkLabel1.Click += new System.EventHandler(this.linkLabel1_Click);
+            // 
             // lblAbout
             // 
             this.lblAbout.AutoSize = true;
-            this.lblAbout.Location = new System.Drawing.Point(470, 136);
+            this.lblAbout.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbout.Location = new System.Drawing.Point(470, 182);
             this.lblAbout.Name = "lblAbout";
-            this.lblAbout.Size = new System.Drawing.Size(275, 30);
+            this.lblAbout.Size = new System.Drawing.Size(306, 34);
             this.lblAbout.TabIndex = 9;
             this.lblAbout.Text = "The .net version of AG YouTube Video Grabber\r\nRewritten with C# 2010 by GaryNg @ " +
                 "AG dev team.";
@@ -128,9 +139,10 @@
             // lblGoogle
             // 
             this.lblGoogle.AutoSize = true;
-            this.lblGoogle.Location = new System.Drawing.Point(470, 95);
+            this.lblGoogle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGoogle.Location = new System.Drawing.Point(470, 97);
             this.lblGoogle.Name = "lblGoogle";
-            this.lblGoogle.Size = new System.Drawing.Size(234, 30);
+            this.lblGoogle.Size = new System.Drawing.Size(252, 34);
             this.lblGoogle.TabIndex = 8;
             this.lblGoogle.TabStop = true;
             this.lblGoogle.Text = "YouTube Sniffer Google Code Page:\r\nhttp://code.google.com/p/youtubesniffer/";
@@ -139,9 +151,10 @@
             // lblBlog
             // 
             this.lblBlog.AutoSize = true;
+            this.lblBlog.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBlog.Location = new System.Drawing.Point(470, 67);
             this.lblBlog.Name = "lblBlog";
-            this.lblBlog.Size = new System.Drawing.Size(253, 15);
+            this.lblBlog.Size = new System.Drawing.Size(276, 17);
             this.lblBlog.TabIndex = 7;
             this.lblBlog.TabStop = true;
             this.lblBlog.Text = "My Blog: http://garyngzhongbo.blogspot.com";
@@ -150,9 +163,10 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVersion.Location = new System.Drawing.Point(470, 35);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(89, 15);
+            this.lblVersion.Size = new System.Drawing.Size(99, 17);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "Current Version";
             // 
@@ -274,8 +288,6 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.cbDownOpt);
             this.groupBox1.Controls.Add(this.btnDownload);
-            this.groupBox1.Controls.Add(this.picDownloadOpt);
-            this.groupBox1.Controls.Add(this.picButtonDownload);
             this.groupBox1.Location = new System.Drawing.Point(624, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(245, 357);
@@ -382,28 +394,12 @@
             this.tcMain.Controls.Add(this.tpMain);
             this.tcMain.Controls.Add(this.tpDownload);
             this.tcMain.Controls.Add(this.tpAbout);
-            this.tcMain.Location = new System.Drawing.Point(8, 12);
+            this.tcMain.Location = new System.Drawing.Point(9, 12);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
             this.tcMain.Size = new System.Drawing.Size(896, 419);
             this.tcMain.TabIndex = 21;
             this.tcMain.TabStop = false;
-            // 
-            // picDownloadOpt
-            // 
-            this.picDownloadOpt.Location = new System.Drawing.Point(6, 29);
-            this.picDownloadOpt.Name = "picDownloadOpt";
-            this.picDownloadOpt.Size = new System.Drawing.Size(226, 44);
-            this.picDownloadOpt.TabIndex = 21;
-            this.picDownloadOpt.TabStop = false;
-            // 
-            // picButtonDownload
-            // 
-            this.picButtonDownload.Location = new System.Drawing.Point(6, 307);
-            this.picButtonDownload.Name = "picButtonDownload";
-            this.picButtonDownload.Size = new System.Drawing.Size(238, 49);
-            this.picButtonDownload.TabIndex = 22;
-            this.picButtonDownload.TabStop = false;
             // 
             // frmMain
             // 
@@ -436,8 +432,6 @@
             this.pnlStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picVideoPic)).EndInit();
             this.tcMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picDownloadOpt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picButtonDownload)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -476,8 +470,7 @@
         private System.Windows.Forms.PictureBox picVideoPic;
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.ToolStripMenuItem startDownloadToolStripMenuItem;
-        private System.Windows.Forms.PictureBox picDownloadOpt;
-        private System.Windows.Forms.PictureBox picButtonDownload;
+        private System.Windows.Forms.LinkLabel linkLabel1;
 
     }
 }

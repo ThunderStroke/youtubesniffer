@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="YouTube Grabber" version="1.4.6.707" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="YouTube Grabber" version="1.4.6.722" language="neutral" processorArchitecture="x86" />
     <commandLine file="YouTube Grabber.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="YouTube Grabber.exe" size="154624">
-      <assemblyIdentity name="YouTube Grabber" version="1.4.6.707" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="YouTube Grabber.exe" size="153600">
+      <assemblyIdentity name="YouTube Grabber" version="1.4.6.722" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>z2xhKRrw0yDTIju+JsAPnGODpUE=</dsig:DigestValue>
+        <dsig:DigestValue>Qpa+QZpwe1gun8zcxaM9FJagLxg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

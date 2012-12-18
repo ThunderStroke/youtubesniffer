@@ -27,33 +27,40 @@ namespace YouTube_Grabber
         delegate void EnDisableControlHandler(Control cnt, bool bControlState);
         delegate void SetControlPos(Control cntControl, int Left);
         delegate void ComboBoxAddItemhandler(ComboBox cbBox, string str);
-        delegate void SetGlowHandler(PictureBox piCon);
+        //delegate void SetGlowHandler(PictureBox piCon);
 
-        void DrawGlow(PictureBox picCon)
-        {
-            GraphicsPath gpGlow = new GraphicsPath();
-            gpGlow.AddRectangle(new Rectangle(Point.Empty, picCon.Size));
-            PathGradientBrush pgbGlow = new PathGradientBrush(gpGlow);
-            pgbGlow.SurroundColors = new Color[] { Color.Transparent };
-            //pgbGlow.CenterPoint = new Point(picCon.Width / 2, picCon.Height / 2);
-            pgbGlow.CenterColor = Color.Red;
-            pgbGlow.FocusScales = new PointF(0.95f, 0.6f);
-            Bitmap bGlow = new Bitmap(picCon.Width, picCon.Height);
-            Graphics gGlow = Graphics.FromImage(bGlow);
-            gGlow.FillRectangle(pgbGlow, new Rectangle(Point.Empty, picCon.Size));
-            picCon.Image = bGlow;
+        //void DrawGlow(PictureBox picCon)
+        //{
+        //    //GraphicsPath gpGlow = new GraphicsPath();
+        //    //gpGlow.AddRectangle(new Rectangle(Point.Empty, picCon.Size));
+        //    //PathGradientBrush pgbGlow = new PathGradientBrush(gpGlow);
+        //    //pgbGlow.SurroundColors = new Color[] { Color.Transparent };
+        //    ////pgbGlow.CenterPoint = new Point(picCon.Width / 2, picCon.Height / 2);
+        //    //pgbGlow.CenterColor = Color.Red;
+        //    //pgbGlow.FocusScales = new PointF(0.95f, 0.6f);
+        //    //Bitmap bGlow = new Bitmap(picCon.Width, picCon.Height);
+        //    //Graphics gGlow = Graphics.FromImage(bGlow);
+        //    //gGlow.FillRectangle(pgbGlow, new Rectangle(Point.Empty, picCon.Size));
+        //    //picCon.Image = bGlow;
+
+        //    Bitmap bGlow = new Bitmap(picCon.Width, picCon.Height);
+        //    Graphics gGlow = Graphics.FromImage(bGlow);
+        //    gGlow.FillRectangle(Brushes.Black, new Rectangle(new Point(0, 0), picCon.Size));
+        //    picCon.Image = bGlow;
 
 
-        }
 
-        void SetPicGlow(Control ctlCon, Control ctlChild)
-        {
-            ctlCon.Left = ctlChild.Left - 8;
-            ctlCon.Top = ctlChild.Top - 8;
-            ctlCon.Width = ctlChild.Width + 16;
-            ctlCon.Height = ctlChild.Height + 16;
-            ctlChild.BringToFront();
-        }
+
+        //}
+
+        //void SetPicGlow(Control ctlCon, Control ctlChild)
+        //{
+        //    ctlCon.Left = ctlChild.Left - 8;
+        //    ctlCon.Top = ctlChild.Top - 8;
+        //    ctlCon.Width = ctlChild.Width + 16;
+        //    ctlCon.Height = ctlChild.Height + 16;
+        //    ctlChild.BringToFront();
+        //}
         public struct LinkInfo
         {
             public string strVideoTitle;
@@ -191,8 +198,6 @@ namespace YouTube_Grabber
             intCurrentSelectedDownloadLinks = 0;
             strDownloadLinks.Clear();
             txtLinkInfo.Text = "";
-            picButtonDownload.Image = null;
-            picDownloadOpt.Image = null;
 
         }
 
@@ -310,7 +315,7 @@ namespace YouTube_Grabber
         
         private void btnDownload_Click(object sender, EventArgs e)
         {
-            picButtonDownload.Image = null;
+            
             liDonwloadList.Add(strDownloadLinks[intCurrentSelectedDownloadLinks]);
             string filename = liDonwloadList[intDownloadListCount].strVideoTitle;
             string extension = liDonwloadList[intDownloadListCount].strVideoType.Replace("*", "");
@@ -368,8 +373,6 @@ namespace YouTube_Grabber
         }
         private void cbDownOpt_SelectedIndexChanged(object sender, EventArgs e)
         {
-            picDownloadOpt.Image = null;
-            DrawGlow(picButtonDownload);
 
             btnDownload.Enabled = true;
             intCurrentSelectedDownloadLinks = cbDownOpt.SelectedIndex;
@@ -493,9 +496,6 @@ namespace YouTube_Grabber
             EnDisableControlHandler edch = new EnDisableControlHandler(EnDisableControl);
             object[] objEnable = { cbDownOpt, true };
             cbDownOpt.Invoke(edch, objEnable);
-            SetGlowHandler sgh = new SetGlowHandler(DrawGlow);
-            object[] objGlow = { picDownloadOpt };
-            cbDownOpt.Invoke(sgh, objGlow);
 
         }
         private void frmMain_Load(object sender, EventArgs e)
@@ -525,9 +525,6 @@ namespace YouTube_Grabber
 
             tScroll = new Thread(ThreadScrollFunc);
             tScroll.Start();
-
-            SetPicGlow(picDownloadOpt, cbDownOpt);
-            SetPicGlow(picButtonDownload, btnDownload);
         }
 
         void txtUrl_LostFocus(object sender, EventArgs e)
@@ -563,7 +560,14 @@ namespace YouTube_Grabber
         {
             System.Diagnostics.Process.Start("http://code.google.com/p/youtubesniffer/");
         }
+        private void linkLabel1_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://youtubesniffer.tk/");
+        }
         #endregion
+
+
+
     }
 
 }
