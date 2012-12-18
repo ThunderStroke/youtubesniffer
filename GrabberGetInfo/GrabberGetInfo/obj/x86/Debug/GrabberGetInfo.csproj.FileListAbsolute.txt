@@ -1,0 +1,8 @@
+C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\bin\Debug\GrabberGetInfo.exe
+C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\bin\Debug\GrabberGetInfo.pdb
+C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.frmMain.resources
+C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.Properties.Resources.resources
+C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.csproj.GenerateResource.Cache
+C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.exe
+C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.pdb
+C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.csprojResolveAssemblyReference.cache

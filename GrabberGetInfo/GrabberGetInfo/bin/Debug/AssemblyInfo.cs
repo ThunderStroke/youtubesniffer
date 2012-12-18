@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GetVersion")]
+[assembly: AssemblyTitle("GrabberGetInfo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GaryNg")]
-[assembly: AssemblyProduct("GetVersion")]
+[assembly: AssemblyProduct("GrabberGetInfo")]
 [assembly: AssemblyCopyright("Copyright © GaryNg 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("8f2bc0ef-f6f0-4676-be74-c708e67c1b08")]
+[assembly: Guid("6880a879-1176-41cd-9639-c05da2adc29b")]
 
 // Version information for an assembly consists of the following four values:
 //
