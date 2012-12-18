@@ -17,6 +17,7 @@ namespace GrabberGetInfo
         public static string[] strInfoPath;
         public frmMain()
         {
+            
             InitializeComponent();
         }
         string[] strVersion;
@@ -39,6 +40,7 @@ namespace GrabberGetInfo
                     break;
                 }
             }
+            srXML.Close();
             txtHistory.Text += txtVer.Text + Environment.NewLine + "- ";
             TextBoxFocus();
 
@@ -54,6 +56,7 @@ namespace GrabberGetInfo
                 WriteVersion();
                 WriteDownloadLink();
                 WriteHistory();
+                WriteCriticalUpdate();
 
                 xtwXML.WriteEndElement();
                 xtwXML.Close();
@@ -62,11 +65,32 @@ namespace GrabberGetInfo
             }
 
         }
+
+        void WriteCriticalUpdate()
+        {
+            xtwXML.WriteStartElement("CriticalUpdate");
+            xtwXML.WriteStartElement("IsCriticleUpdate");
+            xtwXML.WriteString(cbCritical.Checked.ToString());
+            xtwXML.WriteEndElement();
+            if (cbCritical.Checked == true)
+            {
+                xtwXML.WriteStartElement("ArticleLink");
+                xtwXML.WriteString(txtArticleURL.Text);
+                xtwXML.WriteEndElement();
+            }
+
+            xtwXML.WriteEndElement();
+        }
+
+
         void WriteHistory()
         {
             xtwXML.WriteStartElement("History");
             xtwXML.WriteString(txtHistory.Text);
             xtwXML.WriteEndElement();
+
+            if (ckDontUpdateLog.Checked == true) return;
+
             string strToWrite = txtHistory.Text;
             bool bNeedWriteDate = true;
             if (File.Exists("Update Log.txt"))
@@ -106,7 +130,7 @@ namespace GrabberGetInfo
 
         void WriteVersion()
         {
-
+            xtwXML.WriteStartElement("Version");
 
             xtwXML.WriteStartElement("Major");
             xtwXML.WriteString(strVersion[0]);
@@ -122,6 +146,8 @@ namespace GrabberGetInfo
 
             xtwXML.WriteStartElement("Revision");
             xtwXML.WriteString(strVersion[3]);
+            xtwXML.WriteEndElement();
+
             xtwXML.WriteEndElement();
 
         }
@@ -179,10 +205,12 @@ namespace GrabberGetInfo
             strBuildDate = txtDate.Text;
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void cbCritical_CheckedChanged(object sender, EventArgs e)
         {
-            Environment.Exit(-1);
-
+            if (cbCritical.Checked)
+            {
+                txtArticleURL.Enabled = true;
+            }
         }
 
     }

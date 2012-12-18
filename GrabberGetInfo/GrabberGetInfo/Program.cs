@@ -13,6 +13,7 @@ namespace GrabberGetInfo
         [STAThread]
         static void Main(string[] args)
         {
+            
             if (args.Count() == 0)
             {
                 Environment.Exit(-1);
