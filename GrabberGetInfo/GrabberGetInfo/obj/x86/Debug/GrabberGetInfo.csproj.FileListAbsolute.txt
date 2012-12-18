@@ -6,3 +6,11 @@ C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetI
 C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.exe
 C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.pdb
 C:\Users\ZhongBo\Desktop\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.csprojResolveAssemblyReference.cache
+C:\Users\ZhongBo\Desktop\Youtube Sniffer\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.exe
+C:\Users\ZhongBo\Desktop\Youtube Sniffer\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.pdb
+C:\Users\ZhongBo\Desktop\Youtube Sniffer\GrabberGetInfo\GrabberGetInfo\bin\Debug\GrabberGetInfo.exe
+C:\Users\ZhongBo\Desktop\Youtube Sniffer\GrabberGetInfo\GrabberGetInfo\bin\Debug\GrabberGetInfo.pdb
+C:\Users\ZhongBo\Desktop\Youtube Sniffer\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.csprojResolveAssemblyReference.cache
+C:\Users\ZhongBo\Desktop\Youtube Sniffer\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.frmMain.resources
+C:\Users\ZhongBo\Desktop\Youtube Sniffer\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.Properties.Resources.resources
+C:\Users\ZhongBo\Desktop\Youtube Sniffer\GrabberGetInfo\GrabberGetInfo\obj\x86\Debug\GrabberGetInfo.csproj.GenerateResource.Cache

@@ -179,5 +179,11 @@ namespace GrabberGetInfo
             strBuildDate = txtDate.Text;
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(-1);
+
+        }
+
     }
 }

@@ -243,6 +243,7 @@
             this.btnExit.TabIndex = 19;
             this.btnExit.Text = "Developer Testing (Don\'t Write Anything)";
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // frmMain
             // 
