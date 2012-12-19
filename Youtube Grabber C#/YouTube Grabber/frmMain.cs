@@ -23,44 +23,11 @@ namespace YouTube_Grabber
         #region MainFormFunc
         delegate void SetTextHandler(Control t, string text);
         delegate void SetImageHandler(PictureBox pic, string url);
-        delegate void CleanUpHandler();
+        delegate void ZeroParamHandler();
         delegate void EnDisableControlHandler(Control cnt, bool bControlState);
         delegate void SetControlPos(Control cntControl, int Left);
         delegate void ComboBoxAddItemhandler(ComboBox cbBox, string str);
-        //delegate void SetGlowHandler(PictureBox piCon);
 
-        //void DrawGlow(PictureBox picCon)
-        //{
-        //    //GraphicsPath gpGlow = new GraphicsPath();
-        //    //gpGlow.AddRectangle(new Rectangle(Point.Empty, picCon.Size));
-        //    //PathGradientBrush pgbGlow = new PathGradientBrush(gpGlow);
-        //    //pgbGlow.SurroundColors = new Color[] { Color.Transparent };
-        //    ////pgbGlow.CenterPoint = new Point(picCon.Width / 2, picCon.Height / 2);
-        //    //pgbGlow.CenterColor = Color.Red;
-        //    //pgbGlow.FocusScales = new PointF(0.95f, 0.6f);
-        //    //Bitmap bGlow = new Bitmap(picCon.Width, picCon.Height);
-        //    //Graphics gGlow = Graphics.FromImage(bGlow);
-        //    //gGlow.FillRectangle(pgbGlow, new Rectangle(Point.Empty, picCon.Size));
-        //    //picCon.Image = bGlow;
-
-        //    Bitmap bGlow = new Bitmap(picCon.Width, picCon.Height);
-        //    Graphics gGlow = Graphics.FromImage(bGlow);
-        //    gGlow.FillRectangle(Brushes.Black, new Rectangle(new Point(0, 0), picCon.Size));
-        //    picCon.Image = bGlow;
-
-
-
-
-        //}
-
-        //void SetPicGlow(Control ctlCon, Control ctlChild)
-        //{
-        //    ctlCon.Left = ctlChild.Left - 8;
-        //    ctlCon.Top = ctlChild.Top - 8;
-        //    ctlCon.Width = ctlChild.Width + 16;
-        //    ctlCon.Height = ctlChild.Height + 16;
-        //    ctlChild.BringToFront();
-        //}
         public struct LinkInfo
         {
             public string strVideoTitle;
@@ -76,7 +43,7 @@ namespace YouTube_Grabber
 
         clsMain clsDownload;
         int intCurrentSelectedDownloadLinks;
-
+        Form frmUpdater;
         void ComboBoxAddItem(ComboBox cbBox, string str)
         {
             cbBox.Items.Add(str);
@@ -135,7 +102,7 @@ namespace YouTube_Grabber
                     lblScroll.Invoke(scpControl, objSetPos);
                 }
                 //
-
+                Application.DoEvents();
                 Thread.Sleep(10);
             }
 
@@ -443,7 +410,7 @@ namespace YouTube_Grabber
             SetTextHandler sth = new SetTextHandler(SetText);
             object[] objText = { txtUrl, "" };
             txtUrl.Invoke(sth, objText);
-            CleanUpHandler cuh = new CleanUpHandler(CleanUp);
+            ZeroParamHandler cuh = new ZeroParamHandler(CleanUp);
             this.Invoke(cuh);
             object[] objErr = { lblStatus, err };
             lblStatus.Invoke(sth, objErr);
@@ -525,8 +492,11 @@ namespace YouTube_Grabber
 
             tScroll = new Thread(ThreadScrollFunc);
             tScroll.Start();
+
+            frmUpdater = new frmUpdate();
         }
 
+       
         void txtUrl_LostFocus(object sender, EventArgs e)
         {
             GotLostFocus(txtUrl, false);
@@ -564,10 +534,15 @@ namespace YouTube_Grabber
         {
             System.Diagnostics.Process.Start("http://youtubesniffer.tk/");
         }
+        private void btnCheckUpdate_Click(object sender, EventArgs e)
+        {
+            if (frmUpdater.Visible == false)
+            {
+                frmUpdater = new frmUpdate();
+                frmUpdater.Show();
+            }
+        }
         #endregion
-
-
-
     }
 
 }

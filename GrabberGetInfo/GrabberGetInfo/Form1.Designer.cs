@@ -100,6 +100,7 @@
             this.txtHistory.Location = new System.Drawing.Point(10, 209);
             this.txtHistory.Multiline = true;
             this.txtHistory.Name = "txtHistory";
+            this.txtHistory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtHistory.Size = new System.Drawing.Size(444, 171);
             this.txtHistory.TabIndex = 0;
             // 
@@ -115,7 +116,7 @@
             // 
             // btnCore
             // 
-            this.btnCore.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCore.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCore.Location = new System.Drawing.Point(459, 176);
             this.btnCore.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCore.Name = "btnCore";
@@ -139,7 +140,7 @@
             // 
             // btnNewFunc
             // 
-            this.btnNewFunc.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNewFunc.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNewFunc.Location = new System.Drawing.Point(459, 229);
             this.btnNewFunc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnNewFunc.Name = "btnNewFunc";

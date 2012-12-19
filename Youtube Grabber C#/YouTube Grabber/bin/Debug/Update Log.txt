@@ -26,3 +26,7 @@
 1.4.6.710
 - [Function Removed]	Remove the glowing effect
 
+
+19/12/2012
+1.4.6.840
+- [New UI]	Updater

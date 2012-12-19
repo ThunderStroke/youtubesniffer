@@ -63,6 +63,7 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.picVideoPic = new System.Windows.Forms.PictureBox();
             this.tcMain = new System.Windows.Forms.TabControl();
+            this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.mnuPopUp.SuspendLayout();
             this.tpAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -100,6 +101,7 @@
             // tpAbout
             // 
             this.tpAbout.BackColor = System.Drawing.SystemColors.Control;
+            this.tpAbout.Controls.Add(this.btnCheckUpdate);
             this.tpAbout.Controls.Add(this.linkLabel1);
             this.tpAbout.Controls.Add(this.lblAbout);
             this.tpAbout.Controls.Add(this.lblGoogle);
@@ -401,6 +403,17 @@
             this.tcMain.TabIndex = 21;
             this.tcMain.TabStop = false;
             // 
+            // btnCheckUpdate
+            // 
+            this.btnCheckUpdate.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCheckUpdate.Location = new System.Drawing.Point(470, 233);
+            this.btnCheckUpdate.Name = "btnCheckUpdate";
+            this.btnCheckUpdate.Size = new System.Drawing.Size(367, 122);
+            this.btnCheckUpdate.TabIndex = 11;
+            this.btnCheckUpdate.Text = "Check For Update Now!";
+            this.btnCheckUpdate.UseVisualStyleBackColor = true;
+            this.btnCheckUpdate.Click += new System.EventHandler(this.btnCheckUpdate_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -471,6 +484,7 @@
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.ToolStripMenuItem startDownloadToolStripMenuItem;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button btnCheckUpdate;
 
     }
 }

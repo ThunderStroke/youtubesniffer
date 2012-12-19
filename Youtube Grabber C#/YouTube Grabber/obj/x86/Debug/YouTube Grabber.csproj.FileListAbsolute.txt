@@ -75,3 +75,4 @@ C:\Users\ZhongBo\Desktop\Youtube Sniffer\Youtube Grabber C#\YouTube Grabber\obj\
 C:\Users\ZhongBo\Desktop\Youtube Sniffer\Youtube Grabber C#\YouTube Grabber\obj\x86\Debug\YouTube Grabber.TrustInfo.xml
 C:\Users\ZhongBo\Desktop\Youtube Sniffer\Youtube Grabber C#\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe.manifest
 C:\Users\ZhongBo\Desktop\Youtube Sniffer\Youtube Grabber C#\YouTube Grabber\obj\x86\Debug\YouTube Grabber.application
+C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.frmUpdate.resources
