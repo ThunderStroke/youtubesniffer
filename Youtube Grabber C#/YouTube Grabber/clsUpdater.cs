@@ -76,12 +76,15 @@ namespace YouTube_Grabber
         }
         void ReadCurrentInfo()
         {
+            
             XmlDocument xCurrent = new XmlDocument();
             xCurrent.Load(@"Settings.xml");
-            intCurrentVersion[0] = Convert.ToInt32(xCurrent.SelectSingleNode("Settings/Version/Major").InnerText);
-            intCurrentVersion[1] = Convert.ToInt32(xCurrent.SelectSingleNode("Settings/Version/Minor").InnerText);
-            intCurrentVersion[2] = Convert.ToInt32(xCurrent.SelectSingleNode("Settings/Version/Build").InnerText);
-            intCurrentVersion[3] = Convert.ToInt32(xCurrent.SelectSingleNode("Settings/Version/Revision").InnerText);
+            intCurrentVersion[0] = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major; //Convert.ToInt32(xCurrent.SelectSingleNode("Settings/Version/Major").InnerText);
+            intCurrentVersion[1] = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor; // Convert.ToInt32(xCurrent.SelectSingleNode("Settings/Version/Minor").InnerText);
+            intCurrentVersion[2] = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build; //Convert.ToInt32(xCurrent.SelectSingleNode("Settings/Version/Build").InnerText);
+            intCurrentVersion[3] = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Revision; // Convert.ToInt32(xCurrent.SelectSingleNode("Settings/Version/Revision").InnerText);
+
+
         }
         Boolean CompareVersion()
         {

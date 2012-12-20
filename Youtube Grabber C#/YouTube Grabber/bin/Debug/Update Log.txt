@@ -30,3 +30,7 @@
 19/12/2012
 1.4.6.840
 - [New UI]	Updater
+
+20/12/2012
+1.4.6.844
+- [Bug Fixed]	Crash when check for update

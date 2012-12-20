@@ -3,11 +3,11 @@
     <Major>1</Major>
     <Minor>4</Minor>
     <Build>6</Build>
-    <Revision>840</Revision>
+    <Revision>844</Revision>
   </Version>
   <DownloadLink>https://dl.dropbox.com/u/43619472/%E6%89%B9%E5%A4%84%E7%90%86/C%23/YouTube%20Video%20Grabber/YouTube%20Grabber.exe</DownloadLink>
-  <History>1.4.6.840
-- [New UI]	Updater</History>
+  <History>1.4.6.844
+- [Bug Fixed]	Crash when check for update</History>
   <CriticalUpdate>
     <IsCriticleUpdate>False</IsCriticleUpdate>
   </CriticalUpdate>
