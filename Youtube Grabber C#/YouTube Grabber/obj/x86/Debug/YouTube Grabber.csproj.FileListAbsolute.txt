@@ -76,3 +76,6 @@ C:\Users\ZhongBo\Desktop\Youtube Sniffer\Youtube Grabber C#\YouTube Grabber\obj\
 C:\Users\ZhongBo\Desktop\Youtube Sniffer\Youtube Grabber C#\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe.manifest
 C:\Users\ZhongBo\Desktop\Youtube Sniffer\Youtube Grabber C#\YouTube Grabber\obj\x86\Debug\YouTube Grabber.application
 C:\Users\ZhongBo\Desktop\YouTube Grabber\YouTube Grabber\obj\x86\Debug\YouTube_Grabber.frmUpdate.resources
+C:\Users\ZhongBo\Desktop\youtubesniffer\Youtube Grabber C#\YouTube Grabber\bin\Debug\YouTube Grabber.exe.config
+C:\Users\ZhongBo\Desktop\youtubesniffer\Youtube Grabber C#\YouTube Grabber\obj\x86\Debug\YouTube Grabber.exe
+C:\Users\ZhongBo\Desktop\youtubesniffer\Youtube Grabber C#\YouTube Grabber\obj\x86\Debug\YouTube Grabber.pdb
